@@ -1,0 +1,102 @@
+[
+ {
+  "label": "Claude Fable 5.1 (max with fallback)",
+  "intelligenceIndex": 53.3549259623252,
+  "detailsUrl": "/models/claude-fable-5-1"
+ },
+ {
+  "label": "GPT-6 Astra (max)",
+  "intelligenceIndex": 52.673669395513,
+  "detailsUrl": "/models/gpt-6-astra"
+ },
+ {
+  "label": "Claude Opus 5 (max)",
+  "intelligenceIndex": 50.7771115797629,
+  "detailsUrl": "/models/claude-opus-5"
+ },
+ {
+  "label": "Muse Spark 1.3 (max)",
+  "intelligenceIndex": 48.0923107719685,
+  "detailsUrl": "/models/muse-spark-1-3"
+ },
+ {
+  "label": "GPT-5.6 Sol (max)",
+  "intelligenceIndex": 46.9727068915036,
+  "detailsUrl": "/models/gpt-5-6-sol"
+ },
+ {
+  "label": "Qwen3.8 Max (0902)",
+  "intelligenceIndex": 45.4152084980521,
+  "detailsUrl": "/models/qwen3-8-max"
+ },
+ {
+  "label": "GLM-5.3 (max)",
+  "intelligenceIndex": 44.777392385614,
+  "detailsUrl": "/models/glm-5-3"
+ },
+ {
+  "label": "Grok 4.6 (high)",
+  "intelligenceIndex": 44.3113073012592,
+  "detailsUrl": "/models/grok-4-6"
+ },
+ {
+  "label": "Step 5 Preview",
+  "intelligenceIndex": 43.7343049141614,
+  "detailsUrl": "/models/step-5"
+ },
+ {
+  "label": "Kimi K3 (max)",
+  "intelligenceIndex": 43.5938229518782,
+  "detailsUrl": "/models/kimi-k3"
+ },
+ {
+  "label": "GPT-5.6 Terra (max)",
+  "intelligenceIndex": 42.0829248239494,
+  "detailsUrl": "/models/gpt-5-6-terra"
+ },
+ {
+  "label": "GLM-5.3-Flash",
+  "intelligenceIndex": 41.807466113455,
+  "detailsUrl": "/models/glm-5-3-flash"
+ },
+ {
+  "label": "Gemini 3.8 Flash (high)",
+  "intelligenceIndex": 40.9262321765904,
+  "detailsUrl": "/models/gemini-3-8-flash"
+ },
+ {
+  "label": "DeepSeek V4.1 Flash (max)",
+  "intelligenceIndex": 39.456167472527,
+  "detailsUrl": "/models/deepseek-v4-1-flash"
+ },
+ {
+  "label": "GPT-5.6 Luna (max)",
+  "intelligenceIndex": 37.3244239690841,
+  "detailsUrl": "/models/gpt-5-6-luna"
+ },
+ {
+  "label": "DeepSeek V4 Pro 0813 (max)",
+  "intelligenceIndex": 35.9967791278402,
+  "detailsUrl": "/models/deepseek-v4-pro"
+ },
+ {
+  "label": "Qwen3.8 27B (xhigh)",
+  "intelligenceIndex": 33.6962858057476,
+  "detailsUrl": "/models/qwen3-8-27b"
+ },
+ {
+  "label": "K2 Horizon 375B A23B",
+  "intelligenceIndex": 30.5015302696723,
+  "detailsUrl": "/models/k2-horizon-375b-a23b"
+ },
+ {
+  "label": "MiniMax-M3",
+  "intelligenceIndex": 29.2202932236316,
+  "detailsUrl": "/models/minimax-m3"
+ },
+ {
+  "label": "Inkling",
+  "intelligenceIndex": 24.9847810999384,
+  "detailsUrl": "/models/inkling"
+ }
+]

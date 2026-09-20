@@ -58,6 +58,8 @@ def main() -> int:
             except ValueError:
                 failures.append(f"{s}: non-integer context {r['context_window_tokens']!r}")
                 continue
+            if ctx == 0 and r["ctx_ge_1m"] == "UNKNOWN":
+                continue  # context not published; ctx_ge_1m honestly unknown
             want = "YES" if ctx >= 1_000_000 else "NO"
             check(r["ctx_ge_1m"] == want, f"{s}: ctx_ge_1m={r['ctx_ge_1m']} inconsistent with ctx={ctx}")
             for pcol in ("api_input_usd_per_m", "api_output_usd_per_m"):
@@ -130,7 +132,7 @@ def main() -> int:
 
     # --- references ---
     refs = (pass_dir / "references" / "references.md").read_text() if (pass_dir / "references" / "references.md").is_file() else ""
-    check("2026-09-13" in refs, "references missing access date")
+    check(pass_dir.name in refs, f"references missing access date {pass_dir.name}")
     check(refs.count("\n") > 40, "references suspiciously short")
 
     # --- sources present ---

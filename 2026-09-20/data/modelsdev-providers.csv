@@ -1,0 +1,223 @@
+provider_id,name,api,models,models_with_price,models_paid,models_zero,min_input,min_output,npm,is_plan
+302ai,302.AI,https://api.302.ai/v1,117,117,117,0,0.06,0.25,@ai-sdk/openai-compatible,0
+abacus,Abacus,https://routellm.abacus.ai/v1,108,108,108,0,0.02,0.05,@ai-sdk/openai-compatible,0
+abliteration-ai,abliteration.ai,https://api.abliteration.ai/v1,3,3,3,0,3,3,@ai-sdk/openai-compatible,0
+above,above.dev,https://api.above.dev/v1,8,8,8,0,0.165,0.55,@ai-sdk/openai-compatible,0
+agentrouter,AgentRouter,https://agentrouter.org/v1,5,0,0,0,,,@ai-sdk/openai-compatible,0
+agnes,Agnes AI,https://apihub.agnes-ai.com/v1,3,3,1,2,0.45,0.9,@ai-sdk/openai-compatible,0
+ai-router,AI-ROUTER,https://api.ai-router.dev/v1,5,5,5,0,1,6,@ai-sdk/openai-compatible,0
+ai21,AI21 Labs,https://api.ai21.com/studio/v1,2,2,2,0,0.2,0.4,@ai-sdk/openai-compatible,0
+aiand,ai&,https://api.aiand.com/v1,11,11,11,0,0.15,0.25,@ai-sdk/openai-compatible,0
+aihubmix,AIHubMix,,82,82,77,5,0.0282,0.1128,@aihubmix/ai-sdk-provider,0
+ainetcafe,ainetcafe,https://microquickjs.com/v1,1,1,1,0,2.1,10.5,@ai-sdk/openai-compatible,0
+aixy,Aixy,https://api.aixy-gateway.com/v1,1,1,1,0,0.4,1.6,@ai-sdk/openai-compatible,0
+aki-io,AKI.IO,https://aki.io/v1,7,7,7,0,0.1,0.5,@ai-sdk/openai-compatible,0
+alibaba,Alibaba,https://dashscope-intl.aliyuncs.com/compatible-mode/v1,56,56,56,0,0.035,0.035,@ai-sdk/openai-compatible,0
+alibaba-cn,Alibaba (China),https://dashscope.aliyuncs.com/compatible-mode/v1,90,90,88,2,0.022,0.032,@ai-sdk/openai-compatible,0
+alibaba-coding-plan,Alibaba Coding Plan,https://coding-intl.dashscope.aliyuncs.com/v1,12,12,2,10,0.1875,1.125,@ai-sdk/openai-compatible,1
+alibaba-coding-plan-cn,Alibaba Coding Plan (China),https://coding.dashscope.aliyuncs.com/v1,12,12,2,10,0.1875,1.125,@ai-sdk/openai-compatible,1
+alibaba-token-plan,Alibaba Token Plan,https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1,28,28,0,28,,,@ai-sdk/openai-compatible,1
+alibaba-token-plan-cn,Alibaba Token Plan (China),https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1,28,28,0,28,,,@ai-sdk/openai-compatible,1
+amazon-bedrock,Amazon Bedrock,,165,165,165,0,0.035,0.04,@ai-sdk/amazon-bedrock,0
+ambient,Ambient,https://api.ambient.xyz/v1,10,10,10,0,0.08,0.18,@ai-sdk/openai-compatible,0
+amd,AMD,https://developer.amd.com.cn/radeon/api/v1,6,6,5,1,0.124,0.28,@ai-sdk/openai-compatible,0
+anthropic,Anthropic,,14,14,14,0,1,5,@ai-sdk/anthropic,0
+anyapi,AnyAPI,https://api.anyapi.ai/v1,30,0,0,0,,,@ai-sdk/openai-compatible,0
+arcee,Arcee,https://api.arcee.ai/api/v1,7,7,7,0,0.14,0.28,@ai-sdk/openai-compatible,0
+atomic-chat,Atomic Chat,http://127.0.0.1:1337/v1,5,5,0,5,,,@ai-sdk/openai-compatible,0
+auriko,Auriko,https://api.auriko.ai/v1,15,15,15,0,0.14,0.28,@ai-sdk/openai-compatible,0
+azure,Azure,,89,88,88,0,0.02,0.04,@ai-sdk/azure,0
+azure-cognitive-services,Azure Cognitive Services,,74,74,74,0,0.02,0.04,@ai-sdk/azure,0
+bailing,Bailing,https://api.tbox.cn/api/llm/v1/chat/completions,2,2,2,0,0.57,2.29,@ai-sdk/openai-compatible,0
+baseten,Baseten,https://inference.baseten.co/v1,23,23,23,0,0.1,0.26,@ai-sdk/openai-compatible,0
+berget,Berget.AI,https://api.berget.ai/v1,6,6,6,0,0.275,0.33,@ai-sdk/openai-compatible,0
+blueclaw,Blue Claw,https://openai.blueclaw.network/v1,2,0,0,0,,,@ai-sdk/openai-compatible,0
+bothub,Bothub,https://openai.bothub.ru/v1,8,8,6,2,0.06,0.2,@ai-sdk/openai-compatible,0
+cerebras,Cerebras,,2,2,2,0,0.35,0.75,@ai-sdk/cerebras,0
+chutes,Chutes,https://llm.chutes.ai/v1,14,14,14,0,0.0245,0.0978,@ai-sdk/openai-compatible,0
+clarifai,Clarifai,https://api.clarifai.com/v2/ext/openai/v1,12,12,12,0,0.045,0.15,@ai-sdk/openai-compatible,0
+claudinio,Claudinio,https://api.claudin.io/v1,2,2,2,0,0.5,2,@ai-sdk/openai-compatible,0
+cline-pass,ClinePass,https://api.cline.bot/api/v1,15,15,15,0,0.14,0.28,@ai-sdk/openai-compatible,0
+cloudferro-sherlock,CloudFerro Sherlock,https://api-sherlock.cloudferro.com/openai/v1/,5,5,5,0,0.3,0.67,@ai-sdk/openai-compatible,0
+cloudflare-ai-gateway,Cloudflare AI Gateway,,47,47,47,0,0.042,0.3,ai-gateway-provider,0
+cloudflare-workers-ai,Cloudflare Workers AI,https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/v1,27,27,27,0,0.017,0.03,@ai-sdk/openai-compatible,0
+cohere,Cohere,,14,10,9,1,0.0375,0.15,@ai-sdk/cohere,0
+coralbricks,CoralBricks,https://inference.coralbricks.ai/v1,4,4,4,0,0.12,0.5,@ai-sdk/openai-compatible,0
+cortecs,Cortecs,https://api.cortecs.ai/v1,106,106,104,2,0.04,0.111,@ai-sdk/openai-compatible,0
+crof,CrofAI,https://crof.ai/v1,24,24,24,0,0.04,0.1,@ai-sdk/openai-compatible,0
+crossmodel,CrossModel,https://api.crossmodel.ai/v1,59,59,59,0,0.04,0.13,@ai-sdk/openai-compatible,0
+crusoe,Crusoe,https://api.inference.crusoecloud.com/v1,11,11,11,0,0.05,0.2,@ai-sdk/openai-compatible,0
+daoxe,DaoXE,https://daoxe.com/v1,9,9,9,0,0.6,2.5,@ai-sdk/openai-compatible,0
+databricks,Databricks,https://${DATABRICKS_HOST}/ai-gateway/mlflow/v1,30,30,30,0,0.05,0.2,@ai-sdk/openai-compatible,0
+deepinfra,Deep Infra,,68,68,68,0,0.02,0.1,@ai-sdk/deepinfra,0
+deepseek,DeepSeek,https://api.deepseek.com,4,4,4,0,0.15,0.6,@ai-sdk/openai-compatible,0
+digitalocean,DigitalOcean,https://inference.do-ai.run/v1,97,87,87,0,0.009,0.168,@ai-sdk/openai-compatible,0
+dinference,DInference,https://api.dinference.com/v1,6,6,6,0,0.0675,0.27,@ai-sdk/openai-compatible,0
+drun,D.Run (China),https://chat.d.run/v1,3,3,3,0,0.28,1.1,@ai-sdk/openai-compatible,0
+ebcloud,EBCloud,https://maas-api.ebcloud.com/v1,4,4,4,0,0.143,0.2857,@ai-sdk/openai-compatible,0
+echo,Echo,https://echo.tracerml.ai/v1,1,1,1,0,10,50,@ai-sdk/openai-compatible,0
+edenai,Eden AI,https://api.edenai.run/v3,279,279,279,0,0.03,0.03,@ai-sdk/openai-compatible,0
+empiriolabs,EmpirioLabs AI,https://api.empiriolabs.ai/v1,62,62,58,4,0.03,0.07,@ai-sdk/openai-compatible,0
+evroc,evroc,https://models.think.evroc.com/v1,16,16,16,0,0.0023,0.0023,@ai-sdk/openai-compatible,0
+fastrouter,FastRouter,https://go.fastrouter.ai/api/v1,47,37,37,0,0.02,0.1,@ai-sdk/openai-compatible,0
+fireworks-ai,Fireworks AI,https://api.fireworks.ai/inference/v1/,33,33,33,0,0.05,0.2,@ai-sdk/openai-compatible,0
+freemodel,FreeModel,https://cc.freemodel.dev/v1,10,10,10,0,0.75,4.5,@ai-sdk/anthropic,0
+friendli,Friendli,https://api.friendli.ai/serverless/v1,7,7,7,0,0.14,0.4,@ai-sdk/openai-compatible,0
+frogbot,FrogBot,https://app.frogbot.ai/api/v1,26,26,26,0,0.07,0.2,@ai-sdk/openai-compatible,0
+github-copilot,GitHub Copilot,https://api.githubcopilot.com,28,28,28,0,0.2,1.2,@ai-sdk/openai-compatible,0
+gitlab,GitLab Duo,,25,25,0,25,,,gitlab-ai-provider,0
+gmicloud,GMI Cloud,https://api.gmi-serving.com/v1,15,15,15,0,0.112,0.224,@ai-sdk/openai-compatible,0
+google,Google,,39,34,32,2,0.1,0.4,@ai-sdk/google,0
+google-vertex,Vertex,,52,52,52,0,0.07,0.25,@ai-sdk/google-vertex,0
+google-vertex-anthropic,Vertex (Anthropic),,14,14,14,0,1,5,@ai-sdk/google-vertex/anthropic,0
+greenpt,GreenPT,https://api.greenpt.ai/v1,40,40,40,0,0.00437,0.285,@ai-sdk/openai-compatible,0
+groq,Groq,,16,10,9,1,0.03,0.03,@ai-sdk/groq,0
+helicone,Helicone,https://ai-gateway.helicone.ai/v1,90,90,90,0,0.01,0.01,@ai-sdk/openai-compatible,0
+hetzner,Hetzner,https://inference.hetzner.com/api/v1,2,2,0,2,,,@ai-sdk/openai-compatible,0
+hpc-ai,HPC-AI,https://api.hpc-ai.com/inference/v1,9,9,9,0,0.14,0.28,@ai-sdk/openai-compatible,0
+huggingface,Hugging Face,https://router.huggingface.co/v1,77,77,76,1,0.01,0.06,@ai-sdk/openai-compatible,0
+hyper,Charm Hyper,https://hyper.charm.land/v1,23,23,23,0,0.098,0.334,@ai-sdk/openai-compatible,0
+iflowcn,iFlow,https://apis.iflow.cn/v1,14,14,0,14,,,@ai-sdk/openai-compatible,0
+impossibl,Impossibl,https://api.impossibl.com/v1,76,76,76,0,0.05,0.28,@ai-sdk/openai-compatible,0
+inception,Inception,https://api.inceptionlabs.ai/v1/,3,3,3,0,0.04,0.15,@ai-sdk/openai-compatible,0
+inceptron,Inceptron,https://api.inceptron.io/v1,4,4,4,0,0.13,0.28,@ai-sdk/openai-compatible,0
+inco,Inco,https://api.inco.ai/v1,7,7,7,0,0.15,0.5,@ai-sdk/openai-compatible,0
+infer,Infer by Flow7,https://infer.flow7.org/v1,2,2,2,0,2.5,12.5,@ai-sdk/openai,0
+inference,Inference,https://inference.net/v1,9,9,9,0,0.01,0.01,@ai-sdk/openai-compatible,0
+inferx,InferX,https://model.inferx.net/endpoints/v1,12,12,0,12,,,@ai-sdk/openai-compatible,0
+infomaniak,Infomaniak,https://api.infomaniak.com/2/ai/${INFOMANIAK_PRODUCT_ID}/openai/v1,10,10,9,1,0.06,0.25,@ai-sdk/openai-compatible,0
+io-net,IO.NET,https://api.intelligence.io.solutions/api/v1,17,17,17,0,0.02,0.04,@ai-sdk/openai-compatible,0
+iteracompute,IteraCompute,https://api.iteracompute.com/v1,9,9,9,0,0.14,0.49,@ai-sdk/openai-compatible,0
+jalapeno,Jalapeno Cloud,https://api.jalapeno-cloud.ai/v1,17,17,17,0,0.14,0.28,@ai-sdk/openai-compatible,0
+jiekou,Jiekou.AI,https://api.jiekou.ai/openai,61,61,60,1,0.045,0.36,@ai-sdk/openai-compatible,0
+kenari,Kenari,https://kenari.id/v1,59,59,0,59,,,@ai-sdk/openai-compatible,0
+kilo,Kilo Gateway,https://api.kilo.ai/api/gateway,378,378,352,26,0.017,0.03,@ai-sdk/openai-compatible,0
+kimi-code-plan-cn,Kimi For Coding (kimi.com),https://api.kimi.com/coding/v1,4,4,0,4,,,@ai-sdk/openai-compatible,1
+kimi-code-plan-global,Kimi For Coding (kimi.ai),https://api.kimi.ai/coding/v1,4,4,0,4,,,@ai-sdk/openai-compatible,1
+klokintegration,klokintegration.se,https://api-gw.klok.ipaas.se/proxy/kloker-key/v1,3,3,3,0,0.23,1.16,@ai-sdk/openai-compatible,0
+kosmik,Kosmik Compute,https://api.koscompute.com/v1,1,1,1,0,0.35,2.2,@ai-sdk/openai-compatible,0
+kuae-cloud-coding-plan,KUAE Cloud Coding Plan,https://coding-plan-endpoint.kuaecloud.net/v1,1,1,0,1,,,@ai-sdk/openai-compatible,1
+lilac,Lilac,https://api.getlilac.com/v1,4,4,4,0,0.11,0.35,@ai-sdk/openai-compatible,0
+llama,Llama,https://api.llama.com/compat/v1/,7,7,0,7,,,@ai-sdk/openai-compatible,0
+llmgateway,DevPass (LLM Gateway),https://api.llmgateway.io/v1,193,193,190,3,0.03,0.05,@ai-sdk/openai-compatible,0
+llmgateway-providers,LLM Gateway,https://api.llmgateway.io/v1,402,402,401,1,0.03,0.05,@ai-sdk/openai-compatible,0
+llmtech,LLM Tech,https://api.llmtech.eu/v1,1,1,1,0,0.25,2.09,@ai-sdk/openai-compatible,0
+llmtr,LLMTR,https://llmtr.com/v1,32,32,31,1,0.03,0.1,@ai-sdk/openai-compatible,0
+lmstudio,LMStudio,http://127.0.0.1:1234/v1,3,3,0,3,,,@ai-sdk/openai-compatible,0
+longcat,LongCat,https://api.longcat.chat/openai,1,1,1,0,0.75,2.95,@ai-sdk/openai-compatible,0
+lucidquery,LucidQuery,https://api.lucidquery.com/v1,4,4,4,0,2,5,@ai-sdk/openai-compatible,0
+lynkr,Lynkr,http://127.0.0.1:8081/v1,1,1,0,1,,,@ai-sdk/openai-compatible,0
+meganova,Meganova,https://api.meganova.ai/v1,19,19,18,1,0.02,0.04,@ai-sdk/openai-compatible,0
+melious,Melious,https://api.melious.ai/v1,15,15,15,0,0.11592,0.2898,@ai-sdk/openai-compatible,0
+merge-gateway,Merge Gateway,https://api-gateway.merge.dev/v1/ai-sdk,187,187,186,1,0.015,0.05,merge-gateway-ai-sdk-provider,0
+meta,Meta,https://api.meta.ai/v1,5,5,5,0,0.1,0.2,@ai-sdk/openai,0
+minimax,MiniMax (minimax.io),https://api.minimax.io/anthropic/v1,7,7,7,0,0.3,1.2,@ai-sdk/anthropic,0
+minimax-cn,MiniMax (minimax.cn),https://api.minimax.cn/anthropic/v1,7,7,7,0,0.3,1.2,@ai-sdk/anthropic,0
+minimax-cn-coding-plan,MiniMax Token Plan (minimax.cn),https://api.minimax.cn/anthropic/v1,7,7,0,7,,,@ai-sdk/anthropic,1
+minimax-coding-plan,MiniMax Token Plan (minimax.io),https://api.minimax.io/anthropic/v1,7,7,0,7,,,@ai-sdk/anthropic,1
+mistral,Mistral,,35,33,32,1,0.04,0.04,@ai-sdk/mistral,0
+mixlayer,Mixlayer,https://models.mixlayer.ai/v1,5,5,5,0,0.1,0.4,@ai-sdk/openai-compatible,0
+moark,Moark,https://moark.com/v1,2,2,2,0,2.1,8.4,@ai-sdk/openai-compatible,0
+modal,Modal,https://inference.us-west.modal.direct/v1,4,4,4,0,0.45,1.5,@ai-sdk/openai-compatible,0
+model-oracle-ai,Model Oracle AI,https://api.modeloracle.com/api/v1,15,0,0,0,,,@ai-sdk/openai-compatible,0
+modelis,Modelis,https://modelishub.com/v1,9,9,9,0,0.0983,0.1966,@ai-sdk/openai-compatible,0
+modelscope,ModelScope,https://api-inference.modelscope.cn/v1,7,7,0,7,,,@ai-sdk/openai-compatible,0
+moonshotai,Moonshot AI,https://api.moonshot.ai/v1,4,4,4,0,0.95,4,@ai-sdk/openai-compatible,0
+moonshotai-cn,Moonshot AI (China),https://api.moonshot.cn/v1,4,4,4,0,0.95,4,@ai-sdk/openai-compatible,0
+morph,Morph,https://api.morphllm.com/v1,3,3,3,0,0.8,1.2,@ai-sdk/openai-compatible,0
+nan,NaN,https://api.nan.builders/v1,7,7,0,7,,,@ai-sdk/openai-compatible,0
+nano-gpt,NanoGPT,https://nano-gpt.com/api/v1,577,575,573,2,0.02,0.03,@ai-sdk/openai-compatible,0
+nearai,NEAR AI Cloud,https://cloud-api.near.ai/v1,32,32,32,0,0.01,0.01,@ai-sdk/openai-compatible,0
+nebius,Nebius Token Factory,https://api.tokenfactory.nebius.com/v1,20,20,20,0,0.01,0.24,@ai-sdk/openai-compatible,0
+neon,Neon,${NEON_AI_GATEWAY_BASE_URL}/v1,46,46,46,0,0.05,0.3,@ai-sdk/openai-compatible,0
+neosmith,NeoSmith,https://router.neosmith.ai/v1,4,4,4,0,0.6,2.4,@ai-sdk/openai,0
+neuralwatt,Neuralwatt,https://api.neuralwatt.com/v1,21,21,21,0,0.091,0.182,@ai-sdk/openai-compatible,0
+nova,Nova,https://api.nova.amazon.com/v1,2,2,0,2,,,@ai-sdk/openai-compatible,0
+novita-ai,NovitaAI,https://api.novita.ai/openai,107,107,107,0,0.02,0.02,@ai-sdk/openai-compatible,0
+nvidia,Nvidia,https://integrate.api.nvidia.com/v1,105,105,4,101,0.14,0.28,@ai-sdk/openai-compatible,0
+oci,OCI Generative AI,https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/openai/v1,9,9,9,0,0.07,0.3,@ai-sdk/openai-compatible,0
+ofox,Ofox,https://api.ofox.ai/v1,144,144,144,0,0.022,0.09,@ai-sdk/openai-compatible,0
+ollama-cloud,Ollama Cloud,https://ollama.com/v1,24,22,22,0,0.015,0.24,@ai-sdk/openai-compatible,0
+openai,OpenAI,,48,44,44,0,0.02,0.4,@ai-sdk/openai,0
+opencode,OpenCode Zen,https://opencode.ai/zen/v1,107,107,75,32,0.042,0.28,@ai-sdk/openai-compatible,0
+opencode-go,OpenCode Go,https://opencode.ai/zen/go/v1,36,36,35,1,0.1,0.2,@ai-sdk/openai-compatible,0
+openreason,OpenReason,https://api.openreason.app/v1,3,3,3,0,0.1055,0.2743,@ai-sdk/openai-compatible,0
+openrouter,OpenRouter,https://openrouter.ai/api/v1,371,367,343,24,0.017,0.03,@openrouter/ai-sdk-provider,0
+opper,Opper,https://api.opper.ai/v3/compat,40,40,40,0,0.15,0.6,@ai-sdk/openai-compatible,0
+orcarouter,OrcaRouter,https://api.orcarouter.ai/v1,117,114,109,5,0.03,0.13,@ai-sdk/openai-compatible,0
+ovhcloud,OVHcloud AI Endpoints,https://oai.endpoints.kepler.ai.cloud.ovh.net/v1,14,14,12,2,0.05,0.11,@ai-sdk/openai-compatible,0
+pendra,Pendra,https://api.pendra.ai/api/v1,6,6,0,6,,,@ai-sdk/openai-compatible,0
+perplexity,Perplexity,,4,4,4,0,1,1,@ai-sdk/perplexity,0
+perplexity-agent,Perplexity Agent,https://api.perplexity.ai/v1,22,22,22,0,0.13,0.26,@ai-sdk/openai,0
+pioneer,Pioneer,https://api.pioneer.ai/v1,112,111,111,0,0.02,0.03,@ai-sdk/openai-compatible,0
+poe,Poe,https://api.poe.com/v1,137,93,90,3,0.045,0.1,@ai-sdk/openai-compatible,0
+poolside,Poolside,https://inference.poolside.ai/v1,3,3,0,3,,,@ai-sdk/openai-compatible,0
+privatemode-ai,Privatemode AI,http://localhost:8080/v1,11,11,11,0,0.00462,1.4675,@ai-sdk/openai-compatible,0
+qihang-ai,QiHang,https://api.qhaigc.net/v1,9,9,9,0,0.04,0.29,@ai-sdk/openai-compatible,0
+qiniu-ai,Qiniu,https://api.qnaigc.com/v1,91,2,2,0,0.1,0.3,@ai-sdk/openai-compatible,0
+qvac,QVAC,,9,9,0,9,,,@qvac/ai-sdk-provider,0
+regolo-ai,Regolo AI,https://api.regolo.ai/v1,18,18,15,3,0.1,0.1,@ai-sdk/openai-compatible,0
+requesty,Requesty,https://router.requesty.ai/v1,153,153,141,12,0.02,0.1,@ai-sdk/openai-compatible,0
+routing-run,routing.run,https://api.routing.run/v1,15,15,15,0,0.1,0.1,@ai-sdk/openai-compatible,0
+runinfra,RunInfra,https://api.runinfra.ai/v1,7,7,7,0,0.05,0.15,@ai-sdk/openai-compatible,0
+sakana,Sakana AI,https://api.sakana.ai/v1,4,3,3,0,0.95,4,@ai-sdk/openai-compatible,0
+salad-cloud,SaladCloud AI Gateway,,1,1,1,0,0.09,0.6,@saladtechnologies-oss/ai-sdk-provider,0
+sap-ai-core,SAP AI Core,,49,45,45,0,0.02,0.1,@jerome-benoit/sap-ai-provider-v2,0
+sarvam,Sarvam AI,https://api.sarvam.ai/v1,2,0,0,0,,,@ai-sdk/openai-compatible,0
+scaleway,Scaleway,https://api.scaleway.ai/v1,15,15,15,0,0.003,0.2,@ai-sdk/openai-compatible,0
+scnet-token-plan,SCNet Token Plan,https://api.scnet.cn/api/llm/v1,19,19,0,19,,,@ai-sdk/openai-compatible,1
+scx-ai,SCX.ai,https://api.scx.ai/v1,4,4,4,0,0.17,0.55,@ai-sdk/openai-compatible,0
+sensenova,SenseNova (China),https://token.sensenova.cn/v1,5,5,0,5,,,@ai-sdk/openai-compatible,0
+siliconflow,SiliconFlow,https://api.siliconflow.com/v1,49,49,49,0,0.04,0.05,@ai-sdk/openai-compatible,0
+siliconflow-cn,SiliconFlow (China),https://api.siliconflow.cn/v1,47,47,44,3,0.05,0.05,@ai-sdk/openai-compatible,0
+snowflake-cortex,Snowflake Cortex,https://${SNOWFLAKE_ACCOUNT}.snowflakecomputing.com/api/v2/cortex/v1,25,0,0,0,,,@ai-sdk/openai-compatible,0
+stackit,STACKIT,https://api.openai-compat.model-serving.eu01.onstackit.cloud/v1,8,8,8,0,0.02,0.02,@ai-sdk/openai-compatible,0
+standardcompute,Standard Compute,https://api.stdcmpt.com/v1,1,1,0,1,,,@openrouter/ai-sdk-provider,0
+stepfun,StepFun (China),https://api.stepfun.com/v1,8,5,5,0,0.1,0.3,@ai-sdk/openai-compatible,0
+stepfun-ai,StepFun (Global),https://api.stepfun.ai/v1,8,5,5,0,0.1,0.3,@ai-sdk/openai-compatible,0
+stepfun-ai-step-plan,StepFun Step Plan (Global),https://api.stepfun.ai/step_plan/v1,3,0,0,0,,,@ai-sdk/openai-compatible,1
+stepfun-step-plan,StepFun Step Plan (China),https://api.stepfun.com/step_plan/v1,4,0,0,0,,,@ai-sdk/openai-compatible,1
+subconscious,Subconscious,https://api.subconscious.dev/v1,2,2,2,0,0.3,3,@ai-sdk/anthropic,0
+submodel,submodel,https://llm.submodel.ai/v1,9,9,9,0,0.1,0.3,@ai-sdk/openai-compatible,0
+synthetic,Synthetic,https://api.synthetic.new/openai/v1,10,10,10,0,0.1,0.1,@ai-sdk/openai-compatible,0
+tencent-coding-plan,Tencent Coding Plan (China),https://api.lkeap.cloud.tencent.com/coding/v3,8,8,0,8,,,@ai-sdk/openai-compatible,1
+tencent-token-plan,Tencent Token Plan,https://api.lkeap.cloud.tencent.com/plan/v3,2,2,1,1,0.834,2.501,@ai-sdk/openai-compatible,1
+tencent-tokenhub,Tencent TokenHub,https://tokenhub.tencentmaas.com/v1,3,3,1,2,0.834,2.501,@ai-sdk/openai-compatible,0
+tensorx,TensorX,https://api.tensorx.ai/v1,25,25,25,0,0.072,0.2,@ai-sdk/openai-compatible,0
+the-grid-ai,The Grid AI,https://api.thegrid.ai/v1,9,0,0,0,,,@ai-sdk/openai-compatible,0
+thinkingmachines,Thinking Machines,https://tinker.thinkingmachines.dev/services/tinker-prod/anthropic/api/v1,2,2,2,0,1.87,4.68,@ai-sdk/anthropic,0
+tinfoil,Tinfoil,https://inference.tinfoil.sh/v1,9,9,9,0,0.05,0.6,@ai-sdk/openai-compatible,0
+togetherai,Together AI,,39,39,39,0,0.03,0.12,@ai-sdk/togetherai,0
+tokengo,TokenGo,https://api.tokengo.com/v1,13,13,13,0,0.075,0.025,@ai-sdk/openai-compatible,0
+tokenrouter,TokenRouter,https://api.tokenrouter.com/v1,1,1,0,1,,,@ai-sdk/openai-compatible,0
+trustedrouter,TrustedRouter,https://api.trustedrouter.com/v1,7,0,0,0,,,@ai-sdk/openai-compatible,0
+umans-ai,Umans AI,https://api.code.umans.ai/v1,6,6,6,0,0.14,0.28,@ai-sdk/openai-compatible,0
+umans-ai-coding-plan,Umans AI Coding Plan,https://api.code.umans.ai/v1,7,7,0,7,,,@ai-sdk/openai-compatible,1
+unorouter,UnoRouter,https://api.unorouter.com/v1,23,23,12,11,0.0625,0.125,@ai-sdk/openai-compatible,0
+upstage,Upstage,https://api.upstage.ai/v1/solar,4,4,4,0,0.15,0.15,@ai-sdk/openai-compatible,0
+v0,v0,,3,3,3,0,3,15,@ai-sdk/vercel,0
+vancine,Vancine,https://vancine.com/v1,8,8,8,0,0.12,0.38,@ai-sdk/openai-compatible,0
+venice,Venice AI,,105,105,105,0,0.04999999999999999,0.15,venice-ai-sdk-provider,0
+vercel,Vercel AI Gateway,,375,265,255,10,0.021,0.04,@ai-sdk/gateway,0
+vispark,Vispark,https://api.lab.vispark.in/v1,3,3,3,0,1.05,3.16,@ai-sdk/openai-compatible,0
+vivgrid,Vivgrid,https://api.vivgrid.com/v1,30,30,30,0,0.042,0.3,@ai-sdk/openai,0
+volcengine,Volcengine Ark,https://ark.cn-beijing.volces.com/api/v3,16,16,16,0,0.02227,0.22265,@ai-sdk/openai-compatible,0
+volcengine-coding-plan,Volcengine Ark Coding Plan,https://ark.cn-beijing.volces.com/api/coding/v3,10,10,0,10,,,@ai-sdk/openai-compatible,1
+vultr,Vultr,https://api.vultrinference.com/v1,10,10,10,0,0.13,0.38,@ai-sdk/openai-compatible,0
+wafer.ai,Wafer,https://pass.wafer.ai/v1,5,5,5,0,0.33,1.32,@ai-sdk/openai-compatible,0
+wallaby,Wallaby,https://api.wallabytoken.com/v1,1,1,1,0,2.7,13.5,@ai-sdk/openai-compatible,0
+wandb,CoreWeave,https://api.inference.wandb.ai/v1,27,27,27,0,0.03,0.1,@ai-sdk/openai-compatible,0
+watsonx,watsonx.ai,,5,5,5,0,0.0636,0.265,watsonx-ai-provider,0
+xai,xAI,,10,7,7,0,1,2,@ai-sdk/xai,0
+xiaomi,Xiaomi,https://api.xiaomimimo.com/v1,6,6,6,0,0.14,0.28,@ai-sdk/openai-compatible,0
+xiaomi-token-plan-ams,Xiaomi Token Plan (Europe),https://token-plan-ams.xiaomimimo.com/v1,7,7,0,7,,,@ai-sdk/openai-compatible,1
+xiaomi-token-plan-cn,Xiaomi Token Plan (China),https://token-plan-cn.xiaomimimo.com/v1,7,7,0,7,,,@ai-sdk/openai-compatible,1
+xiaomi-token-plan-sgp,Xiaomi Token Plan (Singapore),https://token-plan-sgp.xiaomimimo.com/v1,7,7,0,7,,,@ai-sdk/openai-compatible,1
+xpersona,Xpersona,https://www.xpersona.co/v1,13,13,13,0,0.375,2,@ai-sdk/openai-compatible,0
+zai,Z.AI,https://api.z.ai/api/paas/v4,17,17,15,2,0.07,0.4,@ai-sdk/openai-compatible,0
+zai-coding-plan,Z.AI Coding Plan,https://api.z.ai/api/coding/paas/v4,7,7,0,7,,,@ai-sdk/openai-compatible,1
+zeldoc,Zeldoc,https://api.zeldoc.ai/v1,1,1,0,1,,,@ai-sdk/openai-compatible,0
+zenifra,Zenifra,https://ai.zenifra.com/v1,1,1,1,0,0.19,0.48,@ai-sdk/openai-compatible,0
+zenmux,ZenMux,https://zenmux.ai/api/v1,122,118,112,6,0.0218,0.2184,@ai-sdk/openai-compatible,0
+zhipuai,Zhipu AI,https://open.bigmodel.cn/api/paas/v4,16,16,14,2,0.07,0.4,@ai-sdk/openai-compatible,0
+zhipuai-coding-plan,Zhipu AI Coding Plan,https://open.bigmodel.cn/api/coding/paas/v4,4,4,1,3,0.3,0.9,@ai-sdk/openai-compatible,1

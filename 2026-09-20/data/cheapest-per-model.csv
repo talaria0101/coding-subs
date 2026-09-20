@@ -1,0 +1,94 @@
+canonical_model,rank,provider_id,provider_name,model_key,input_usd_per_mtok,output_usd_per_mtok
+claude-sonnet-4-6,1,xpersona,Xpersona,claude-sonnet-4-6,0.9,5.55
+claude-sonnet-4-6,2,modelis,Modelis,claude-sonnet-4-6,3,15
+claude-sonnet-4-6,3,auriko,Auriko,claude-sonnet-4-6,3,15
+claude-sonnet-4-6,4,freemodel,FreeModel,claude-sonnet-4-6,3,15
+claude-sonnet-4-6,5,impossibl,Impossibl,anthropic/claude-sonnet-4-6,3,15
+claude-sonnet-4-6,6,llmgateway-providers,LLM Gateway,vertex-anthropic/claude-sonnet-4-6,3,15
+claude-sonnet-4-6,7,llmgateway-providers,LLM Gateway,aws-bedrock/claude-sonnet-4-6,3,15
+claude-sonnet-4-6,8,llmgateway-providers,LLM Gateway,anthropic/claude-sonnet-4-6,3,15
+claude-sonnet-4-6,9,aihubmix,AIHubMix,claude-sonnet-4-6,3,15
+claude-sonnet-4-6,10,routing-run,routing.run,claude-sonnet-4-6,3,15
+claude-opus-5,1,nano-gpt,NanoGPT,anthropic/claude-opus-5,5,25
+claude-opus-5,2,digitalocean,DigitalOcean,anthropic-claude-opus-5,5,25
+claude-opus-5,3,vivgrid,Vivgrid,claude-opus-5,5,25
+claude-opus-5,4,llmgateway-providers,LLM Gateway,aws-bedrock/claude-opus-5,5,25
+claude-opus-5,5,llmgateway-providers,LLM Gateway,anthropic/claude-opus-5,5,25
+claude-opus-5,6,llmgateway-providers,LLM Gateway,azure-anthropic/claude-opus-5,5,25
+claude-opus-5,7,aihubmix,AIHubMix,claude-opus-5,5,25
+claude-opus-5,8,orcarouter,OrcaRouter,anthropic/claude-opus-5,5,25
+claude-opus-5,9,azure-cognitive-services,Azure Cognitive Services,claude-opus-5,5,25
+claude-opus-5,10,google-vertex,Vertex,claude-opus-5@default,5,25
+gpt-6-astra,1,ofox,Ofox,openai/gpt-6-astra,8,40
+gpt-6-astra,2,nano-gpt,NanoGPT,openai/gpt-6-astra-pro,10,50
+gpt-6-astra,3,nano-gpt,NanoGPT,openai/gpt-6-astra,10,50
+gpt-6-astra,4,digitalocean,DigitalOcean,openai-gpt-6-astra,10,50
+gpt-6-astra,5,vivgrid,Vivgrid,gpt-6-astra,10,50
+gpt-6-astra,6,llmgateway-providers,LLM Gateway,aws-mantle/gpt-6-astra,10,50
+gpt-6-astra,7,llmgateway-providers,LLM Gateway,azure/gpt-6-astra,10,50
+gpt-6-astra,8,llmgateway-providers,LLM Gateway,openai/gpt-6-astra,10,50
+gpt-6-astra,9,requesty,Requesty,gpt-6-astra,10,50
+gpt-6-astra,10,crossmodel,CrossModel,openai/gpt-6-astra,10,50
+gpt-5.5,1,unorouter,UnoRouter,gpt-5.5,0.1875,1.125
+gpt-5.5,2,xpersona,Xpersona,gpt-5.5,1.5,12
+gpt-5.5,3,xpersona,Xpersona,xpersona-gpt-5.5,3,18
+gpt-5.5,4,ofox,Ofox,openai/gpt-5.5,4,24
+gpt-5.5,5,poe,Poe,openai/gpt-5.5,4.5455,27.2727
+gpt-5.5,6,nano-gpt,NanoGPT,openai/gpt-5.5,5,30
+gpt-5.5,7,digitalocean,DigitalOcean,openai-gpt-5.5,5,30
+gpt-5.5,8,vivgrid,Vivgrid,gpt-5.5,5,30
+gpt-5.5,9,freemodel,FreeModel,gpt-5.5,5,30
+gpt-5.5,10,impossibl,Impossibl,openai/gpt-5.5,5,30
+gemini-3-pro,1,poe,Poe,google/gemini-3-pro,1.6,9.6
+gemini-3-pro,2,databricks,Databricks,databricks-gemini-3-pro,2,12
+gemini-3-pro,3,opencode,OpenCode Zen,gemini-3-pro,2,12
+deepseek-v4,1,merge-gateway,Merge Gateway,deepseek/deepseek-v4-flash-0731,0.035,0.07
+deepseek-v4,2,merge-gateway,Merge Gateway,deepseek/deepseek-v4-flash,0.035,0.07
+deepseek-v4,3,openrouter,OpenRouter,deepseek/deepseek-v4-flash,0.03668,0.07336
+deepseek-v4,4,kilo,Kilo Gateway,~deepseek/deepseek-v4-flash-latest,0.04,0.08
+deepseek-v4,5,openrouter,OpenRouter,~deepseek/deepseek-v4-flash-latest,0.04,0.08
+deepseek-v4,6,openrouter,OpenRouter,deepseek/deepseek-v4-flash-0731,0.04,0.08
+deepseek-v4,7,llmgateway-providers,LLM Gateway,consensusprotocol/deepseek-v4-flash,0.05,0.1
+deepseek-v4,8,llmgateway,DevPass (LLM Gateway),deepseek-v4-flash,0.05,0.1
+deepseek-v4,9,crof,CrofAI,deepseek-v4-flash-0731,0.08,0.1
+deepseek-v4,10,llmgateway-providers,LLM Gateway,gonka24/deepseek-v4-flash,0.051,0.104
+glm-5,1,tokengo,TokenGo,z-ai/glm-5.3-flash,0.075,0.025
+glm-5,2,merge-gateway,Merge Gateway,zai/glm-5.3-flash,0.015,0.05
+glm-5,3,aihubmix,AIHubMix,coding-glm-5.1,0.06,0.22
+glm-5,4,crof,CrofAI,glm-5.3-flash,0.07,0.22
+glm-5,5,nano-gpt,NanoGPT,z-ai/glm-5.3-flash,0.075,0.25
+glm-5,6,orcarouter,OrcaRouter,z-ai/glm-5.3-flash,0.075,0.25
+glm-5,7,empiriolabs,EmpirioLabs AI,glm-5-3-flash,0.075,0.25
+glm-5,8,302ai,302.AI,glm-5.3-flash,0.075,0.25
+glm-5,9,llmgateway-providers,LLM Gateway,scx-ai-gp/glm-5.3-flash,0.088,0.25
+glm-5,10,llmgateway,DevPass (LLM Gateway),glm-5.3-flash,0.088,0.25
+minimax-m2,1,aihubmix,AIHubMix,coding-minimax-m2.7,0.2,0.2
+minimax-m2,2,aihubmix,AIHubMix,coding-minimax-m2.7-highspeed,0.2,0.2
+minimax-m2,3,llmgateway-providers,LLM Gateway,gonka24/minimax-m2.7,0.08,0.32
+minimax-m2,4,llmgateway,DevPass (LLM Gateway),minimax-m2.7,0.08,0.32
+minimax-m2,5,llmgateway-providers,LLM Gateway,minimax/minimax-m2.1-lightning,0.12,0.48
+minimax-m2,6,llmgateway,DevPass (LLM Gateway),minimax-m2.1-lightning,0.12,0.48
+minimax-m2,7,empiriolabs,EmpirioLabs AI,minimax-m2-7,0.15,0.6
+minimax-m2,8,dinference,DInference,minimax-m2.5,0.22,0.88
+minimax-m2,9,venice,Venice AI,minimax-m25,0.27,0.95
+minimax-m2,10,llmgateway-providers,LLM Gateway,minimax/minimax-m2,0.2,1
+grok-4.6,1,nano-gpt,NanoGPT,x-ai/grok-4.6,2,6
+grok-4.6,2,aihubmix,AIHubMix,grok-4.6,2,6
+grok-4.6,3,orcarouter,OrcaRouter,grok/grok-4.6,2,6
+grok-4.6,4,google-vertex,Vertex,xai/grok-4.6,2,6
+grok-4.6,5,requesty,Requesty,grok-4.6,2,6
+grok-4.6,6,crossmodel,CrossModel,x-ai/grok-4.6,2,6
+grok-4.6,7,vercel,Vercel AI Gateway,spacexai/grok-4.6,2,6
+grok-4.6,8,cloudflare-ai-gateway,Cloudflare AI Gateway,xai/grok-4.6,2,6
+grok-4.6,9,github-copilot,GitHub Copilot,grok-4.6,2,6
+grok-4.6,10,perplexity-agent,Perplexity Agent,xai/grok-4.6,2,6
+qwen3.7-max,1,merge-gateway,Merge Gateway,qwen/qwen3.7-max,0.825,2.4755
+qwen3.7-max,2,llmgateway-providers,LLM Gateway,novita/qwen3.7-max,1.25,3.75
+qwen3.7-max,3,orcarouter,OrcaRouter,qwen/qwen3.7-max,1.25,3.75
+qwen3.7-max,4,novita-ai,NovitaAI,qwen/qwen3.7-max,1.25,3.75
+qwen3.7-max,5,pioneer,Pioneer,qwen3.7-max,1.25,3.75
+qwen3.7-max,6,llmgateway,DevPass (LLM Gateway),qwen3.7-max,1.25,3.75
+qwen3.7-max,7,cloudflare-ai-gateway,Cloudflare AI Gateway,alibaba/qwen3.7-max,1.25,3.75
+qwen3.7-max,8,togetherai,Together AI,Qwen/Qwen3.7-Max,1.25,3.75
+qwen3.7-max,9,kilo,Kilo Gateway,qwen/qwen3.7-max,1.475,4.425
+qwen3.7-max,10,openrouter,OpenRouter,qwen/qwen3.7-max,1.475,4.425

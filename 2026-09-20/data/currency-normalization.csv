@@ -1,0 +1,18 @@
+# Currency normalization to USD (2026-09-20)
+
+FX reference: open.er-api.com USD base, updated 2026-09-20T00:02:31Z (snapshot
+`sources/fx-cny-usd.txt`). Rate used: **1 USD = 6.7184 CNY** (and 7.8453 HKD, 31.8367 TWD
+where needed). Conversions are rounded to cents and marked ESTIMATED (FX moves daily;
+first-party CNY prices are VERIFIED, their dollar equivalents are derived).
+
+item,currency,first_party_price,usd_equivalent,conversion,note
+Kimi membership Andante (legacy CN),CNY,49/month,$7.30/month,49 / 6.7184,VERIFIED CNY price (Kimi help center); legacy tier
+Kimi membership Moderato (legacy CN),CNY,99/month,$14.74/month,99 / 6.7184,VERIFIED CNY price
+Kimi membership Allegretto (legacy CN),CNY,199/month,$29.62/month,199 / 6.7184,VERIFIED CNY price; note the INTERNATIONAL USD price for the same tier was $39 (kimi.com international pricing) - regional price discrimination is real
+Kimi membership Allegro (legacy CN),CNY,699/month,$104.05/month,699 / 6.7184,VERIFIED CNY price
+Kimi Extra Usage top-up (CN),CNY,minimum top-up,THIRD-PARTY reports ¥199 minimum,,mentioned in third-party pricing page snapshot
+Alibaba Model Studio Coding Plan Pro,USD,50/month,$50/month,1.0,sold in USD internationally; CN storefront may bill CNY
+Qiniu Enterprise S (relay market; excluded from rankings),CNY,2999/month,$446.39/month,2999 / 6.7184,normalized here ONLY to show the relay market's real price scale; see relay advisory
+AIGoCode Pro (relay market; excluded from rankings),CNY,399/4 weeks,$59.39/4 weeks,399 / 6.7184,credit-spend rate unpublished; the '$440 credit' headline is unconvertible without it
+AIGoCode Max (relay market; excluded from rankings),CNY,899/4 weeks,$133.82/4 weeks,899 / 6.7184,same caveat
+AIGoCode Ultra (relay market; excluded from rankings),CNY,1799/4 weeks,$267.78/4 weeks,1799 / 6.7184,same caveat

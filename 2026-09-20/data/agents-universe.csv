@@ -1,0 +1,38 @@
+product,category,open_source,monetization,price_note,in_sub2api,in_cliproxyapi,in_pass_2026_09_13,source_quality,evidence
+Command Code,coding agent (open models),no,subscription + PAYG,"Go $1 / GOAT $10 / Pro $20 / Max10x $100 / Max20x $200 per month, API plan $15/mo zero markup, Teams $40/mo",no,no,no,VERIFIED own pricing page 2026-09-20,sources/agents/commandcode-pricing.txt
+Open Interpreter,coding agent (open models),yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/openinterpreter/openinterpreter
+OpenCode,coding agent,no (agent open, Zen closed),PAYG + subscription,Zen zero-markup PAYG ($20 top-ups); Go subscription (quota windows),yes,yes,yes,VERIFIED official 2026-09-13 + registry,2026-09-13/data/providers-database.csv
+Claude Code,coding agent,no,bundled subscription,Claude Pro $20 / Max $100 / Max $200,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Codex CLI,coding agent,no,bundled subscription,ChatGPT Plus $20 / Pro $100-$200,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Gemini CLI,coding agent,no,free tier + subscription,Antigravity free tier $0; Google AI Pro $19.99,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Cline,coding agent,yes,BYOK,free (BYOK); ClinePass appears in models.dev,partial,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Roo Code,coding agent,yes,BYOK,free (BYOK),no,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Kilo Code,coding agent,yes,subscription discount,Kilo Pass Starter $19 → $26.60 credits,no,no,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+Cursor,IDE + agent,no,subscription,Cursor Pro $20 / Ultra $200,no,no,yes,VERIFIED price quota UNKNOWN,"2026-09-13/data/providers-database.csv"
+Windsurf / Devin Desktop,IDE + agent,no,subscription,legacy Windsurf plans migrating to Cognition,no,yes,yes,MIXED press,2026-09-13/data/providers-database.csv
+Devin (Cognition),coding agent,no,subscription,UNKNOWN for 2026 tiers,no,yes,yes,MIXED press,CLIProxyAPI/internal/auth/devin/
+Kiro,coding agent,no,subscription,Kiro Pro $20 (burn rates UNKNOWN),yes,yes,yes,VERIFIED price,2026-09-13/data/providers-database.csv
+Trae,IDE + agent,no,subscription,Trae Lite $3 / Pro $10,no,yes,yes,VERIFIED price capacity UNKNOWN,2026-09-13/data/providers-database.csv
+Qoder,coding agent,no,time-of-day credits,off-peak discounted credits; price UNKNOWN,no,no,partial (hidden deals),THIRD-PARTY press,Yahoo Finance Jun 2026 via 2026-09-13
+Augment Code,coding agent,no,subscription,Augment Standard $20,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
+CodeBuddy,coding agent,no,credits,UNKNOWN (site JS-rendered),yes,yes,yes,UNKNOWN unverified,2026-09-13/data/providers-database.csv
+Aider,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/Aider-AI/aider
+Continue,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/continuedev/continue
+Goose,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/aaif-goose/goose
+Charm Crush,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/charmbracelet/crush
+Amp,coding agent,no,free tier + PAYG,UNKNOWN this pass,no,partial,no,UNKNOWN,CLIProxyAPI internal config ref
+Factory Droid,coding agent,no,subscription,UNKNOWN this pass,no,yes,no,UNKNOWN,CLIProxyAPI/README.md
+Muse Code (Meta),coding agent,no,bundled subscription,~$20-$100 3 tiers (prices at onboarding),no,yes,yes,VERIFIED quota shape price via press,2026-09-13/data/providers-database.csv
+Tabby,coding agent,yes,self-hosted / BYOK,free (self-host),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/TabbyML/tabby
+Sweep,coding agent,no,subscription,UNKNOWN this pass,no,no,no,UNKNOWN,https://github.com/sweepai/sweep
+Plandex,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/plandex-ai/plandex
+OpenHands,coding agent,yes,BYOK,free (BYOK),no,partial,no,THIRD-PARTY github listing 2026-09-20,CLIProxyAPI sdk/cliproxy/session/info.go
+Pochi,coding agent,no,freemium,UNKNOWN this pass,no,no,no,UNKNOWN,https://github.com/TabbyML
+Codebuff,coding agent,no,pay-as-you-go,UNKNOWN this pass,no,no,no,UNKNOWN,https://github.com/CodebuffAI/codebuff
+Zed,editor + agent,yes,free + subscription,UNKNOWN this pass,no,partial,no,UNKNOWN,CLIProxyAPI internal executor ref
+Warp,terminal + agent,no,subscription,UNKNOWN this pass,no,no,no,UNKNOWN,https://github.com/warpdotdev
+CodeWhale,coding agent,yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/Hmbown/Codewhale
+Qwen Code,coding agent,yes,BYOK + Qwen account,free tier with Qwen account,no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/QwenLM/qwen-code
+DeepSeek-Reasonix,coding agent,no,BYOK,UNKNOWN this pass,no,no,no,UNKNOWN,https://github.com/esengine/DeepSeek-Reasonix
+Kimi Code CLI (Moonshot),coding agent,no,subscription (Kimi membership),renamed tiers 2026-09-20: weekly window removed for new members; K3 from Plus; K3 1M from Pro,no,no,yes,VERIFIED official docs 2026-09-20,kimi-membership-doc.html
+Devin CLI / Warp Agent CLI / AGY CLI (Antigravity 2.0),coding agent,no,varies,listed for completeness: agent CLIs keep multiplying; pricing covered in providers-database.csv,no,no,partial,VERIFIED official pages 2026-09-20,devin-pricing.html + warp-pricing.html + antigravity-plans-doc.html

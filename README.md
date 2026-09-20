@@ -9,6 +9,7 @@ coding-agent usage by subscription** — model landscape, provider arbitrage, pu
 | Date | Report | Scope |
 |---|---|---|
 | **2026-09-13** | [2026-09-13/README.md](2026-09-13/README.md) | Full pass: 45-model landscape (AA snapshot), 44 access plans across 26 provider groups, workload tests, rankings |
+| **2026-09-20** | [2026-09-20/README.md](2026-09-20/README.md) | Re-verification + delta pass: all first-party sources re-fetched, 26 logged changes (Trae repriced upward, Kimi tiers restructured with the weekly window removed, Claude Code limits settled ~17% below the promo level, new Command Code / Devin / Kiro / Factory / Warp / Zed / Replit ladders), every non-USD price normalized at a cited FX rate, and the relay/sponsor "0.03x" market quarantined into a red-flag advisory instead of a ranking |
 
 Each pass directory contains the report (`README.md`), the underlying databases (`data/`),
 numbered citations with access dates (`references/`), and raw snapshots of primary sources
@@ -20,8 +21,12 @@ Model quality comes from an Artificial Analysis dataset snapshot (Intelligence I
 Terminal-Bench v4.0, context windows, API prices, modalities). Subscription economics come from
 first-party pricing pages and docs wherever possible — fetched and archived in `sources/` on the
 research date — with every unverifiable number labeled ESTIMATED or UNKNOWN rather than guessed.
-Each pass undergoes five independent reviews (recorded in [docs/reviews.md](docs/reviews.md))
-before being committed.
+The subscription universe is **first-party coding-agent plans only**: API relays, sponsor
+marketplaces and account resellers are excluded from rankings by policy (see the 2026-09-20
+advisory) because their discounts are ToS-violating quota resale and their pricing is
+advertisement, not a published rate card. Prices in non-USD currencies are normalized at a cited
+FX rate with the rate date. Each pass undergoes independent reviews (recorded in
+[docs/reviews.md](docs/reviews.md)) before being committed.
 
 ## Conventions
 

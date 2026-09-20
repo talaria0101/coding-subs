@@ -1,0 +1,20 @@
+# Relay/reseller market: red-flag register (2026-09-20)
+
+The sub2api / CLIProxyAPI "sponsor" ecosystem, re-verified live on 2026-09-20
+(sub2api README at fbb9006adef8, pushed 2026-09-20T06:57Z). These are NOT coding
+subscriptions and are EXCLUDED from every ranking in this pass. This register exists so a
+reader who meets these offers in the wild can pattern-match them in seconds.
+
+flag_id,item,class,what_it_claims,red_flag,evidence
+R01,sub2api README,"platform warning","'Using this project may violate the terms of service of Anthropic and other upstream providers.'","The platform's own README, while selling sponsor slots to quota resellers",sub2api-readme-today.md
+R02,AIGoCode sponsor copy,"quota resale","'stable, efficient ... zero risk of account suspension'","'Zero risk of account suspension' is impossible for a ToS-violating resale; directly contradicts R01",sub2api-readme-today.md
+R03,Bestproxy sponsor copy,"evasion infrastructure","'one-IP-per-account ... reduces the probability of association-based risk control'","Sells explicitly the fingerprint/IP isolation needed to evade provider abuse detection",sub2api-readme-today.md
+R04,PPToken sponsor copy,"ad arithmetic","'0.16x rate multiplier, overall cost roughly 2.2% of official'","0.16x is 16%, not 2.2%; the ad contradicts itself",sub2api-readme-today.md
+R05,PP.dog sponsor copy,"ad arithmetic","'0.03x, just 0.35% of official' (per Nemo-010 fork snapshot)","0.03x is 3%, not 0.35%; same self-contradiction pattern as R04",fork snapshot 2026-09-20 (Nemo-010/coding-subs)
+R06,APIKEY.FUN sponsor copy,"ad arithmetic","'pricing starting from as low as 7% of the original rate'","'As low as' teaser rate; no public rate card behind login",sub2api-readme-today.md
+R07,BmoPlus sponsor copy,"account resale","'ready-to-use accounts ... 10% of the official GPT subscription price (90% OFF)'","Resells shared accounts; ToS violation; account can be banned with your history on it",sub2api-readme-today.md
+R08,CCTK.AI sponsor copy,"relay","'same model capabilities at a fraction of the official cost' (affiliate link)","Per the Nemo-010 fork, its published Claude-group multiplier was 2.1x official - dearer than official on the model coders actually burn",sub2api-readme-today.md + fork snapshot
+R09,CodexEverywhere (fork snapshot),"pool resale","Codex Plus Pool at 0.03x official","Seller's own docs called the Plus Pool 'unstable'; Grok free pool suspended after xAI degraded free-tier intelligence",fork snapshot 2026-09-20 (Nemo-010/coding-subs)
+R10,sponsor table mechanics,"paid placement","'Want to appear here? mailto:support@sub2api.org'","Placement is paid/affiliate; inclusion is an advertisement, not a quality signal",sub2api-readme-today.md
+R11,Wei-Shaw tracker,"degradation reports","Issues #6871/#7202/#6957 report 'jiangzhi' (intelligence degradation) on relayed models","No relay can prove model identity; cheap resale of consumer quotas degrades under upstream anti-abuse pressure",Nemo-010 fork references (issues cited there)
+R12,provenance,"measurement hygiene","Fork's reachability probe ran through a third-party reverse proxy (api.rv.pkgforge.dev)","Even the relay-market 'uptime' numbers in the fork measure the proxy, not the provider; nothing in this market is independently measured",Nemo-010 fork README
