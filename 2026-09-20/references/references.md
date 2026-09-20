@@ -139,3 +139,25 @@ reputable secondary source; ESTIMATED = derived; UNKNOWN = not published, never 
 36. **Category enumeration method**: adopted from the Nemo-010 fork's PROVIDER-BY-PROVIDER pass —
     enumerate the coding-agent category and check each member, rather than string-searching
     sources; its `agents-universe.csv` is carried forward in `../data/` with two new rows.
+
+## Revision 2 additions (2026-09-20, after reader review)
+
+37. **OpenCode Go — product page** (`opencode.ai/go`, fetched 2026-09-20): $10/month; "use with any
+    agent"; published per-model table (requests/5h and monthly usage value): Kimi K3 110 / $15,
+    Kimi K2.7 Code 1,350 / $60, GPT-5.6 Luna 2,050 / $15, MiniMax M3 3,200 / $60, Qwen3.7 Plus
+    4,300 / $60, GLM-5.3-Flash 6,320 / $60, DeepSeek V4 Flash 13,000 / $30, DeepSeek V4.1 Flash
+    6,500 (26,000 at 4x promo) / $15→$60, MiMo-V2.5 30,100 / $60, Muse Spark 1.3 Contributor
+    45,300 / $60; 27 models total; credit top-ups; cancel anytime. Snapshot: `opencode-go.html`.
+38. **CreditsPlan — Meta Muse Code High Usage** (`creditsplan.com/plans/meta.muse-code-high-usage/`,
+    fetched 2026-09-20; tracker's first record 2026-09-17): $15/month, "standard monthly price",
+    scope unverified. THIRD-PARTY corroboration of the subscriber-reported price. Snapshot:
+    `thirdparty-creditsplan-muse-high.html`.
+39. **Subscriber report (conversation, 2026-09-20)**: "~3B tokens per week" on the $15/mo Muse Code
+    plan. USER-REPORTED, single-source; not independently measurable by this pass (Meta publishes
+    no quota tables and prices are shown only at onboarding). Carried in the databases with that
+    label; it drives the rev-2 re-ranking and should be re-verified first-hand against the
+    subscriber's own dashboard.
+40. **Session environment (bias disclosure)**: the researching agent's harness env read
+    `PI_MODEL=glm-5.3-flash`, `PI_PROVIDER=zai-coding-cn` — i.e., the pass was executed on a Z.ai
+    GLM plan. Disclosed in the report header in rev 2; ranking changes motivated by this are
+    logged as delta row D29 and reviewed in `../../docs/reviews.md` (Review 6).

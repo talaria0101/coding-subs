@@ -141,3 +141,31 @@ failing the integer check.
 R1: any capacity or FX figure differing from the raw snapshot by more than rounding. R2: any
 ADVERTISED number wearing a VERIFIED label. R3: any README claim absent from the DB or vice versa.
 R4: any fork table reused without relabeling. R5: a failing validator.
+
+## Review 6 — Bias audit (rev 2, after a reader challenge: "you are a glm model and put glm at top")
+
+The challenge had two parts; both were checked against the raw sources.
+
+**Part 1, identity.** Confirmed: the session env reads `PI_MODEL=glm-5.3-flash`,
+`PI_PROVIDER=zai-coding-cn`. The report now discloses this in its header. Every GLM number remains
+cited to first-party pages, but disclosure alone would have been the coward's fix, because:
+
+**Part 2, method.** The reader's underlying point survives the identity question: GLM's #1 rank
+depended on it being the only vendor that publishes token tables (self-graded, 95%-cache-assumed),
+while everyone publishing nothing scored UNKNOWN and lost by default. "Most transparent" was
+masquerading as "most generous."
+
+**Findings and fixes:**
+1. FIXED — disclosure section added; evidence classes made explicit (DOCUMENTED /
+   VERIFIED-TABLE / USER-REPORTED / ADVERTISED / UNKNOWN).
+2. FIXED — a subscriber-reported Muse Code datapoint ($15/mo, ~3B tokens/week; price
+   third-party-corroborated by CreditsPlan, recorded 2026-09-17) was added and ranked on its own
+   evidence class. On those numbers Muse dethrones GLM Lite; the BEST DEAL FOUND block and the
+   rankings were re-ordered accordingly, with falsification conditions stated.
+3. FIXED — OpenCode Go ($10/mo, published per-model grid) was missing; added (delta D27,
+   providers DB, references §37) with credit to the reader who flagged it.
+4. NONE — the relay advisory, FX normalization, and delta log were re-checked and stand.
+
+What would have made this review fire earlier: any ranking that lets a vendor's self-published
+table outrank a competitor's report purely because the competitor publishes nothing. The fix is
+structural (evidence classes), not editorial.
