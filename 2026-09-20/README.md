@@ -168,6 +168,13 @@ price), MiniMax Plus (capacity still unpublished; M3 slipped to II 29.22).
 6. **Qwen3.8 Max's jump (II 45.42)** — Alibaba's Coding Plan Pro ($50) supports qwen3-coder-next/plus,
    so its supported-model quality silently improved this week even though its request quota (90K/mo)
    did not. Watch for a Qwen3.8-Max coding plan from Alibaba or a Z.ai-style unlimited tier.
+6b. **Amp rides your existing subs** — the Individual $20 tier (45,000 orb-minutes) can route
+    tokens from your ChatGPT/Codex subscription and BYOK keys, so a Codex-heavy household can
+    point idle Plus quota at an agentic harness. First agent built explicitly for subscription
+    arbitrage without a relay.
+6c. **JetBrains AI Pro's credit transparency** — 1 AI credit = $1 of usage, printed in the help
+    docs: the only IDE vendor besides Copilot to publish its exchange rate. $10 buys $10 of
+    tokens plus Junie; BYOK removes the margin entirely.
 7. **OpenCode Go's Muse Spark contributor lane** — inside the $10 Go grid, Muse Spark 1.3 shows
    45,300 requests/5h at ~$60/mo list value: a Contributor-labeled routing of Meta's model through
    OpenCode's own agreement. Cheapest second route to Spark if the Muse subscription is throttle-prone.
@@ -203,6 +210,33 @@ rates ± bonus credits). And the entire relay/reseller market — its "0.03×" m
 arbitrage, they are a different product with a different risk (see the advisory below).
 
 ---
+
+## The second sweep (rev 3): re-enumerating from the top
+
+After rev 2, the category was re-enumerated from zero (labs, IDE vendors, cloud vendors, agent
+startups) rather than extended from the old list. New verified rows (all in
+[data/providers-database.csv](data/providers-database.csv)):
+
+| Finding | Price | Evidence class | Why it matters |
+|---|---|---|---|
+| **Amazon Q Developer Pro** (AWS's *other* coding sub, besides Kiro) | $19/user/mo (Free tier exists) | VERIFIED | Latest Claude models, agentic requests in IDE/CLI; request counts unpublished |
+| **JetBrains AI Pro (Junie)** | $10/mo = 10 AI credits (1 credit = $1) + BYOK + third-party agents (Claude/Codex/Gemini via ACP) | VERIFIED | API-parity credits like Copilot, but the value is Junie + JetBrains integration; Ultimate $30 = 35cr |
+| **Gemini Code Assist** Standard/Enterprise | $19 / $45 per user/mo (annual upfront) | VERIFIED | Distinct from Antigravity/AI Pro; license "supercharges" Gemini CLI; Gemini 3 on waitlist |
+| **Amp (Sourcegraph)** | Free (BYOK + your own ChatGPT/agent subs) / Individual $20 (45,000 orb-minutes) | VERIFIED | First agent explicitly built to ride your *existing* subscriptions' tokens |
+| **Windsurf mystery resolved** | windsurf.com/pricing now serves Cognition's ladder: Free / Pro $20 / Max $200; Teams $80+$40/seat | VERIFIED | The last UNKNOWN row from 09-13 is settled: Windsurf individual = Devin plans (SWE-2 model) |
+| **Roo Code Cloud (Roomote)** | from $49/mo up to 10 users, BYO inference key; self-host free | VERIFIED | Team-shaped, not a solo sub; open-source core unchanged |
+| **Cline** | free; "inference at cost" or BYOK; **no subscription** | VERIFIED | Rules out rumors of a Cline pass/subscription |
+| **xAI / SuperGrok** | Free / Lite $10 / $30 / Plus $100 / Heavy $300 | THIRD-PARTY (two trackers agree) | **No dedicated coding-agent product** (grok-code-fast-1 retired May 15); Grok 4.6 reaches coding agents only through Copilot/Command Code/OpenCode grids — but it is on *every* SuperGrok tier including free for chat |
+| **DeepSeek** | no subscription; API only (V4.1 Flash $0.15/$0.6 off-peak, $0.3/$1.2 peak) | VERIFIED | The 09-13 prediction "V4.1 coding plan within months" has not materialized; cheapest sub-lane to V4.1 Flash is OpenCode Go's 4x promo |
+| **Qwen Code free tier** | $0 with a Qwen-account OAuth | THIRD-PARTY | A real free daily lane alongside iFlow and Antigravity |
+| **Tabnine** | acquired by Tricentis; pricing unavailable | VERIFIED | Out of the market for now |
+
+Still unresolved after two sweeps (kept UNKNOWN, never guessed): Qoder and CodeBuddy pricing
+(JS-only sites, no public numbers found via two search engines), Xiaomi MiMo's own token-plan
+prices (MiMo-V2.5 remains reachable through OpenCode Go's grid), StepFun's plans (site
+unreachable from this network), and Z.ai/Trae/MiniMax CN-storefront prices. Scope boundary:
+app-builders (v0, Lovable, bolt) and review-only bots are not coding-agent subscriptions and are
+not ranked.
 
 ## THE RELAY MARKET IS NOT A DEAL — advisory (rankings-excluded)
 

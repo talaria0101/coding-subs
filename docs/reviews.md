@@ -169,3 +169,30 @@ masquerading as "most generous."
 What would have made this review fire earlier: any ranking that lets a vendor's self-published
 table outrank a competitor's report purely because the competitor publishes nothing. The fix is
 structural (evidence classes), not editorial.
+
+## Review 7 — Second top-down sweep (rev 3, after "think what else you missed")
+
+The category was re-enumerated from zero in four lanes: (a) frontier labs (do they sell coding
+subs?), (b) cloud/IDE vendors bundling agents, (c) agent startups, (d) sites the earlier passes
+left as JS shells.
+
+**Findings:**
+1. FIXED — six real products were missing from the market picture entirely and are now verified
+   rows: Amazon Q Developer Pro $19 (AWS's second coding sub - 09-13 only ever listed Kiro under
+   AWS), JetBrains AI Pro $10 (Junie; 1 credit = $1 printed), Gemini Code Assist $19/$45 (a
+   distinct product line from Antigravity), Amp Free/$20 (the first agent that consumes your
+   existing ChatGPT/agent subscription tokens), Roo Cloud from $49 (team-shaped), Qwen Code's free
+   OAuth tier.
+2. FIXED — one standing UNKNOWN from the 09-13 pass resolved: windsurf.com/pricing now serves the
+   Cognition ladder (Free/$20/$200; Teams $80+$40/seat), so "Devin Desktop (ex-Windsurf)" is no
+   longer UNKNOWN.
+3. FIXED — three scope questions answered and closed rather than left dangling: xAI sells no
+   coding-agent subscription (chat-first ladder; grok-code-fast-1 retired; Grok 4.6 reaches agents
+   only via third-party grids), DeepSeek still has no coding plan (the 09-13 "within months"
+   prediction failed its own deadline), Tabnine is acquired and out of the market.
+4. NONE — Cline confirmed subscription-free; Kiro/Trae/Qoder/CodeBuddy/MiMo/StepFun/Z.ai-CN
+   remain UNKNOWN where unverifiable, and the report says so instead of guessing.
+
+What would have made this review fire earlier: enumerating vendors by *category* (cloud vendor,
+IDE vendor) instead of by *product fame*. The 09-13 and rev-1/rev-2 passes both failed AWS twice
+by checking Kiro and never asking "does AWS sell a second coding agent?"

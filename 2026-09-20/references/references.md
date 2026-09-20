@@ -161,3 +161,46 @@ reputable secondary source; ESTIMATED = derived; UNKNOWN = not published, never 
     `PI_MODEL=glm-5.3-flash`, `PI_PROVIDER=zai-coding-cn` — i.e., the pass was executed on a Z.ai
     GLM plan. Disclosed in the report header in rev 2; ranking changes motivated by this are
     logged as delta row D29 and reviewed in `../../docs/reviews.md` (Review 6).
+
+## Revision 3 additions (2026-09-20, second top-down sweep)
+
+41. **AWS — Amazon Q Developer pricing** (`aws.amazon.com/q/developer/pricing/`, fetched
+    2026-09-20): Free tier (limited agentic requests) and Pro Tier $19/user/month (increased
+    agentic limits, latest Claude models, IDE + CLI, 4,000 LOC/month Java-transform allocation,
+    pro-rated per-user billing). Snapshot: `amazonq-pricing.html`.
+42. **JetBrains — AI plans and usage** (`jetbrains.com/help/ai-assistant/licensing-and-subscriptions.html`,
+    fetched 2026-09-20): AI Free 3 credits/30d; AI Pro $10 = 10 credits/30d; AI Ultimate $30 = 35
+    credits/30d; 1 AI credit = $1; team tiers $20/$60/$60; Junie agent + third-party agents
+    (Claude, Codex, Gemini) via ACP; BYOK. Snapshot: `jetbrains-ai-help.html`.
+43. **Google — Gemini Code Assist** (`codeassist.google/`, fetched 2026-09-20): Free $0 /
+    Standard $19 / Enterprise $45 per user/month (annual upfront); Gemini 3 on waitlist
+    (immediate for AI Ultra); license supercharges Gemini CLI free tier. Snapshot:
+    `gemini-codeassist.html`.
+44. **Amp (Sourcegraph) — pricing** (`ampcode.com/pricing`, fetched 2026-09-20): Hobby Free
+    (BYOK, "use tokens from your ChatGPT sub & other subs", no token fees); Individual $20/mo =
+    45,000 orb-minutes; Teams; Enterprise; education $10/mo per the news page. Snapshots:
+    `amp-pricing.html`, `amp-news.html`.
+45. **Windsurf — pricing** (`windsurf.com/pricing`, fetched 2026-09-20): identical Cognition
+    ladder to Devin (Free / Pro $20 / Max $200 "NEW"; Teams $80 + $40/seat; SWE-2; Devin Cloud).
+    Snapshot: `windsurf-pricing.html`.
+46. **Roo Code — Roomote Cloud pricing** (`roocode.com/pricing`, fetched 2026-09-20): Cloud from
+    $49/mo up to 10 users ($249 up to 50, $499 up to 100), BYO inference key, 7-day free trial,
+    self-host free. Snapshot: `roo-pricing.html`.
+47. **Cline — pricing** (`cline.bot/pricing`, fetched 2026-09-20): free for individuals; Cline
+    provider = inference at cost or BYOK; "no subscriptions, no seat fees." Snapshot:
+    `cline-pricing.html`.
+48. **xAI SuperGrok ladder (THIRD-PARTY)**: two independent trackers agree — Free / Lite $10 /
+    SuperGrok $30 / Plus $100 / Heavy $300 (annual $100/$300/$1,000/$3,000), Business $30/seat;
+    Grok 4.6 on all tiers incl. free; `grok-code-fast-1` retired 2026-05-15, redirected to
+    `grok-build-0.1` API pricing. No dedicated coding-agent product. Snapshots:
+    `thirdparty-aitoolbox-grok.html`, `thirdparty-aitoolanalysis-grok.html` (grok.com is
+    JS-paywalled to this fetcher).
+49. **DeepSeek — API pricing** (`api-docs.deepseek.com/quick_start/pricing`, fetched 2026-09-20):
+    deepseek-flash = DeepSeek-V4.1-Flash; off-peak $0.15 in / $0.6 out, peak $0.3 / $1.2,
+    cache-hit $0.003 off-peak per 1M; no subscription tier exists. Snapshot:
+    `deepseek-pricing.html`.
+50. **Tabnine** (`tabnine.com/pricing/`, fetched 2026-09-20): page replaced by a Tricentis
+    acquisition notice. Snapshot: `tabnine-pricing.html`.
+51. **Qwen Code** (`github.com/QwenLM/qwen-code` README, fetched 2026-09-20): free tier via
+    Qwen-account OAuth (third-party listing; daily request cap not re-verified this pass).
+    Snapshot: `qwen-code-readme.md`.
