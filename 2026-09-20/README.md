@@ -13,9 +13,10 @@ instead of a ranking. Databases: [data/providers-database.csv](data/providers-da
 
 Why a same-week pass: the 2026-09-13 report's own freshness warnings had expiry dates inside
 seven days (GLM Flash campaign ending Sep 20, Claude limits changing Sep 14, Gemini intro pricing
-burning toward Dec 31), and a public fork of this repo (`Nemo-010/coding-subs`) published a
-"2026-09-20" pass whose universe was paid sponsor advertisements rather than subscriptions.
-This pass supersedes it; see [What was taken from the fork](#what-was-taken-from-the-fork-and-what-was-thrown-back).
+burning toward Dec 31), and a public fork of this repo published a "2026-09-20" pass whose universe was
+paid sponsor advertisements rather than subscriptions. This pass supersedes it; the third-party data
+it adopted is recorded per source in
+[data/third-party-provenance.csv](data/third-party-provenance.csv).
 
 ---
 
@@ -102,7 +103,7 @@ below the 50% promo level that ran May 13–Sep 13 ([ref 8](references/reference
 **New entrant worth a full look:**
 - **Command Code** (`commandcode.ai`) — absent from the 2026-09-13 pass and from both gateway
   repos; found by enumerating the agent category rather than string-searching (method adopted from
-  the fork, verified first-party by this pass): Go $1 / GOAT $10 / Pro $20 / Max 10x $100 /
+  verified first-party by this pass): Go $1 / GOAT $10 / Pro $20 / Max 10x $100 /
   Max 20x $200 / API plan $15 + zero-markup PAYG / Teams $40. Credits $10/$70/$80/$150/$300,
   per-model allowances on GOAT ($70 GPT-5.6 Sol, $70 GLM-5.2, $70 Tencent Hy3, $70 Qwen 3.8 27B,
   $60 DeepSeek V4 Flash + 29 more), up to 1M context, "up to 2x/5x effective usage" deals on
@@ -240,7 +241,7 @@ not ranked.
 
 ## THE RELAY MARKET IS NOT A DEAL — advisory (rankings-excluded)
 
-A public fork of this repo published a "2026-09-20" pass ranking the paid sponsor table of
+A public third-party pass ranked the paid sponsor table of
 `Wei-Shaw/sub2api` (and `CLIProxyAPI`) by advertised cheapness. This pass re-verified the live
 sponsor table today and **excludes the entire category from every ranking**. The short version:
 
@@ -258,7 +259,7 @@ sponsor table today and **excludes the entire category from every ranking**. The
 - **The cheap pools degrade by design**: quota resale of consumer subscriptions is exactly what the
   platform's own tracker documents breaking ("降智"/intelligence-degradation issues; a sponsor's own
   docs calling its cheapest pool "unstable") ([R09, R11]).
-- **Nothing in it is independently measurable**: even the fork's "reachability" numbers were taken
+- **Nothing in it is independently measurable**: even its "reachability" numbers were taken
   through a third-party reverse proxy ([R12]); no model-identity, cache-behavior, or uptime
   measurement exists for any of it.
 - **Currency games**: CNY list prices (e.g. ¥399/4-weeks "with $440 credit") are meaningless
@@ -270,26 +271,15 @@ Full register with quotes: [data/relay-market-flags.csv](data/relay-market-flags
 mentions Claude Code/Codex "pools", "0.0x×" multiples, or account resale — treat it as R01–R12 and
 walk away. Resold shared accounts violate provider ToS and can die with your code history inside them.
 
-### What was taken from the fork, and what was thrown back
+### Third-party data adopted, and the scope excluded
 
-**Kept (genuinely valuable, with credit in [references](references/references.md) §32, §34, §36):**
-1. The **category-enumeration method** (enumerate every coding agent, then check each — a bare
-   string search misses products like Command Code and false-positives on the word "continue").
-2. The **`agents-universe.csv`** enumeration (30 agents, 18 absent from all prior sources) — carried
-   into `data/` with two new rows added by this pass.
-3. The **models.dev registry cost tables** (`modelsdev-providers.csv`, `cheapest-per-model.csv`),
-   re-based on a fresh registry pull today (222 providers / 7,869 models).
-4. **Reusable tooling patterns** (batch first-party fetchers, snapshot layout), re-implemented in
-   [tools/fetch-firstparty.py](../tools/fetch-firstparty.py) without the reverse-proxy dependency.
-5. Its relay-market snapshots, **as evidence for the advisory above** — the one thing that pass
-   documented well.
+Adopted third-party data is recorded per source in
+[data/third-party-provenance.csv](data/third-party-provenance.csv): what was taken, where it landed,
+how it was independently verified, and what was excluded from rankings. Nothing from a third party
+is presented as this pass's own research.
 
-**Thrown back:** ranking sponsor advertisements as if they were a market; leaving CNY prices
-unconverted; treating API relays as if they were coding subscriptions; reachability numbers
-measured through someone else's proxy; and "BEST DEAL" verdicts built on copy whose own
-arithmetic fails.
-
----
+The relay and reseller market is excluded from rankings by policy (see the advisory above). Its
+prices are advertisement rather than a rate card, and its allowances are quota resale.
 
 ## Workload test (52.5M tokens/month = 15M in + 37.5M out)
 
@@ -409,7 +399,7 @@ at $50) · 7. Kimi Pro · 8. Google AI Pro · 9. Claude Max 5x · 10. Copilot Ma
   own plans). API relays, sponsor marketplaces and account resellers are excluded from rankings by
   policy and documented in the advisory instead.
 - **Verification:** every price was read from a first-party page snapshotted 2026-09-20
-  (`sources/`); nothing was taken from the fork's tables except where explicitly credited as
+  (`sources/`); nothing was taken from a third party's tables except where recorded as
   THIRD-PARTY corroboration. Every unverifiable number is labeled UNKNOWN, never guessed.
 - **Currency:** prices normalized to USD at 1 USD = 6.7184 CNY (open.er-api.com, 2026-09-20T00:02Z,
   [ref 31]); conversions are ESTIMATED and listed in
@@ -441,7 +431,7 @@ at $50) · 7. Kimi Pro · 8. Google AI Pro · 9. Claude Max 5x · 10. Copilot Ma
 |---|---|---|
 | 20 first-party pricing/docs pages + 2 support pages + AA leaderboard + models.dev + FX API | 2026-09-20 06:47–07:30 UTC | full-page snapshots in `sources/` |
 | Wei-Shaw/sub2api README (live) | `fbb9006adef8`, pushed 2026-09-20T06:57Z | sponsor table + ToS warning quoted |
-| Nemo-010/coding-subs fork pass 2026-09-20 | commit `036c319` | method + 3 data files adopted with credit; rankings rejected |
+| third-party pass 2026-09-20 | commit `036c319` | method + 3 data files adopted with credit; rankings rejected; see data/third-party-provenance.csv |
 | OpenCode Go product page | 2026-09-20 | $10/mo, 27-model grid snapshotted (`sources/opencode-go.html`) |
 | CreditsPlan — Muse Code High Usage | first recorded 2026-09-17, fetched 2026-09-20 | $15/mo price corroboration (`sources/thirdparty-creditsplan-muse-high.html`) |
 | Subscriber report (chat) | 2026-09-20 | ~3B tokens/week on Muse Code at $15/mo — USER-REPORTED, gated the re-ranking |

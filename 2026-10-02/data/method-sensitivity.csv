@@ -1,0 +1,75 @@
+plan,model,monthly_limit_usd,blended_cache_heavy,blended_balanced,blended_no_cache,usd_per_mtok_cache_heavy,usd_per_mtok_balanced,usd_per_mtok_no_cache,spread_no_over_cache,source
+Go,GLM-5.3-Flash,60,0.0353,0.1250,0.2375,0.0059,0.0208,0.0396,6.7,https://opencode.ai/docs/go/
+Go,GLM-5.3,15,0.3092,1.1300,2.1500,0.2061,0.7533,1.4333,7.0,https://opencode.ai/docs/go/
+Go,GLM-5.2,60,0.3092,1.1300,2.1500,0.0515,0.1883,0.3583,7.0,https://opencode.ai/docs/go/
+Go,Kimi K3,15,0.4410,2.8500,6.0000,0.2940,1.9000,4.0000,13.6,https://opencode.ai/docs/go/
+Go,Kimi K2.7 Code,60,0.2280,0.8750,1.7125,0.0380,0.1458,0.2854,7.5,https://opencode.ai/docs/go/
+Go,Kimi K2.6,60,0.1989,0.8600,1.7125,0.0332,0.1433,0.2854,8.6,https://opencode.ai/docs/go/
+Go,LongCat-2.0,60,0.0193,0.2430,0.5250,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go,MiMo-V2.6-Flash,60,0.0076,0.0854,0.1750,0.0013,0.0142,0.0292,23.0,https://opencode.ai/docs/go/
+Go,MiMo-V2.6-Pro,15,0.0187,0.2628,0.5437,0.0125,0.1752,0.3625,29.0,https://opencode.ai/docs/go/
+Go,MiMo-V2.5,60,0.0076,0.0854,0.1750,0.0013,0.0142,0.0292,23.0,https://opencode.ai/docs/go/
+Go,MiMo-V2.5-Pro,15,0.0187,0.2628,0.5437,0.0125,0.1752,0.3625,29.0,https://opencode.ai/docs/go/
+Go,MiniMax M3,60,0.0717,0.2700,0.5250,0.0120,0.0450,0.0875,7.3,https://opencode.ai/docs/go/
+Go,MiniMax M2.7,60,0.0717,0.2700,0.5250,0.0120,0.0450,0.0875,7.3,https://opencode.ai/docs/go/
+Go,Muse Spark 1.3 Contributor,60,0.0054,0.0610,0.1250,0.0009,0.0102,0.0208,23.0,https://opencode.ai/docs/go/
+Go,Muse Spark 1.2 Contributor,60,0.0054,0.0610,0.1250,0.0009,0.0102,0.0208,23.0,https://opencode.ai/docs/go/
+Go,Qwen3.8 Max,15,0.3225,1.5250,3.0000,0.2150,1.0167,2.0000,9.3,https://opencode.ai/docs/go/
+Go,Qwen3.8 Flash,30,0.0216,0.1150,0.2300,0.0072,0.0383,0.0767,10.6,https://opencode.ai/docs/go/
+Go,Qwen3.7 Plus (≤ 256K tokens),60,0.0568,0.3400,0.7000,0.0095,0.0567,0.1167,12.3,https://opencode.ai/docs/go/
+Go,Qwen3.7 Plus (> 256K tokens),60,0.1704,1.0200,2.1000,0.0284,0.1700,0.3500,12.3,https://opencode.ai/docs/go/
+Go,DeepSeek V4.1 Flash (Off-Peak),60,0.0097,0.1215,0.2625,0.0016,0.0202,0.0437,27.2,https://opencode.ai/docs/go/
+Go,DeepSeek V4.1 Flash (Peak),60,0.0193,0.2430,0.5250,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Pro (Off-Peak),15,0.0477,0.4730,0.9900,0.0318,0.3153,0.6600,20.7,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Pro (Peak),15,0.0955,0.9460,1.9800,0.0637,0.6307,1.3200,20.7,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Flash (Off-Peak),30,0.0097,0.1215,0.2625,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Flash (Peak),30,0.0193,0.2430,0.5250,0.0064,0.0810,0.1750,27.2,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Flash Vision Exp (Off-Peak),15,0.0097,0.1215,0.2625,0.0064,0.0810,0.1750,27.2,https://opencode.ai/docs/go/
+Go,DeepSeek V4 Flash Vision Exp (Peak),15,0.0193,0.2430,0.5250,0.0129,0.1620,0.3500,27.2,https://opencode.ai/docs/go/
+Go,Hy4 preview,30,0.0741,0.6047,1.2508,0.0247,0.2016,0.4169,16.9,https://opencode.ai/docs/go/
+Go,Hy3,60,0.0404,0.1315,0.2500,0.0067,0.0219,0.0417,6.2,https://opencode.ai/docs/go/
+Go,Grok 4.7 (≤ 200K tokens),15,0.5650,1.6500,3.0000,0.3767,1.1000,2.0000,5.3,https://opencode.ai/docs/go/
+Go,Grok 4.7 (> 200K tokens),15,1.1300,3.3000,6.0000,0.7533,2.2000,4.0000,5.3,https://opencode.ai/docs/go/
+Go,Grok 4.6 (≤ 200K tokens),15,0.5650,1.6500,3.0000,0.3767,1.1000,2.0000,5.3,https://opencode.ai/docs/go/
+Go,Grok 4.6 (> 200K tokens),15,1.1300,3.3000,6.0000,0.7533,2.2000,4.0000,5.3,https://opencode.ai/docs/go/
+Go,GPT 6 Luna (≤ 272K tokens),15,0.0147,0.0950,0.2000,0.0098,0.0633,0.1333,13.6,https://opencode.ai/docs/go/
+Go,GPT 6 Luna (> 272K tokens),15,0.0282,0.1650,0.3375,0.0188,0.1100,0.2250,12.0,https://opencode.ai/docs/go/
+Go,GPT 5.6 Luna (≤ 272K tokens),15,0.0304,0.2100,0.4500,0.0203,0.1400,0.3000,14.8,https://opencode.ai/docs/go/
+Go,GPT 5.6 Luna (> 272K tokens),15,0.0578,0.3600,0.7500,0.0385,0.2400,0.5000,13.0,https://opencode.ai/docs/go/
+Go Plus,GLM-5.3-Flash,180,0.0353,0.1250,0.2375,0.0079,0.0278,0.0528,6.7,https://opencode.ai/docs/go/
+Go Plus,GLM-5.3,120,0.3092,1.1300,2.1500,0.1031,0.3767,0.7167,7.0,https://opencode.ai/docs/go/
+Go Plus,GLM-5.2,180,0.3092,1.1300,2.1500,0.0687,0.2511,0.4778,7.0,https://opencode.ai/docs/go/
+Go Plus,Kimi K3,60,0.4410,2.8500,6.0000,0.2940,1.9000,4.0000,13.6,https://opencode.ai/docs/go/
+Go Plus,Kimi K2.7 Code,180,0.2280,0.8750,1.7125,0.0507,0.1944,0.3806,7.5,https://opencode.ai/docs/go/
+Go Plus,Kimi K2.6,240,0.1989,0.8600,1.7125,0.0332,0.1433,0.2854,8.6,https://opencode.ai/docs/go/
+Go Plus,LongCat-2.0,240,0.0193,0.2430,0.5250,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go Plus,MiMo-V2.6-Flash,120,0.0076,0.0854,0.1750,0.0025,0.0285,0.0583,23.0,https://opencode.ai/docs/go/
+Go Plus,MiMo-V2.6-Pro,60,0.0187,0.2628,0.5437,0.0125,0.1752,0.3625,29.0,https://opencode.ai/docs/go/
+Go Plus,MiMo-V2.5,120,0.0076,0.0854,0.1750,0.0025,0.0285,0.0583,23.0,https://opencode.ai/docs/go/
+Go Plus,MiMo-V2.5-Pro,60,0.0187,0.2628,0.5437,0.0125,0.1752,0.3625,29.0,https://opencode.ai/docs/go/
+Go Plus,MiniMax M3,180,0.0717,0.2700,0.5250,0.0159,0.0600,0.1167,7.3,https://opencode.ai/docs/go/
+Go Plus,MiniMax M2.7,240,0.0717,0.2700,0.5250,0.0120,0.0450,0.0875,7.3,https://opencode.ai/docs/go/
+Go Plus,Muse Spark 1.3 Contributor,120,0.0054,0.0610,0.1250,0.0018,0.0203,0.0417,23.0,https://opencode.ai/docs/go/
+Go Plus,Muse Spark 1.2 Contributor,120,0.0054,0.0610,0.1250,0.0018,0.0203,0.0417,23.0,https://opencode.ai/docs/go/
+Go Plus,Qwen3.8 Max,60,0.3225,1.5250,3.0000,0.2150,1.0167,2.0000,9.3,https://opencode.ai/docs/go/
+Go Plus,Qwen3.8 Flash,90,0.0216,0.1150,0.2300,0.0096,0.0511,0.1022,10.6,https://opencode.ai/docs/go/
+Go Plus,Qwen3.7 Plus (≤ 256K tokens),180,0.0568,0.3400,0.7000,0.0126,0.0756,0.1556,12.3,https://opencode.ai/docs/go/
+Go Plus,Qwen3.7 Plus (> 256K tokens),180,0.1704,1.0200,2.1000,0.0379,0.2267,0.4667,12.3,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4.1 Flash (Off-Peak),120,0.0097,0.1215,0.2625,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4.1 Flash (Peak),120,0.0193,0.2430,0.5250,0.0064,0.0810,0.1750,27.2,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Pro (Off-Peak),60,0.0477,0.4730,0.9900,0.0318,0.3153,0.6600,20.7,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Pro (Peak),60,0.0955,0.9460,1.9800,0.0637,0.6307,1.3200,20.7,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Flash (Off-Peak),120,0.0097,0.1215,0.2625,0.0032,0.0405,0.0875,27.2,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Flash (Peak),120,0.0193,0.2430,0.5250,0.0064,0.0810,0.1750,27.2,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Flash Vision Exp (Off-Peak),60,0.0097,0.1215,0.2625,0.0064,0.0810,0.1750,27.2,https://opencode.ai/docs/go/
+Go Plus,DeepSeek V4 Flash Vision Exp (Peak),60,0.0193,0.2430,0.5250,0.0129,0.1620,0.3500,27.2,https://opencode.ai/docs/go/
+Go Plus,Hy4 preview,120,0.0741,0.6047,1.2508,0.0247,0.2016,0.4169,16.9,https://opencode.ai/docs/go/
+Go Plus,Hy3,240,0.0404,0.1315,0.2500,0.0067,0.0219,0.0417,6.2,https://opencode.ai/docs/go/
+Go Plus,Grok 4.7 (≤ 200K tokens),60,0.5650,1.6500,3.0000,0.3767,1.1000,2.0000,5.3,https://opencode.ai/docs/go/
+Go Plus,Grok 4.7 (> 200K tokens),60,1.1300,3.3000,6.0000,0.7533,2.2000,4.0000,5.3,https://opencode.ai/docs/go/
+Go Plus,Grok 4.6 (≤ 200K tokens),60,0.5650,1.6500,3.0000,0.3767,1.1000,2.0000,5.3,https://opencode.ai/docs/go/
+Go Plus,Grok 4.6 (> 200K tokens),60,1.1300,3.3000,6.0000,0.7533,2.2000,4.0000,5.3,https://opencode.ai/docs/go/
+Go Plus,GPT 6 Luna (≤ 272K tokens),60,0.0147,0.0950,0.2000,0.0098,0.0633,0.1333,13.6,https://opencode.ai/docs/go/
+Go Plus,GPT 6 Luna (> 272K tokens),60,0.0282,0.1650,0.3375,0.0188,0.1100,0.2250,12.0,https://opencode.ai/docs/go/
+Go Plus,GPT 5.6 Luna (≤ 272K tokens),60,0.0304,0.2100,0.4500,0.0203,0.1400,0.3000,14.8,https://opencode.ai/docs/go/
+Go Plus,GPT 5.6 Luna (> 272K tokens),60,0.0578,0.3600,0.7500,0.0385,0.2400,0.5000,13.0,https://opencode.ai/docs/go/

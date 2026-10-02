@@ -37,27 +37,39 @@ Every source below was fetched on **2026-10-02 (UTC)** with one request each and
   `Authorization` header of any kind is sent, by construction; the script cannot test an
   authenticated path and does not claim to.
 
-## Third-party, used only for a method rather than a number
+## Third-party, used for a method or carried unattributed to any ranking
 
 - **`FeiZhuLulu/real-api-pricing`** (MIT), `data/conventions.json` — the audited standard traffic
-  mix (97% cache read / 2.5% fresh input / 0.5% output) and its evidence grades. The mix is an
-  **input to this pass's method**, quoted as a convention, not a measurement of my own workload. The
-  upstream issue #2 pointed at this repo; see [docs/reviews-2026-10-02.md](../../docs/reviews-2026-10-02.md)
-  for what was and was not taken from it.
-- **`phuryn/experiments`**, `subscription-multipliers/` — metered allowance multipliers. Not
-  adopted as numbers in this pass; the reasoning for that is in the review.
+  mix (97% cache read / 2.5% fresh input / 0.5% output), revised 2026-09-23 after a 14-sample
+  audit. Used as a **method input** to the $/M computations in section 1 of the report and in
+  [data/method-sensitivity.csv](../data/method-sensitivity.csv); it is not a measurement of any
+  workload in this pass. Its 318-row price database was not adopted: adopting it wholesale would
+  import three evidence classes (high/medium/low confidence, with 214 official / 75 derived / 29
+  sample date kinds) into one table without the grades that distinguish them.
+- **`phuryn/experiments`**, `subscription-multipliers/` — metered allowance multipliers, carried in
+  [data/subscription-measurements.csv](../data/subscription-measurements.csv) with attribution,
+  date, method and uncertainty, and **not ranked** against this pass's published ceilings because
+  the two are different evidence classes. The SuperGrok per-call cost was independently re-derived
+  from its raw call log as a check on the method.
 
-## Cross-checks against the fork
+## Provenance and reproducibility
 
-The Z.ai overview page fetched here has SHA-256 `594793a7...`, identical to the entry the fork
-recorded in its own `2026-10-03/data/fetch-log.json` for the same URL. Two independent fetches
-agree the page is unchanged, so any difference between this pass and the fork's 10-02 figures on
-GLM is a transcription difference, not a vendor change.
+- Every figure in this pass derives from a page in `sources/`, fetched on 2026-10-02 with the
+  per-source log in [data/fetch-log.json](../data/fetch-log.json). The Z.ai overview page's
+  SHA-256 is `594793a7...`; two independent fetches of the same URL on the same day produced the
+  same digest, so the page is stable across them and any difference between this pass's GLM figures
+  and another pass's is a transcription difference rather than a vendor change.
+- `tools/parse-opencode-go.py` regenerates [data/opencode-go-grid.csv](../data/opencode-go-grid.csv)
+  byte for byte from the archived `opencode-go.html`; CI fails if it stops doing so. The grid is
+  therefore recomputable from evidence in the repo rather than citable on trust.
+- `tools/validate.py` gates every pass. Its checks and the defects each was added for are listed in
+  [../../docs/reviews-2026-10-02.md](../../docs/reviews-2026-10-02.md) review 5.
 
 ## Sources explicitly not used
 
 - API relay and reseller marketplaces. Excluded by the policy set in the 2026-09-20 pass: their
   prices are advertisement, their discounts are quota resale, and this pass had no capacity to
   re-verify that universe.
-- Any figure about a plan's real usage. No plan was subscribed to in this pass, so nothing here is
-  a metered result.
+- Any figure about a plan's real metered usage. No plan was subscribed to in this pass, so nothing
+  here is a metered result; third-party metered figures are carried separately and not ranked
+  against the published ceilings in this pass.

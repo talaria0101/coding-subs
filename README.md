@@ -10,7 +10,7 @@ coding-agent usage by subscription** — model landscape, provider arbitrage, pu
 |---|---|---|
 | **2026-09-13** | [2026-09-13/README.md](2026-09-13/README.md) | Full pass: 45-model landscape (AA snapshot), 44 access plans across 26 provider groups, workload tests, rankings |
 | **2026-09-20** | [2026-09-20/README.md](2026-09-20/README.md) | Re-verification + delta pass: all first-party sources re-fetched, 26 logged changes (Trae repriced upward, Kimi tiers restructured with the weekly window removed, Claude Code limits settled ~17% below the promo level, new Command Code / Devin / Kiro / Factory / Warp / Zed / Replit ladders), every non-USD price normalized at a cited FX rate, and the relay/sponsor "0.03x" market quarantined into a red-flag advisory instead of a ranking |
-| **2026-10-02** | [2026-10-02/README.md](2026-10-02/README.md) | Method pass: 20 first-party sources fetched serially with a per-source log, the OpenCode Go per-model price grid parsed to 78 reproducible rows, and the finding that a $/M token price is undefined until its traffic mix is stated (5x to 29x swing, median 14x). Closes issues #1 and #2, refutes the fork's "transparency defect" with a control, and fixes 7 malformed CSVs in this repo's own history |
+| **2026-10-02** | [2026-10-02/README.md](2026-10-02/README.md) | Method pass: 20 first-party sources fetched serially with a per-source log, the OpenCode Go per-model grid parsed to 78 reproducible rows, the finding that a $/M token price is undefined until its traffic mix is stated (5.3x to 29.0x swing, median 13.6x), an anonymous-access measurement of 25 free-tier endpoints, and a re-derivation of a metered allowance project |
 
 Each pass directory contains the report (`README.md`), the underlying databases (`data/`),
 numbered citations with access dates (`references/`), and raw snapshots of primary sources
@@ -30,15 +30,18 @@ full 78-row vendor grid is in the repo so a reader can recompute under a mix the
 measured. Older passes predate this and their $/M figures should be treated as unit conversions
 with a hidden assumption rather than as findings.
 
-## Evidence classes used from 2026-10-02 onward
+## Evidence classes
+
+A published ceiling and a measured meter are different quantities, and this repo does not rank them
+in the same table.
 
 | Class | Means |
 |---|---|
-| `FIRST-PARTY-COMPUTED` | Both inputs read from the vendor's own current page, and the arithmetic done here. The strongest class in the repo. |
+| `FIRST-PARTY-COMPUTED` | Every input read from the vendor's own current page, arithmetic done here. The strongest class in the repo. |
 | `FIRST-PARTY-PRICE-ONLY` | Price read from the vendor, allowance not published, so no derived figure is offered. |
-| `MEASURED` | A meter was ticked and a number observed. Not yet produced by any pass in this repo. |
-| `DOCUMENTED` | A vendor published a table; it was read, not tested. |
-| `THIRD-PARTY` | A source outside the vendor, carried with attribution and its own uncertainty. |
+| `MEASURED` | A meter was ticked and a number observed. Carried in `subscription-measurements.csv` and not ranked against ceilings. |
+| `DOCUMENTED` | A vendor published a table; read, not tested. |
+| `THIRD-PARTY` | A source outside the vendor, carried with attribution, date and uncertainty. |
 | `UNKNOWN` | Not published. Never estimated, never filled from a secondary source. |
 
 ## Method in one paragraph

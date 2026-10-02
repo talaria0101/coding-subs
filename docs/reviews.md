@@ -119,15 +119,16 @@ Cross-checked every row quoted in the README against `data/providers-database.cs
 **Finding 3 — FIXED.** The Devin (team) row still carried "UNKNOWN for 2026 tiers" as its price
 while the same row's published_quota said "$80 base + $40/seat". Price field corrected.
 
-## Review 4 — Scope policy (the fork question)
+## Review 4 — Scope policy (third-party data)
 
-Checked that nothing from the Nemo-010 fork is presented as this pass's research.
+Checked that no third-party figure is presented as this pass's own research.
 
-**Finding 4 — none.** The fork's contributions are adopted with credit (method, agents-universe,
-models.dev tables, relay snapshots as advisory evidence) and its rankings are rejected with named
-reasons (sponsor universe, CNY unconverted, relay != subscription, proxy-measured uptime,
-self-contradicting ad arithmetic). The live sub2api README was re-fetched today so the advisory's
-quotes stand on this pass's own snapshot, not the fork's.
+**Finding 4 — none.** Third-party contributions are adopted with credit and recorded per source in
+[data/third-party-provenance.csv](../2026-09-20/data/third-party-provenance.csv) (method,
+agents-universe, models.dev tables, relay snapshots as advisory evidence), and third-party rankings
+are rejected with named reasons (sponsor universe, CNY unconverted, relay != subscription,
+proxy-measured uptime, self-contradicting ad arithmetic). The live sub2api README was re-fetched
+today so the advisory's quotes stand on this pass's own snapshot.
 
 ## Review 5 — Validator + arithmetic gates
 
@@ -140,7 +141,7 @@ failing the integer check.
 
 R1: any capacity or FX figure differing from the raw snapshot by more than rounding. R2: any
 ADVERTISED number wearing a VERIFIED label. R3: any README claim absent from the DB or vice versa.
-R4: any fork table reused without relabeling. R5: a failing validator.
+R4: any third-party table reused without relabeling. R5: a failing validator.
 
 ## Review 6 — Bias audit (rev 2, after a reader challenge: "you are a glm model and put glm at top")
 

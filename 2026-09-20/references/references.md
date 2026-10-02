@@ -89,8 +89,8 @@ reputable secondary source; ESTIMATED = derived; UNKNOWN = not published, never 
 21. **Command Code — pricing page** (`commandcode.ai/pricing`): Go $1 / GOAT $10 / Pro $20 /
     Max 10x $100 / Max 20x $200; credits $10/$70/$80/$150/$300; API plan $15/mo, zero-markup PAYG,
     top-ups roll over; Teams $40; up to 1M context; per-model allowances on GOAT. Snapshot:
-    `commandcode-pricing.html` (+ the Nemo-010 fork's independent snapshot of the same page:
-    `commandcode-pricing-fork-snapshot.txt`).
+    `commandcode-pricing.html`, plus an independent third-party snapshot of the same page:
+    `commandcode-pricing-thirdparty-snapshot.txt`).
 22. **Factory — pricing** (`factory.ai/pricing`): Droid Pro $20 / Plus $100 (~5x) / Max $200 (~10x);
     Droid Computers on Plus+. Snapshot: `factory-pricing.html`.
 23. **Replit — pricing** (`replit.com/pricing`): Core $20 ($18 annual); Pro $100 ($90 annual) with
@@ -119,14 +119,15 @@ reputable secondary source; ESTIMATED = derived; UNKNOWN = not published, never 
     `../data/currency-normalization.csv` are ESTIMATED (rounding + daily FX drift).
 32. **models.dev registry API** (`models.dev/api.json`, fetched 2026-09-20): 222 providers /
     7,869 models. Snapshot: `modelsdev-api.json`. Provider-level cost table:
-    `../data/modelsdev-providers.csv` (adopted from the Nemo-010 fork, see Provenance).
+    `../data/modelsdev-providers.csv` (third-party, re-based on a fresh first-party pull; see
+    `../data/third-party-provenance.csv`).
 
 ## Relay/reseller market (advisory only — excluded from rankings)
 
 33. **Wei-Shaw/sub2api README** (live at commit `fbb9006adef8`, pushed 2026-09-20T06:57Z): sponsor
     table with affiliate links (`?aff=SUB2API`); ToS warning; sponsor copy quoted in
     `../data/relay-market-flags.csv`. Snapshot: `sub2api-readme-today.md`.
-34. **Nemo-010/coding-subs fork, pass 2026-09-20** (THIRD-PARTY): rate-card snapshots and tracker
+34. **Third-party pass 2026-09-20** (THIRD-PARTY): rate-card snapshots and tracker
     findings for the relay market (CodexEverywhere pool instability, PPToken/PP.dog ad arithmetic,
     CCTK Claude-group 2.1x, jiangzhi issue refs #6871/#7202/#6957, reverse-proxy reachability probe).
     Used only as corroborating evidence in the advisory; its rankings were NOT adopted.
@@ -136,7 +137,7 @@ reputable secondary source; ESTIMATED = derived; UNKNOWN = not published, never 
 35. **This repo's 2026-09-13 pass** (`../../2026-09-13/`): models-database columns, provider
     database columns, workload definition (52.5M tokens/month), and evidence-label conventions
     carried forward; 44 provider rows re-verified or updated individually.
-36. **Category enumeration method**: adopted from the Nemo-010 fork's PROVIDER-BY-PROVIDER pass —
+36. **Category enumeration method**: adopted from a third-party PROVIDER-BY-PROVIDER pass —
     enumerate the coding-agent category and check each member, rather than string-searching
     sources; its `agents-universe.csv` is carried forward in `../data/` with two new rows.
 
