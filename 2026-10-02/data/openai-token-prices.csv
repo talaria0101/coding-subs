@@ -1,0 +1,8 @@
+model_slug,input_per_m,cached_read_per_m,cache_write_per_m,output_per_m,price_class,source,read_date
+gpt-6-astra,10.0,1.0,12.5,50.0,API-LIST,openai-pricing.html,2026-10-02
+gpt-6.1-sol,2.0,0.1,2.5,10.0,API-LIST,openai-pricing.html,2026-10-02
+gpt-6-luna,0.1,0.01,0.125,0.5,API-LIST,openai-pricing.html,2026-10-02
+gpt-5.6-sol,4.0,0.4,5.0,20.0,API-LIST,openai-pricing.html,2026-10-02
+gpt-5.6-cyber,12.5,1.25,15.625,75.0,API-LIST,openai-pricing.html,2026-10-02
+gpt-4o-transcribe,2.5,,,10.0,API-LIST,openai-pricing.html,2026-10-02
+gpt-4o-mini-transcribe,1.25,,,5.0,API-LIST,openai-pricing.html,2026-10-02

@@ -25,3 +25,14 @@ jobs:
         run: |
           python3 tools/parse-aa-models.py 2026-10-02/sources/aa-models.html /tmp/models.csv
           diff -u 2026-10-02/data/models-database.csv /tmp/models.csv
+      # OpenAI's price grid is read from a table with a grouped colspan header, so
+      # a parser that takes the first row as the header silently skips it.
+      - name: OpenAI price grid is reproducible from the archived source
+        run: |
+          python3 tools/extract-token-prices.py 2026-10-02/sources/openai-pricing.html /tmp/oai.csv --market
+          diff -u 2026-10-02/data/openai-token-prices.csv /tmp/oai.csv
+      # The plan ladder is hand-curated because the generic text extractor cannot
+      # tell a plan name from a feature label. This is the check that keeps a
+      # hand-curated row honest against the page it cites.
+      - name: every ladder price is present in the page it cites
+        run: python3 tools/validate.py 2026-10-02

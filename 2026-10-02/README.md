@@ -6,10 +6,14 @@ request each, with per-source HTTP status, byte count, latency and SHA-256 in
 [data/models-database.csv](data/models-database.csv) (24 models, Intelligence Index, context window,
 modalities and API list price),
 [data/plan-economics.csv](data/plan-economics.csv) (22 plan rows),
+[data/plan-ladder.csv](data/plan-ladder.csv) (30 plans across 7 vendors, read from 7 pages),
 [data/opencode-go-grid.csv](data/opencode-go-grid.csv) (78 rows, the full OpenCode Go and Go Plus
 per-model grid),
+[data/openai-token-prices.csv](data/openai-token-prices.csv) (7 models, OpenAI's own per-1M grid),
 [data/method-sensitivity.csv](data/method-sensitivity.csv) (the $/M sensitivity table below, per
-model),
+model, from the OpenCode Go grid),
+[data/mix-sensitivity-all.csv](data/mix-sensitivity-all.csv) (44 model/price-class rows across both
+vendors and both evidence classes),
 [data/free-tier-access.csv](data/free-tier-access.csv) (free-tier catalogue sources evaluated),
 [data/subscription-measurements.csv](data/subscription-measurements.csv) (third-party metered
 allowance multipliers). Numbered citations: [references/references.md](references/references.md).
@@ -114,8 +118,9 @@ model, which is a real limitation for multimodal agent work.
 
 A $/M figure is a division. Its divisor is a traffic mix: what fraction of the traffic was cache
 reads, fresh input, and output. Vendors price those three token classes very differently, so the
-same plan on the same vendor page yields figures that differ by **5.3x to 29.0x** depending on the
-mix assumed. Across the 37 priced models on OpenCode Go the median spread is 13.6x.
+same plan on the same vendor page yields figures that differ by **1.7x to 29.0x** depending on the
+mix assumed, and the median across 44 model/price-class rows spanning two vendors and two evidence
+classes is 13.6x.
 
 No $/M table states its mix. The consequence is that a $/M published without one cannot be checked,
 reproduced, or compared against another, because the reader cannot tell which assumption is
@@ -144,6 +149,30 @@ The spread is widest where a vendor prices cache reads far below fresh input, an
 the three classes are priced closer together. This is a property of the vendor's price table, not
 of the plan: GLM-5.3-Flash is the steadiest row on the plan and MiMo-V2.6-Pro is not, on the same
 plan and the same month.
+
+### The result generalises past the one vendor it was found on
+
+The sensitivity above was computed from one vendor's grid. If the effect were an artefact of that
+vendor's price table rather than a property of how this market prices tokens, it would not survive
+a second vendor. `tools/extract-token-prices.py` reads the same four-column shape out of any page
+that publishes it, and applied to **OpenAI's own platform pricing page** it recovers 7 models. Its
+published prices agree with the leaderboard's list prices to the cent for every model both carry
+(gpt-6-astra at $10/$50, gpt-6-luna at $0.10/$0.50), which independently confirms the landscape in
+section 0.
+
+| Price class | Models | Spread (no-cache / cache-heavy) | Median |
+|---|---|---|---|
+| Subscription ceiling (OpenCode Go grid) | 37 | 5.3x – 29.0x | 13.6x |
+| API list (OpenAI platform pricing) | 7 | 1.7x – 20.3x | 13.6x |
+| **All rows** | **44** | **1.7x – 29.0x** | **13.6x** |
+
+The medians are identical across two vendors, two evidence classes and a 20x difference in absolute
+price, which is what a property of the market looks like rather than of one rate card. The 1.7x
+floor is not a counterexample: both rows at the bottom are models with **no published cached tier**
+(OpenAI's two transcribe models), so their spread is computed with the input price substituted for a
+cache price that does not exist, and the column records `cached_tier_published=no`. A vendor that
+does not publish a cache price cannot be evaluated on cache sensitivity, and the table says which
+rows those are rather than implying a measured spread.
 
 ### The mix is an observable, not a free parameter
 
@@ -226,7 +255,46 @@ accounting, and it is the one reading from this measurement that a consumer need
 
 ---
 
-## 3. First-party figures, re-read 2026-10-02
+## 3. The plan ladder, as each vendor publishes it
+
+[data/plan-ladder.csv](data/plan-ladder.csv) carries 30 plans across 7 vendors, read from 7 of the
+20 archived pages. `tools/extract-plans.py` reads a vendor's own schema.org `Offer` block where one
+exists and falls back to rendered text next to a price and a billing period where one does not, and
+it reports which pages yielded nothing rather than counting them as covered. Prices in USD.
+
+| Vendor | Plans read | Ladder |
+|---|---|---|
+| Anthropic | 10 | Free $0; Pro $17 annual / $20 monthly; Max from $100; Team standard seat $20 annual / $25 monthly; Team premium seat $100 annual / $125 monthly; **Max 20x and Enterprise not published** |
+| Cursor | 5 | Hobby $0; Pro $20; **Pro+ $60**; Ultra $200; Teams $40 per user |
+| GitHub Copilot | 7 | Free $0; Pro $10; Pro+ $39; Max $100, each with a separate flex allotment of $5 / $31 / $100 |
+| OpenCode | 2 | Go $10; Go Plus $40 |
+| Z.ai | 5 | Lite **$18, published**; Pro $72 and Max $160 **not on the page this pass fetched**, carried from the 2026-09-20 pass; Team Standard and Premium seat **not published** |
+| Kilo | 1 | Individual $0 (a free tier, not a paid plan) |
+
+**Four prices in this ladder are UNKNOWN because no vendor publishes them**, and they are the ones a
+buyer most wants: Claude Max 20x, Claude Enterprise, and both Z.ai Team seat prices. Anthropic
+publishes Max as "From $100" with a "choose 5x or 20x" selector and never states the 20x price on
+the page; the 2026-09-20 pass carried $200 for it, which this pass cannot confirm from the vendor's
+own page and therefore does not repeat. A ladder that fills those cells from a previous pass or a
+tracker is a ladder with an unsourced number in it, which is the condition this repo exists to
+catch.
+
+**A seventh cell was nearly the same error and is now labelled.** Z.ai's overview page publishes
+exactly one price, "starting at just 18 USD per month". The Pro ($72) and Max ($160) prices are
+**not on that page**, on the FAQ page, or on the Team Plan page archived here. Verifying every
+ladder price against the bytes of the page it cites found this: four of thirty rows initially
+claimed a first-party provenance the archived page does not support. Those four rows are now
+`CARRIED-FORWARD` in [data/plan-economics.csv](data/plan-economics.csv) and `NOT-ON-PAGE` in this
+ladder, with the reason in the row. The $0.0142/M and $0.0090/M figures computed from them are
+arithmetically correct and rest on a price this pass could not re-verify, which is a different
+statement from "verified" and is now the one the table makes.
+
+**Two ladders are not comparable and should not be added together.** Anthropic's Team premium seat
+at $100 is per seat with "5x more usage than standard seats", and Z.ai's Team seats publish a credit
+allowance and not a price. Cursor Teams at $40 is per user. None of the three publishes a token
+allowance, so none yields a $/M.
+
+## 4. First-party figures, re-read 2026-10-02
 
 **Z.ai GLM Coding Plan** ([overview](sources/zai-overview.md)). Credits per plan: Lite 2,000 per 5h
 and 10,000 weekly at $18, Pro 12,000 and 60,000 at $72, Max 28,000 and 140,000 at $160. The
@@ -277,7 +345,7 @@ host.
 
 ---
 
-## 4. Workload test: 52.5M tokens/month (15M in + 37.5M out)
+## 5. Workload test: 52.5M tokens/month (15M in + 37.5M out)
 
 The same workload the earlier passes use, repriced against today's model table. This is the
 **list cost of the workload**, which a plan covers if its published ceiling reaches it. A plan
@@ -318,7 +386,7 @@ is not tokens, it is the top 7 II points.
 
 ---
 
-## 5. What I would buy
+## 6. What I would buy
 
 Ranked by what the measurements above support, with the reasoning and the caveat attached.
 
@@ -346,7 +414,7 @@ dollar ceiling does. A plan adding an II≥50 model to its grid would displace i
 
 ---
 
-## 6. Third-party allowance measurements, and why they are not ranked here
+## 7. Third-party allowance measurements, and why they are not ranked here
 
 [data/subscription-measurements.csv](data/subscription-measurements.csv) carries metered multipliers
 from an external measurement project: a weekly usage meter is ticked on purpose and every call is
@@ -377,7 +445,7 @@ pass.
 
 ---
 
-## 7. Free-tier catalogue sources: what each contributes
+## 8. Free-tier catalogue sources: what each contributes
 
 [data/free-tier-access.csv](data/free-tier-access.csv) evaluates four external free-tier
 catalogues against one question: can they establish access, or only price. All four are catalogues
@@ -391,20 +459,22 @@ database.
 
 ---
 
-## 8. Known gaps
+## 9. Known gaps
 
 - **No plan was subscribed to and no authenticated request was made.** Every allowance figure here
   is a published ceiling. Nothing in this pass is a metered result.
 - **The traffic mix is a quoted convention**, not a measurement of this pass's own workload. The
   mix is stated beside every figure that depends on it, and the sensitivity table lets a reader
   substitute a measured one.
-- **Sixteen of the twenty fetched sources carry no figure in this pass.** They are archived as the
-  re-verification base: MiniMax, Anthropic, Cline, Aider, Kilo and Volcengine are cited in
-  [references/](references/references.md) and carry no number in
-  [data/plan-economics.csv](data/plan-economics.csv). Four sources do carry figures: the OpenCode Go
-  grid (section 1), the Z.ai docs (section 3), Cursor and GitHub Copilot (section 3), and the
-  Artificial Analysis leaderboard (section 0, the model landscape). A source list implying twenty
-  mined sources when four were mined is its own form of overclaim.
+- **Thirteen of the twenty fetched sources carry no figure in this pass.** They are archived as the
+  re-verification base and cited in [references/](references/references.md). Seven do carry
+  figures: the OpenCode Go grid (sections 1 and 5), the Artificial Analysis leaderboard (section 0),
+  OpenAI platform pricing (section 1), Anthropic, Cursor, GitHub Copilot and Kilo (section 3), and
+  the Z.ai docs (section 4). The seven that carry nothing are MiniMax token-plan and platform, the
+  Anthropic context-window support page, Cline, Aider, Volcengine, and the two OpenCode Zen pages
+  beyond the one the probe uses. A source list implying twenty mined sources when seven were mined is
+  its own form of overclaim, and the list of unmined pages is named rather than left to be
+  discovered by a reader who counts.
 - **OpenCode Go's monthly-vs-weekly request columns are irreconcilable** and the page does not say
   which is authoritative. Not guessed.
 - **Z.ai's off-peak all-day window and the GLM-5.3-Flash campaign both expire 2026-10-07**, which
@@ -425,7 +495,7 @@ database.
 
 ---
 
-## 9. What would falsify this pass
+## 10. What would falsify this pass
 
 - A first-party statement of OpenCode Go's monthly-versus-weekly convention. Either reading changes
   the plan's effective ceiling by 2x and the page supports both.
