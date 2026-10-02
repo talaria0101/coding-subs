@@ -1,86 +1,110 @@
 #!/usr/bin/env python3
-"""Fetch first-party subscription/pricing pages for a coding-subs research pass.
+"""Serial first-party fetcher for the coding-subs pass.
 
-Fetches the live first-party pages listed in PAGES into <pass>/sources/. Deliberately
-proxy-free: measurements come from this network, not through anyone else's. Pages that
-return gzip/brotli despite no Accept-Encoding are detected by `file`/magic bytes and
-should be gunzip-decoded before text extraction (see antigravity snapshots in 2026-09-20).
+One URL, one request, one file, one log line. No retries: a failure is recorded
+as a failure rather than retried into a success, because "we asked twice" is a
+different claim from "the page says this" and the log has to support the weaker
+one honestly.
 
-Usage: python3 tools/fetch-firstparty.py [PASS_DIR]   (default: latest YYYY-MM-DD dir)
+Usage:
+    python3 fetch_firstparty.py OUT_DIR LOG_JSON SOURCES_TSV
+
+SOURCES_TSV is tab-separated: label<TAB>url[<TAB>note]
 """
-import concurrent.futures as cf
-import pathlib
+import hashlib
+import json
+import os
 import sys
+import time
+import urllib.error
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
-
-# label -> url   (pass 2026-09-20 set; extend per pass)
-PAGES = {
-    "zai-glm-coding-plan-overview.md": "https://docs.z.ai/devpack/overview.md",
-    "zai-glm-coding-plan-faq.md": "https://docs.z.ai/devpack/faq.md",
-    "zai-teamplan.md": "https://docs.z.ai/devpack/teamplan.md",
-    "zai-plan-update-announcement.md": "https://docs.z.ai/devpack/transition.md",
-    "zai-glm53-flash-campaign.md": "https://docs.z.ai/devpack/notice/event-glm-5.3-flash.md",
-    "openai-codex-pricing.md": "https://developers.openai.com/codex/pricing.md",
-    "anthropic-model-overview-docs.md": "https://docs.claude.com/en/docs/about-claude/models/overview.md",
-    "anthropic-pricing-page.html": "https://www.anthropic.com/pricing",
-    "anthropic-context-window-paid-plans.html": "https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-plans",
-    "gemini-api-pricing.html": "https://ai.google.dev/gemini-api/docs/pricing",
-    "antigravity-plans-doc.html": "https://antigravity.google/docs/plans/",
-    "antigravity-models-doc.html": "https://antigravity.google/docs/models/",
-    "google-ai-subscriptions.html": "https://gemini.google/subscriptions/",
-    "minimax-token-plan-intro.md": "https://platform.minimax.io/docs/token-plan/intro.md",
-    "minimax-token-plan-pricing.md": "https://platform.minimax.io/docs/guides/pricing-token-plan.md",
-    "kimi-membership-doc.html": "https://www.kimi.com/code/docs/en/kimi-code/membership.html",
-    "kimi-help-membership-overview.html": "https://www.kimi.com/en/help/membership/membership-overview",
-    "kimi-api-pricing.md": "https://platform.kimi.ai/docs/pricing/chat.md",
-    "github-copilot-plans.html": "https://docs.github.com/en/copilot/get-started/plans",
-    "meta-muse-subscriptions.md": "https://dev.meta.ai/docs/muse-code/subscriptions.md",
-    "alibaba-coding-plan-doc.html": "https://www.alibabacloud.com/help/en/model-studio/coding-plan",
-    "trae-pricing.html": "https://www.trae.ai/pricing",
-    "kilo-pricing.html": "https://kilo.ai/pricing",
-    "kiro-pricing.html": "https://kiro.dev/pricing/",
-    "replit-pricing.html": "https://replit.com/pricing",
-    "augment-pricing.html": "https://www.augmentcode.com/pricing",
-    "cerebras-code-pricing.html": "https://www.cerebras.ai/code",
-    "cursor-pricing.html": "https://cursor.com/pricing",
-    "mistral-lechat-pricing.html": "https://mistral.ai/pricing",
-    "qoder-pricing.html": "https://qoder.com/pricing",
-    "codebuddy.html": "https://www.codebuddy.ai/",
-    "commandcode-pricing.html": "https://commandcode.ai/pricing",
-    "devin-pricing.html": "https://devin.ai/pricing",
-    "zed-pricing.html": "https://zed.dev/pricing",
-    "warp-pricing.html": "https://www.warp.dev/pricing",
-    "factory-pricing.html": "https://factory.ai/pricing",
-    "opencode-zen.html": "https://opencode.ai/zen/",
-    "fx-cny-usd.txt": "https://open.er-api.com/v6/latest/USD",
-    "aa-models-page.html": "https://artificialanalysis.ai/models",
-    "modelsdev-api.json": "https://models.dev/api.json",
-}
+UA = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+)
 
 
-def fetch(out_dir: pathlib.Path, name: str, url: str):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "text/html,text/markdown,application/json,*/*"})
+def one_request(url: str, timeout: int = 45) -> dict:
+    """Exactly one HTTP request. Returns the record; never raises."""
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": UA,
+            "Accept": "text/html,application/xhtml+xml,application/json,text/plain,*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+        },
+    )
+    started = time.time()
+    status = None
+    body = b""
+    error = None
     try:
-        with urllib.request.urlopen(req, timeout=40) as r:
-            data = r.read()
-            (out_dir / name).write_bytes(data)
-            return name, f"OK {r.status} {len(data)}"
-    except Exception as e:  # noqa: BLE001 - record, don't crash the batch
-        return name, f"FAIL {type(e).__name__}: {e}"
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            status = response.status
+            body = response.read()
+    except urllib.error.HTTPError as exc:
+        status = exc.code
+        body = exc.read()
+        error = f"HTTP {exc.code}"
+    except Exception as exc:  # noqa: BLE001 - the point is to record, not to raise
+        error = f"{type(exc).__name__}: {exc}"[:200]
+    return {
+        "url": url,
+        "http": status,
+        "bytes": len(body),
+        "ms": int((time.time() - started) * 1000),
+        "sha256": hashlib.sha256(body).hexdigest() if body else None,
+        "error": error,
+        "_body": body,
+    }
 
 
 def main() -> int:
-    passes = sorted(p for p in ROOT.iterdir() if p.is_dir() and len(p.name) == 10 and p.name[4] == "-")
-    pass_dir = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else passes[-1]
-    out = pass_dir / "sources"
-    out.mkdir(parents=True, exist_ok=True)
-    print(f"fetching {len(PAGES)} pages -> {out}")
-    with cf.ThreadPoolExecutor(8) as ex:
-        for name, status in ex.map(lambda kv: fetch(out, *kv), PAGES.items()):
-            print(f"{status:28s} {name}")
+    out_dir, log_path, sources_path = sys.argv[1], sys.argv[2], sys.argv[3]
+    os.makedirs(out_dir, exist_ok=True)
+    os.makedirs(os.path.dirname(log_path) or ".", exist_ok=True)
+
+    wanted: list[tuple[str, str, str]] = []
+    with open(sources_path) as handle:
+        for line in handle:
+            line = line.rstrip("\n")
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split("\t")
+            wanted.append((parts[0], parts[1], parts[2] if len(parts) > 2 else ""))
+
+    log = []
+    for index, (label, url, note) in enumerate(wanted, 1):
+        record = one_request(url)
+        body = record.pop("_body", b"")
+        # The bytes are the evidence. Keep them whenever the server said 200,
+        # and never for an error page, which is not the source.
+        if record["http"] == 200 and body:
+            path = os.path.join(out_dir, label)
+            os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+            with open(path, "wb") as handle:
+                handle.write(body)
+            record["saved_as"] = os.path.relpath(path, os.path.dirname(out_dir) or ".")
+        else:
+            record["saved_as"] = None
+        record["label"] = label
+        record["note"] = note
+        log.append(record)
+        status = record["http"] if record["http"] is not None else "ERR"
+        print(
+            f"[{index:>2}/{len(wanted)}] {label:<34} {status!s:<5} "
+            f"{record['bytes']:>9} B  {record['ms']:>5} ms  {record['error'] or ''}",
+            flush=True,
+        )
+        # Politeness, and it keeps a serial pass from looking like a burst.
+        time.sleep(0.7)
+
+    with open(log_path, "w") as handle:
+        json.dump(log, handle, indent=2)
+
+    ok = sum(1 for r in log if r["http"] == 200)
+    print(f"\n{ok}/{len(log)} returned HTTP 200; log written to {log_path}")
     return 0
 
 

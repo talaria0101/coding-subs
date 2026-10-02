@@ -7,4 +7,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: python3 tools/validate.py
+      # Every pass, not just the newest. The 2026-09-20 pass shipped seven
+      # malformed CSV rows for three weeks because the gate only ever looked at
+      # the directory it was pointed at, and nothing re-checked the old ones.
+      - run: python3 tools/validate.py --all
+      # The OpenCode Go grid must regenerate from the archived page byte for byte.
+      # A parser change that silently drops rows is the exact failure that
+      # produced the 16x error in the previous pass.
+      - name: grid is reproducible from the archived source
+        run: |
+          python3 tools/parse-opencode-go.py 2026-10-02/sources/opencode-go.html > /tmp/grid.csv
+          diff -u 2026-10-02/data/opencode-go-grid.csv /tmp/grid.csv

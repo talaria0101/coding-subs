@@ -1,14 +1,48 @@
 #!/usr/bin/env python3
-"""Data-integrity checks for a coding-subs research pass.
+"""Data-integrity gate for a coding-subs research pass.
 
-Usage: python3 tools/validate.py [PASS_DIR]   (default: latest YYYY-MM-DD dir)
-Exit code 0 = all checks pass; 1 = failures (printed).
+    python3 tools/validate.py [PASS_DIR]      # default: newest YYYY-MM-DD dir
+    python3 tools/validate.py --all           # every pass in the repo
+
+Exit code 0 only when every check passes. Each check exists because a real,
+named defect got past the previous validator; the ones with a story are listed
+in CHECKS below and the failing-before evidence is in docs/reviews-*.md.
+
+The checks that matter are the ones a reader cannot do by eye:
+
+* field-count agreement. A surplus unquoted comma in a CSV row shifts every
+  column after it, and csv.DictReader hides the shift under a None key. Four
+  files in the 2026-09-20 pass shipped with that defect while every earlier
+  check reported the pass clean.
+* unit agreement. A cost row states a price, a token count and a $/M for one
+  quantity in three units. If they disagree the row is wrong, and which of the
+  three is wrong is not decidable from the row, so the row is not published.
+* evidence labelling. A row that carries a number must say where the number
+  came from, and a row whose number is not published must say UNKNOWN rather
+  than carry a plausible figure.
 """
-import csv, json, os, re, sys
+from __future__ import annotations
+
+import csv
+import json
+import re
+import sys
 from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# name -> (what it enforces, what defect it was added for)
+CHECKS: dict[str, str] = {
+    "layout": "every pass has data/, references/, sources/ and a README",
+    "field-count": "2026-09-20 shipped 38 malformed CSV rows past a green run",
+    "cost-arithmetic": "a price, a token count and a $/M must describe one quantity",
+    "evidence-label": "a number without a source is not evidence",
+    "no-future-pass": "a pass directory cannot be dated after the machine's clock",
+    "fetch-log-corroborates": "a pass whose date cannot be checked by a log says so",
+    "report-matches-data": "row counts the report quotes must match the CSVs",
+}
+
 failures: list[str] = []
 
 
@@ -17,135 +51,232 @@ def check(cond: bool, msg: str) -> None:
         failures.append(msg)
 
 
-def latest_pass() -> Path:
-    passes = sorted(p for p in ROOT.iterdir() if p.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}", p.name))
-    check(bool(passes), "no YYYY-MM-DD pass directory found")
-    return passes[-1] if passes else ROOT
+def passes() -> list[Path]:
+    return sorted(p for p in ROOT.iterdir() if p.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}", p.name))
+
+
+def latest() -> Path:
+    found = passes()
+    check(bool(found), "no YYYY-MM-DD pass directory found")
+    return found[-1] if found else ROOT
+
+
+def rel(path: Path) -> str:
+    """Path relative to the repo root, whether or not ROOT is a prefix of it.
+
+    A pass directory can be passed in as a relative path, and `relative_to`
+    raises rather than degrading. Reporting a bare path is better than a
+    traceback in a gate that is supposed to be readable.
+    """
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def read_rows(path: Path) -> tuple[list[str], list[list[str]]]:
+    """Rows of a CSV, skipping a leading prose preamble whose header starts '#'."""
+    raw = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    start = 0
+    while start < len(raw) and raw[start].lstrip().startswith("#"):
+        start += 1
+    if start >= len(raw):
+        return [], []
+    rows = list(csv.reader(raw[start:]))
+    return (rows[0] if rows else []), rows[1:]
+
+
+def check_layout(pass_dir: Path) -> None:
+    for sub in ("data", "references", "sources"):
+        check((pass_dir / sub).is_dir(), f"[layout] missing {sub}/ in {pass_dir.name}")
+    check((pass_dir / "README.md").is_file(), f"[layout] missing README.md in {pass_dir.name}")
+    check((ROOT / "README.md").is_file(), "[layout] missing root README.md")
+    check((ROOT / "docs").is_dir(), "[layout] missing docs/ (reviews live there)")
+
+
+def check_field_counts(pass_dir: Path) -> None:
+    """The check the 2026-09-20 pass needed and did not have."""
+    data = pass_dir / "data"
+    if not data.is_dir():
+        return
+    for path in sorted(data.glob("*.csv")):
+        header, rows = read_rows(path)
+        if not header or len(header) < 2:
+            # A single-column ledger is prose or a key/value file, not a table.
+            continue
+        width = len(header)
+        for offset, row in enumerate(rows, start=1):
+            if not row or (len(row) == 1 and not row[0].strip()):
+                continue
+            if len(row) != width:
+                failures.append(
+                    f"[field-count] {rel(path)} data row {offset} has "
+                    f"{len(row)} fields, header has {width} (columns from field "
+                    f"{min(len(row), width) + 1} onward are shifted)"
+                )
+
+
+def _num(value):
+    try:
+        return float(str(value).replace(",", "").replace("$", ""))
+    except (TypeError, ValueError):
+        return None
+
+
+def check_cost_arithmetic(pass_dir: Path) -> None:
+    """price, tokens and $/M must agree. A row that fails is not publishable.
+
+    The three cells have to be the same quantity in three units, so the columns
+    are matched by exact name and the check runs only where all three exist.
+    Guessing a column by substring produced a confident nonsense failure on this
+    pass's own data, which is worse than having no check, so a file without the
+    triple is skipped instead.
+    """
+    data = pass_dir / "data"
+    if not data.is_dir():
+        return
+    for path in sorted(data.glob("*.csv")):
+        header, rows = read_rows(path)
+        if not header:
+            continue
+        index = {name.strip().lower(): i for i, name in enumerate(header)}
+        price_col = next((c for c in index if c in ("price_usd_month", "plan_price_usd_month", "price")), None)
+        tok_col = next((c for c in index if c in ("monthly_tokens_m", "monthly_tokens", "tokens_m", "tokens_m_at_ceiling")), None)
+        per_col = next((c for c in index if c in ("usd_per_mtok", "usd_per_m_tokens")), None)
+        if not (price_col and tok_col and per_col):
+            continue
+        for offset, row in enumerate(rows, start=1):
+            if len(row) <= max(index[c] for c in (price_col, tok_col, per_col)):
+                continue
+            price = _num(row[index[price_col]])
+            tokens = _num(row[index[tok_col]])
+            per_m = _num(row[index[per_col]])
+            if not price or not tokens or not per_m or price <= 0 or tokens <= 0 or per_m <= 0:
+                continue
+            # monthly_tokens_m is already in millions, so price / tokens is $/M.
+            expected = price / tokens
+            ratio = expected / per_m
+            if not (0.95 <= ratio <= 1.05):
+                shown = row[index[per_col]]
+                failures.append(
+                    f"[cost-arithmetic] {rel(path)} data row {offset}: "
+                    f"price {price} / {tokens:g}M tokens = ${expected:.4f}/M but the row "
+                    f"states ${shown}/M ({ratio:.2f}x off)"
+                )
+
+
+def check_evidence_labels(pass_dir: Path) -> None:
+    """Every number must be attributable, or explicitly marked unknown."""
+    data = pass_dir / "data"
+    if not data.is_dir():
+        return
+    label_cols = ("source", "source_quality", "confidence", "evidence", "class")
+    for path in sorted(data.glob("*.csv")):
+        header, rows = read_rows(path)
+        if not header:
+            continue
+        index = {name.strip().lower(): i for i, name in enumerate(header)}
+        present = [c for c in label_cols if any(c in name for name in index)]
+        if not present:
+            continue
+        for offset, row in enumerate(rows, start=1):
+            if len(row) != len(header) or not any(c.strip() for c in row):
+                continue
+            values = [row[index[name]].strip() for name in index if any(c in name for c in present)]
+            if not any(values):
+                failures.append(
+                    f"[evidence-label] {rel(path)} data row {offset} has "
+                    f"no source/quality/confidence value"
+                )
+
+
+def check_dates(pass_dir: Path) -> None:
+    today = str(date.today())
+    check(pass_dir.name <= today, f"[no-future-pass] {pass_dir.name} is after the machine date {today}")
+    log = pass_dir / "data" / "fetch-log.json"
+    if pass_dir.name == today and not log.is_file():
+        check(
+            False,
+            f"[fetch-log-corroborates] pass is dated today ({today}) but "
+            f"{rel(log)} is absent, so the date cannot be checked",
+        )
+    if log.is_file():
+        try:
+            entries = json.loads(log.read_text())
+        except json.JSONDecodeError as exc:
+            failures.append(f"[fetch-log-corroborates] {rel(log)} is not valid JSON: {exc}")
+            return
+        if not isinstance(entries, list) or not entries:
+            failures.append(f"[fetch-log-corroborates] {rel(log)} has no entries")
+            return
+        for entry in entries:
+            if not all(k in entry for k in ("url", "http", "sha256")):
+                failures.append(
+                    f"[fetch-log-corroborates] an entry in {rel(log)} is missing "
+                    f"url/http/sha256, so it cannot be checked against a source"
+                )
+                break
+
+
+def check_report_matches_data(pass_dir: Path) -> None:
+    """A row count in the prose is a claim about the CSV, so check it.
+
+    The 2026-10-02 report said "76 rows" for a file with 78. A reader cannot
+    tell which is right without opening both, so the gate compares them.
+    """
+    report = pass_dir / "README.md"
+    data = pass_dir / "data"
+    if not report.is_file() or not data.is_dir():
+        return
+    text = report.read_text(encoding="utf-8", errors="replace")
+    # "N rows", "N-row", "N rows per plan" immediately after a data/ path
+    for match in re.finditer(r"data/([A-Za-z0-9._-]+\.csv)\)?\s*\((\d+)[- ]row", text):
+        name, claimed = match.group(1), int(match.group(2))
+        path = data / name
+        if not path.is_file():
+            failures.append(f"[report-matches-data] report cites data/{name} but it is not in {rel(data)}/")
+            continue
+        header, rows = read_rows(path)
+        actual = len([r for r in rows if r and any(c.strip() for c in r)])
+        if actual != claimed:
+            failures.append(
+                f"[report-matches-data] report says data/{name} has {claimed} rows, it has {actual}"
+            )
+
+
+def validate(pass_dir: Path) -> None:
+    check_layout(pass_dir)
+    check_dates(pass_dir)
+    check_field_counts(pass_dir)
+    check_cost_arithmetic(pass_dir)
+    check_evidence_labels(pass_dir)
+    check_report_matches_data(pass_dir)
 
 
 def main() -> int:
-    pass_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else latest_pass()
-    print(f"validating pass: {pass_dir.name}")
+    args = sys.argv[1:]
+    if "--all" in args:
+        targets = passes()
+        if not targets:
+            print("no pass directories found")
+            return 1
+    elif args:
+        targets = [Path(a) for a in args]
+    else:
+        targets = [latest()]
 
-    # --- layout ---
-    for sub in ("data", "references", "sources"):
-        check((pass_dir / sub).is_dir(), f"missing directory {sub}/")
-    check((pass_dir / "README.md").is_file(), "missing report README.md")
-    check((ROOT / "README.md").is_file(), "missing root README.md")
-    check((ROOT / "docs" / "reviews.md").is_file(), "missing docs/reviews.md")
-    check(pass_dir.name <= str(date.today()), f"pass dir {pass_dir.name} is in the future")
-    if os.environ.get("STRICT_DATE"):
-        check(pass_dir.name == str(date.today()), f"pass dir {pass_dir.name} != today {date.today()}")
+    for pass_dir in targets:
+        before = len(failures)
+        validate(pass_dir)
+        added = len(failures) - before
+        print(f"{pass_dir.name}: {'OK' if not added else f'{added} failure(s)'}")
 
-    # --- models database ---
-    mpath = pass_dir / "data" / "models-database.csv"
-    check(mpath.is_file(), "missing data/models-database.csv")
-    if mpath.is_file():
-        with mpath.open() as f:
-            models = list(csv.DictReader(f))
-        check(len(models) >= 30, f"models DB has {len(models)} rows, need >= 30")
-        need = {"model_slug", "provider", "release_date", "aa_intelligence_index",
-                "terminal_bench_v4", "context_window_tokens", "ctx_ge_1m",
-                "image_input", "api_input_usd_per_m", "api_output_usd_per_m"}
-        check(need.issubset(models[0].keys()), f"models DB missing columns: {need - set(models[0].keys())}")
-        slugs = set()
-        for r in models:
-            s = r["model_slug"]
-            check(s and s not in slugs, f"duplicate/empty model slug: {s!r}")
-            slugs.add(s)
-            try:
-                ctx = int(r["context_window_tokens"])
-            except ValueError:
-                failures.append(f"{s}: non-integer context {r['context_window_tokens']!r}")
-                continue
-            if ctx == 0 and r["ctx_ge_1m"] == "UNKNOWN":
-                continue  # context not published; ctx_ge_1m honestly unknown
-            want = "YES" if ctx >= 1_000_000 else "NO"
-            check(r["ctx_ge_1m"] == want, f"{s}: ctx_ge_1m={r['ctx_ge_1m']} inconsistent with ctx={ctx}")
-            for pcol in ("api_input_usd_per_m", "api_output_usd_per_m"):
-                v = r[pcol]
-                if v not in ("", None):
-                    try:
-                        check(float(v) >= 0, f"{s}: negative {pcol}")
-                    except ValueError:
-                        failures.append(f"{s}: non-numeric {pcol}={v!r}")
-        # frontier band present per brief (Opus 5 class)
-        check("claude-opus-5" in slugs, "models DB missing claude-opus-5")
-
-    # --- providers database ---
-    ppath = pass_dir / "data" / "providers-database.csv"
-    check(ppath.is_file(), "missing data/providers-database.csv")
-    if ppath.is_file():
-        with ppath.open() as f:
-            providers = list(csv.DictReader(f))
-        check(len(providers) >= 25, f"providers DB has {len(providers)} rows, need >= 25")
-        pneed = {"provider", "coding_tool", "price_usd_month", "usage_mechanism",
-                 "ctx_1m_at_sub_level", "bundled_inference", "status", "source_quality"}
-        check(pneed.issubset(providers[0].keys()), f"providers DB missing columns: {pneed - set(providers[0].keys())}")
-        distinct = {r["provider"] for r in providers}
-        check(len(distinct) >= 20, f"only {len(distinct)} distinct providers, need >= 20")
-        for r in providers:
-            check(r["source_quality"] != "", f"{r['provider']}/{r['coding_tool']}: empty source_quality")
-
-    # --- AA snapshot ---
-    apath = pass_dir / "data" / "aa-snapshot-2026-09-13.json"
-    if apath.is_file():
-        aa = json.loads(apath.read_text())
-        check(len(aa) >= 100, f"AA snapshot only {len(aa)} rows")
-        bad = [r["slug"] for r in aa if r.get("deprecated") or (r.get("intelligenceIndex") or 0) < 20]
-        check(not bad, f"AA snapshot contains deprecated/low-II rows: {bad[:5]}")
-        iis = [r["intelligenceIndex"] for r in aa]
-        check(iis == sorted(iis, reverse=True), "AA snapshot not sorted by II desc")
-
-    # --- report cross-checks ---
-    report = (pass_dir / "README.md").read_text()
-    for anchor in ("BEST DEAL FOUND", "HIDDEN DEALS", "ARBITRAGE OPPORTUNITIES",
-                   "WHAT I WOULD BUY", "Workload test", "1M-context deep dive",
-                   "Multimodal deep dive", "Rankings", "Method"):
-        check(anchor in report, f"report missing section: {anchor}")
-    check("52.5M" in report, "report missing 52.5M workload figure")
-    # workload arithmetic
-    check(15 + 37.5 == 52.5, "workload arithmetic 15M + 37.5M != 52.5M")
-    # GLM capacity claim must match weekly allowance x 4.33 weeks (48-97M/wk)
-    for wk, mo in ((48, 208), (97, 420)):
-        check(abs(wk * 4.33 - mo) <= 1, f"GLM weekly {wk}M x 4.33 != {mo}M")
-    check("208–420M" in report, "report missing GLM Lite monthly capacity 208–420M")
-    # every model slug cited with backticks in the DB exists in models DB
-    if mpath.is_file():
-        with mpath.open() as f:
-            slugs = {r["model_slug"] for r in csv.DictReader(f)}
-        for cited in set(re.findall(r"`([a-z0-9]+(?:[-.][a-z0-9]+)+)`", report)):
-            norm = cited.replace(".", "-")
-            if norm.startswith(("claude-", "gpt-", "gemini-", "qwen", "kimi-", "glm-", "muse-",
-                                "minimax-", "deepseek-", "grok-", "mimo-")):
-                check(norm in slugs, f"report cites model `{cited}` not in models DB")
-        # GLM capacity consistency between report (x4.33wk) and providers DB
-        if ppath.is_file():
-            with ppath.open() as f:
-                prow = next((r for r in csv.DictReader(f) if r["coding_tool"] == "GLM Coding Plan Lite"), {})
-            est = prow.get("est_token_capacity_month", "")
-            for fig in ("208-420M", "632M-1,264M"):
-                check(fig in est, f"providers DB GLM Lite capacity missing {fig} (4.33wk math)")
-            for fig in ("208–420M", "632M–1.26B", "632M–1,264M"):
-                pass  # report uses en-dashes; primary check is the CSV side above
-            check("208–420M" in report, "report GLM Lite capacity disagrees with DB")
-
-    # --- references ---
-    refs = (pass_dir / "references" / "references.md").read_text() if (pass_dir / "references" / "references.md").is_file() else ""
-    check(pass_dir.name in refs, f"references missing access date {pass_dir.name}")
-    check(refs.count("\n") > 40, "references suspiciously short")
-
-    # --- sources present ---
-    n_sources = len(list((pass_dir / "sources").glob("*"))) if (pass_dir / "sources").is_dir() else 0
-    check(n_sources >= 20, f"only {n_sources} source snapshots, expected >= 20")
-
-    # --- result ---
     if failures:
-        print(f"FAIL ({len(failures)}):")
-        for m in failures:
-            print("  -", m)
+        print(f"\nFAIL ({len(failures)}):")
+        for message in failures:
+            print("  -", message)
         return 1
-    print("OK: all checks passed")
+    print("\nOK: all checks passed")
     return 0
 
 

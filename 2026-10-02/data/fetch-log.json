@@ -1,0 +1,222 @@
+[
+  {
+    "url": "https://docs.z.ai/devpack/overview.md",
+    "http": 200,
+    "bytes": 8315,
+    "ms": 650,
+    "sha256": "594793a77de76dcdd30662a200f1f48599cbf353f08c00e2df8eb9d00e3c0851",
+    "error": null,
+    "saved_as": "raw/zai-overview.md",
+    "label": "zai-overview.md",
+    "note": "Z.ai GLM Coding Plan overview, markdown"
+  },
+  {
+    "url": "https://docs.z.ai/devpack/faq.md",
+    "http": 200,
+    "bytes": 9838,
+    "ms": 860,
+    "sha256": "af2d4b98eab9b9290dfd1f09abd9e9b7eceb08f07e910d754a51bb346bc72839",
+    "error": null,
+    "saved_as": "raw/zai-faq.md",
+    "label": "zai-faq.md",
+    "note": "Z.ai devpack FAQ"
+  },
+  {
+    "url": "https://docs.z.ai/devpack/teamplan.md",
+    "http": 200,
+    "bytes": 10353,
+    "ms": 657,
+    "sha256": "246b67a7efbbcab3164a7cb678fcfb4c5abf75275fc31a37bfe0fb82869f5ff2",
+    "error": null,
+    "saved_as": "raw/zai-teamplan.md",
+    "label": "zai-teamplan.md",
+    "note": "Z.ai Team Plan"
+  },
+  {
+    "url": "https://api.z.ai/",
+    "http": 200,
+    "bytes": 264645,
+    "ms": 2059,
+    "sha256": "7851fb001d3c930f19b1d6525ca1e63dc975fa36e827af0fe48c6e1b88aab264",
+    "error": null,
+    "saved_as": "raw/zai-api-home.html",
+    "label": "zai-api-home.html",
+    "note": "Z.ai API landing"
+  },
+  {
+    "url": "https://opencode.ai/zen/",
+    "http": 200,
+    "bytes": 39100,
+    "ms": 882,
+    "sha256": "6d3c77a9376ca200344abe6adc6bd775739f99c91a154dfededda256ec892b37",
+    "error": null,
+    "saved_as": "raw/opencode-zen.html",
+    "label": "opencode-zen.html",
+    "note": "OpenCode Zen gateway catalogue and pricing"
+  },
+  {
+    "url": "https://opencode.ai/docs/zen/",
+    "http": 200,
+    "bytes": 107080,
+    "ms": 1113,
+    "sha256": "84a7e4059af111a892596a4d3f2113cc05e7ade3311fbb0835cd3feb220f4175",
+    "error": null,
+    "saved_as": "raw/opencode-zen-docs.html",
+    "label": "opencode-zen-docs.html",
+    "note": "OpenCode Zen documentation"
+  },
+  {
+    "url": "https://opencode.ai/docs/go/",
+    "http": 200,
+    "bytes": 103111,
+    "ms": 1078,
+    "sha256": "bdef8d7bf9f3939d25a31fdd8eaeff375402bdae41de57cc0ac5e56bdd1ae994",
+    "error": null,
+    "saved_as": "raw/opencode-go.html",
+    "label": "opencode-go.html",
+    "note": "OpenCode Go subscription plan"
+  },
+  {
+    "url": "https://www.minimax.io/",
+    "http": 200,
+    "bytes": 378046,
+    "ms": 2175,
+    "sha256": "28145b4b5dd072d54bc9af14f70071763d825fc98b5221131ad38398a445d5d6",
+    "error": null,
+    "saved_as": "raw/minimax-home.html",
+    "label": "minimax-home.html",
+    "note": "MiniMax global site"
+  },
+  {
+    "url": "https://platform.minimax.io/docs/guides/pricing-token-plan",
+    "http": 200,
+    "bytes": 513760,
+    "ms": 1481,
+    "sha256": "f89b45310fbdcd753c6dddf5a4c1c176c9756499166fde0b5f3c1c065209bc48",
+    "error": null,
+    "saved_as": "raw/minimax-token-plan.md",
+    "label": "minimax-token-plan.md",
+    "note": "MiniMax token plan pricing"
+  },
+  {
+    "url": "https://www.anthropic.com/pricing",
+    "http": 200,
+    "bytes": 1184703,
+    "ms": 1747,
+    "sha256": "662e0e9628139c6f23c9b9c2c163657ea46acfa053aa95f66c1166540bb338b8",
+    "error": null,
+    "saved_as": "raw/anthropic-pricing.html",
+    "label": "anthropic-pricing.html",
+    "note": "Anthropic plan pricing"
+  },
+  {
+    "url": "https://support.anthropic.com/en/articles/9797557-1m-context-window",
+    "http": 200,
+    "bytes": 365176,
+    "ms": 1687,
+    "sha256": "61faffe51327ece2fd1b6f6d5d1df0b3f0d2f02248f513ed0c89eb91662daf12",
+    "error": null,
+    "saved_as": "raw/anthropic-context.html",
+    "label": "anthropic-context.html",
+    "note": "Anthropic 1M context window support doc"
+  },
+  {
+    "url": "https://platform.openai.com/docs/pricing",
+    "http": 200,
+    "bytes": 580576,
+    "ms": 1412,
+    "sha256": "09a16a138ac06385fe4d6cce7a8d1a8c27cd14be00d4ce954cc6b7544662995d",
+    "error": null,
+    "saved_as": "raw/openai-pricing.html",
+    "label": "openai-pricing.html",
+    "note": "OpenAI platform pricing (docs host, avoids 403 on www)"
+  },
+  {
+    "url": "https://docs.cline.bot/",
+    "http": 200,
+    "bytes": 310429,
+    "ms": 1612,
+    "sha256": "620a2b089e43116f838e25c24845a47102b1640159fdc753a2c03c18932fbdf7",
+    "error": null,
+    "saved_as": "raw/cline-docs.html",
+    "label": "cline-docs.html",
+    "note": "Cline docs root"
+  },
+  {
+    "url": "https://aider.chat/",
+    "http": 200,
+    "bytes": 30632,
+    "ms": 201,
+    "sha256": "5c4361d45bfdf3a54ec8f3f17c8c8bf7da1aa975e34db2e36d02b6f5ab977770",
+    "error": null,
+    "saved_as": "raw/aider-home.html",
+    "label": "aider-home.html",
+    "note": "Aider home"
+  },
+  {
+    "url": "https://kilo.ai/",
+    "http": 200,
+    "bytes": 496651,
+    "ms": 1007,
+    "sha256": "4d9f87cae3cfebe230339b8de010e2ddbddd15f371b5acc72235e2d9d5dd1ba8",
+    "error": null,
+    "saved_as": "raw/kilo-home.html",
+    "label": "kilo-home.html",
+    "note": "Kilo Code site"
+  },
+  {
+    "url": "https://cursor.com/pricing",
+    "http": 200,
+    "bytes": 251483,
+    "ms": 490,
+    "sha256": "db55c1cdd5f80718d2d6e0e8a8d410ed5715336a59d8c8c14a298322382deeee",
+    "error": null,
+    "saved_as": "raw/cursor-pricing.html",
+    "label": "cursor-pricing.html",
+    "note": "Cursor pricing"
+  },
+  {
+    "url": "https://github.com/features/copilot/plans",
+    "http": 200,
+    "bytes": 1265863,
+    "ms": 1374,
+    "sha256": "b4d6edfe1a0f93c86728ec38d434ddaba8c4841eb982b160f348d32164317528",
+    "error": null,
+    "saved_as": "raw/github-copilot-plans.html",
+    "label": "github-copilot-plans.html",
+    "note": "GitHub Copilot plans"
+  },
+  {
+    "url": "https://platform.minimax.io/",
+    "http": 200,
+    "bytes": 570521,
+    "ms": 4145,
+    "sha256": "406f54785726da49236d242d8da2bc528141d4730fdbaa548fbd7741adbe2831",
+    "error": null,
+    "saved_as": "raw/minimax-api.html",
+    "label": "minimax-api.html",
+    "note": "MiniMax platform"
+  },
+  {
+    "url": "https://www.volcengine.com/",
+    "http": 200,
+    "bytes": 118152,
+    "ms": 2690,
+    "sha256": "34a5fab4a6d1517cda70b8e0d1effa4f01cd3063beb3f66aeaf09f48594d4f2c",
+    "error": null,
+    "saved_as": "raw/volcengine-home.html",
+    "label": "volcengine-home.html",
+    "note": "Volcengine (ByteDance) home"
+  },
+  {
+    "url": "https://artificialanalysis.ai/models",
+    "http": 200,
+    "bytes": 1360159,
+    "ms": 860,
+    "sha256": "ef2eeee12f9bc9edd0090b24a264edc2029187d236ccd15433627e8bf35ca36c",
+    "error": null,
+    "saved_as": "raw/aa-models.html",
+    "label": "aa-models.html",
+    "note": "Artificial Analysis model leaderboard"
+  }
+]

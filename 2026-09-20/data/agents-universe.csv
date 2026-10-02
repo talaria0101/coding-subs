@@ -1,7 +1,7 @@
 product,category,open_source,monetization,price_note,in_sub2api,in_cliproxyapi,in_pass_2026_09_13,source_quality,evidence
 Command Code,coding agent (open models),no,subscription + PAYG,"Go $1 / GOAT $10 / Pro $20 / Max10x $100 / Max20x $200 per month, API plan $15/mo zero markup, Teams $40/mo",no,no,no,VERIFIED own pricing page 2026-09-20,sources/agents/commandcode-pricing.txt
 Open Interpreter,coding agent (open models),yes,BYOK,free (BYOK),no,no,no,THIRD-PARTY github listing 2026-09-20,https://github.com/openinterpreter/openinterpreter
-OpenCode,coding agent,no (agent open, Zen closed),PAYG + subscription,Zen zero-markup PAYG ($20 top-ups); Go subscription (quota windows),yes,yes,yes,VERIFIED official 2026-09-13 + registry,2026-09-13/data/providers-database.csv
+OpenCode,coding agent,"no (agent open, Zen closed)",PAYG + subscription,Zen zero-markup PAYG ($20 top-ups); Go subscription (quota windows),yes,yes,yes,VERIFIED official 2026-09-13 + registry,2026-09-13/data/providers-database.csv
 Claude Code,coding agent,no,bundled subscription,Claude Pro $20 / Max $100 / Max $200,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
 Codex CLI,coding agent,no,bundled subscription,ChatGPT Plus $20 / Pro $100-$200,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
 Gemini CLI,coding agent,no,free tier + subscription,Antigravity free tier $0; Google AI Pro $19.99,yes,yes,yes,VERIFIED official 2026-09-13,2026-09-13/data/providers-database.csv
