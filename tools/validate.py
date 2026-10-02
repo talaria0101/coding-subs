@@ -41,6 +41,7 @@ CHECKS: dict[str, str] = {
     "no-future-pass": "a pass directory cannot be dated after the machine's clock",
     "fetch-log-corroborates": "a pass whose date cannot be checked by a log says so",
     "report-matches-data": "row counts the report quotes must match the CSVs",
+    "model-slug-joins": "a plan row naming a model must join to a model in the landscape",
 }
 
 failures: list[str] = []
@@ -244,6 +245,40 @@ def check_report_matches_data(pass_dir: Path) -> None:
             )
 
 
+def check_model_slug_joins(pass_dir: Path) -> None:
+    """A plan row that names a model must join to a row in the model database.
+
+    The plan table carries display names ("GLM-5.3-Flash") and the model
+    database carries slugs ("glm-5-3-flash"). Joining them on the display name
+    silently yields an empty ranking: the first version of this pass's ranked
+    table was empty for exactly that reason and said nothing was wrong. A row
+    whose model has no counterpart is therefore an error, not a gap.
+    """
+    data = pass_dir / "data"
+    models = data / "models-database.csv"
+    plans = data / "plan-economics.csv"
+    if not models.is_file() or not plans.is_file():
+        return
+    mheader, mrows = read_rows(models)
+    pheader, prows = read_rows(plans)
+    if "slug" not in mheader or "model_slug" not in pheader:
+        return
+    mi = mheader.index("slug")
+    pi = pheader.index("model_slug")
+    known = {r[mi].strip() for r in mrows if len(r) > mi}
+    for offset, row in enumerate(prows, start=1):
+        if len(row) <= pi:
+            continue
+        slug = row[pi].strip()
+        if not slug or slug == "UNKNOWN":
+            continue
+        if slug not in known:
+            failures.append(
+                f"[model-slug-joins] {rel(plans)} data row {offset} names model_slug "
+                f"{slug!r}, which is not in data/models-database.csv"
+            )
+
+
 def validate(pass_dir: Path) -> None:
     check_layout(pass_dir)
     check_dates(pass_dir)
@@ -251,6 +286,7 @@ def validate(pass_dir: Path) -> None:
     check_cost_arithmetic(pass_dir)
     check_evidence_labels(pass_dir)
     check_report_matches_data(pass_dir)
+    check_model_slug_joins(pass_dir)
 
 
 def main() -> int:

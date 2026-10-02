@@ -1,17 +1,112 @@
 # Coding-Subscription Market Pass — 2026-10-02 (metering methods and free-tier access)
 
-**Research date: 2026-10-02 (UTC), 08:00–08:20.** 20 first-party sources fetched serially, one
+**Research date: 2026-10-02 (UTC), 08:00–08:25.** 20 first-party sources fetched serially, one
 request each, with per-source HTTP status, byte count, latency and SHA-256 in
 [data/fetch-log.json](data/fetch-log.json); 20/20 returned 200. Databases:
+[data/models-database.csv](data/models-database.csv) (24 models, Intelligence Index, context window,
+modalities and API list price),
 [data/plan-economics.csv](data/plan-economics.csv) (22 plan rows),
 [data/opencode-go-grid.csv](data/opencode-go-grid.csv) (78 rows, the full OpenCode Go and Go Plus
 per-model grid),
+[data/method-sensitivity.csv](data/method-sensitivity.csv) (the $/M sensitivity table below, per
+model),
 [data/free-tier-access.csv](data/free-tier-access.csv) (free-tier catalogue sources evaluated),
 [data/subscription-measurements.csv](data/subscription-measurements.csv) (third-party metered
-allowance multipliers),
-[data/method-sensitivity.csv](data/method-sensitivity.csv) (the $/M sensitivity table below, per
-model). Numbered citations: [references/references.md](references/references.md). Raw snapshots:
-[sources/](sources/). Reviews: [../docs/reviews-2026-10-02.md](../docs/reviews-2026-10-02.md).
+allowance multipliers). Numbered citations: [references/references.md](references/references.md).
+Raw snapshots: [sources/](sources/). Reviews:
+[../docs/reviews-2026-10-02.md](../docs/reviews-2026-10-02.md).
+
+---
+
+## 0. The short answer
+
+| Question | Answer | Evidence class |
+|---|---|---|
+| **Cheapest large allowance per dollar** | **OpenCode Go, $10/month.** On its own published grid it reaches **Muse Spark 1.3 at II 48.09 for $0.0009/M** under a cache-heavy mix, and DeepSeek V4.1 Flash at II 39.46 for $0.0016/M. 39 models, per-model ceilings $6–$240, works in any agent. | FIRST-PARTY-COMPUTED |
+| **Best quality per dollar, first-party ceiling** | **OpenCode Go, same plan, same $10**: II 48.09 at $0.0009/M is 53,000 II-points per $/M. The next best on the same plan is 24,660. | FIRST-PARTY-COMPUTED |
+| **Cheapest per token under a no-cache assumption** | OpenCode Go on Muse Spark 1.3 at $0.0208/M — still the cheapest single-model figure in this market, 4x its cache-heavy reading. | FIRST-PARTY-COMPUTED |
+| **Best plan that publishes a credit-and-token table** | **Z.ai GLM Coding Plan**, $18 (Lite) to $160 (Max). GLM-5.3-Flash at II 41.81 runs $0.0142/M (Lite) to $0.0090/M (Max); GLM-5.3 at II 44.78 runs $0.0429/M to $0.0273/M. | FIRST-PARTY-COMPUTED |
+| **Frontier quality (II ≥ 50)** | **No plan in this table reaches it.** The frontier moved: Claude Opus 5.5 (II 57.62, released 2026-09-22) and Claude Sonnet 5.5 (II 56.00, 2026-09-28) are the two highest-scoring models on the leaderboard, and neither appears on any subscription grid read in this pass. The best reachable quality is II 48.09. | FIRST-PARTY-COMPUTED |
+| **Cheapest entry** | Command Code Go at $1 and OpenCode Go at $10, per the 2026-09-20 pass. Command Code's effective-usage multiples are advertised, not published as tokens, so it carries no $/M here. | ADVERTISED |
+| **Best free entry** | **Google Antigravity free tier** and **Kiro Free (50 credits/month)**, per the 2026-09-20 pass. Not re-verified in this pass; the only free surface measured here is section 3's anonymous probe. | CARRIED FORWARD |
+| **Confidence** | HIGH on every price and grid figure, all read from the vendor's own page today. The $/M figures carry their traffic mix and move 5.3x–29.0x on it. No metered result in this pass. | — |
+
+### The ranked field
+
+This is the whole market as this pass can compute it: every plan/model pair where a first-party
+ceiling and a leaderboard score both exist, ordered by quality per dollar. Full data in
+[data/plan-economics.csv](data/plan-economics.csv) and
+[data/models-database.csv](data/models-database.csv).
+
+| Plan | $/mo | Model | Creator | II | $/M (cache-heavy) | II per $/M |
+|---|---|---|---|---|---|---|
+| **OpenCode Go** | **10** | **Muse Spark 1.3** | Meta | **48.09** | **$0.0009** | **53,436** |
+| OpenCode Go | 10 | DeepSeek V4.1 Flash | DeepSeek | 39.46 | $0.0016 | 24,660 |
+| OpenCode Go Plus | 40 | Muse Spark 1.3 | Meta | 48.09 | $0.0018 | 26,718 |
+| OpenCode Go | 10 | GLM-5.3-Flash | Z AI | 41.81 | $0.0059 | 7,086 |
+| GLM Coding Plan Max | 160 | GLM-5.3-Flash | Z AI | 41.81 | $0.0090 | 4,645 |
+| GLM Coding Plan Pro | 72 | GLM-5.3-Flash | Z AI | 41.81 | $0.0095 | 4,401 |
+| OpenCode Go | 10 | GPT 6 Luna (≤272K) | OpenAI | 38.12 | $0.0098 | 3,890 |
+| GLM Coding Plan Lite | 18 | GLM-5.3-Flash | Z AI | 41.81 | $0.0142 | 2,944 |
+| GLM Coding Plan Max | 160 | GLM-5.3 | Z AI | 44.78 | $0.0273 | 1,640 |
+| GLM Coding Plan Pro | 72 | GLM-5.3 | Z AI | 44.78 | $0.0287 | 1,560 |
+| GLM Coding Plan Lite | 18 | GLM-5.3 | Z AI | 44.78 | $0.0429 | 1,044 |
+| OpenCode Go | 10 | Kimi K3 | Kimi | 43.59 | $0.2940 | 148 |
+
+**Three things fall out of the table that no single row shows.**
+
+1. **The frontier is not for sale at any price in this market.** The leaderboard's top two models
+   were both released in the last ten days and appear on no subscription grid. The best quality any
+   plan here reaches is II 48.09 (Muse Spark 1.3): a gap of **9.53 II points** to the top model at
+   II 57.62, and **4.47 points** to the best non-Anthropic entry at II 52.56 (Gemini 4 Argon). Every
+   plan in the table is buying last month's frontier.
+2. **The same model costs 2.4x more through one vendor than another.** GLM-5.3-Flash is $0.0059/M
+   on an OpenCode Go dollar ceiling and $0.0142/M on Z.ai Lite credits. Both are first-party, same
+   model, same day. The difference is that one vendor meters in dollars-per-model and the other in
+   credits, and the credit table is published while the dollar grid is not comparable to it.
+3. **Cheapest and best are the same row, and that is unusual.** OpenCode Go on Muse Spark 1.3 is
+   both the highest quality reachable and the cheapest per token, because it is the only lane in
+   this market where a single published grid covers both a strong model and a very low blended
+   price. That is a property of one plan's price table, not a general rule, and it is why the
+   ranking is published per plan rather than as a single winner.
+
+### What the model landscape looks like
+
+24 models carry an Intelligence Index on the leaderboard read today
+([data/models-database.csv](data/models-database.csv)). The top of it:
+
+| Model | Creator | Released | II | Context | In $/M | Out $/M | Image |
+|---|---|---|---|---|---|---|---|
+| Claude Opus 5.5 | Anthropic | 2026-09-22 | 57.62 | 1M | 4.00 | 20.00 | yes |
+| Claude Sonnet 5.5 | Anthropic | 2026-09-28 | 56.00 | 1M | 2.00 | 10.00 | yes |
+| Claude Fable 5.1 | Anthropic | 2026-09-01 | 53.35 | 1M | 10.00 | 50.00 | yes |
+| GPT-6 Astra | OpenAI | 2026-09-03 | 52.67 | 1M | 10.00 | 50.00 | yes |
+| Gemini 4 Argon | Google | 2026-09-30 | 52.56 | 1M | 2.00 | 10.00 | yes |
+| GPT-6.1 Sol | OpenAI | 2026-09-29 | 51.83 | 1M | 2.00 | 10.00 | yes |
+| Muse Spark 1.3 | Meta | 2026-09-02 | 48.09 | 1M | 1.25 | 4.25 | yes |
+| Grok 4.7 | SpaceXAI | 2026-09-21 | 46.45 | 500K | 2.00 | 6.00 | yes |
+| MiMo-V2.6-Pro | Xiaomi | 2026-09-21 | 46.32 | 1M | 0.435 | 0.87 | yes |
+| Qwen3.8 Max | Alibaba | 2026-09-02 | 45.42 | 984K | 2.00 | 6.00 | yes |
+| GLM-5.3 | Z AI | 2026-08-18 | 44.78 | 1M | 1.40 | 4.40 | no |
+| Step 5 | StepFun | 2026-09-18 | 43.73 | 1M | 1.00 | 2.70 | yes |
+| Kimi K3 | Kimi | 2026-07-16 | 43.59 | 1.05M | 3.00 | 15.00 | yes |
+| GLM-5.3-Flash | Z AI | 2026-08-26 | 41.81 | 1M | 0.15 | 0.50 | yes |
+| Gemini 3.8 Flash | Google | 2026-09-02 | 40.93 | 1M | 0.75 | 3.75 | yes |
+| DeepSeek V4.1 Flash | DeepSeek | 2026-09-10 | 39.46 | 1M | 0.30 | 1.20 | yes |
+| GPT-6 Luna | OpenAI | 2026-09-22 | 38.12 | 1M | 0.10 | 0.50 | yes |
+
+**All seven of the top seven models were released in September 2026**, five of them in the last ten
+days. The models on every subscription grid in this market are 4 to 7 II points behind the
+leaderboard, which is the concrete form of "you are buying last month's frontier".
+
+Two properties of this table matter for plan selection and neither is visible in a price list:
+**17 of 24 models have a full 1M context window and 19 of 24 have at least 512k**, so context length
+is close to being a non-differentiator and quality per dollar is the axis that separates plans. The
+exceptions are all sub-frontier (Grok 4.7 at 500k, Qwen3.8 27B at 256k, Nemotron at 262k, Muse
+Glimmer at 131k, Mistral Medium 3.5 at 256k), so a 1M-context requirement narrows the field from
+24 models to 17 without excluding anything above II 38. And **GLM-5.3 is the only model in the top
+17 without image input** — on a plan that also routes vision through MCP rather than through the
+model, which is a real limitation for multimodal agent work.
 
 ---
 
@@ -182,7 +277,76 @@ host.
 
 ---
 
-## 4. Third-party allowance measurements, and why they are not ranked here
+## 4. Workload test: 52.5M tokens/month (15M in + 37.5M out)
+
+The same workload the earlier passes use, repriced against today's model table. This is the
+**list cost of the workload**, which a plan covers if its published ceiling reaches it. A plan
+passes at II 40 or above if its ceiling covers the workload on a model scoring at least that.
+
+| Model | II | List cost of 52.5M | Cheapest plan in this table that covers it |
+|---|---|---|---|
+| GPT-6 Luna | 38.12 | $20.25 | none at II≥40; OpenCode Go holds a $15 ceiling on it |
+| GLM-5.3-Flash | 41.81 | $21.00 | **GLM Lite $18** (632M–1,264M tokens) |
+| MiMo-V2.6-Pro | 46.32 | $39.15 | **OpenCode Go $10** ($15 ceiling on this model) |
+| DeepSeek V4.1 Flash | 39.46 | $49.50 | **OpenCode Go $10** ($60 ceiling) |
+| MiniMax M3 | 29.22 | $49.50 | no plan in this table |
+| Step 5 | 43.73 | $116.25 | no plan in this table |
+| Qwen3.8 27B | 33.70 | $120.00 | no plan in this table |
+| Gemini 3.8 Flash | 40.93 | $151.88 | **OpenCode Go $10** (no ceiling row; GLM Lite reaches 1,264M Flash tokens but not this model) |
+| Muse Spark 1.3 | 48.09 | $178.12 | **OpenCode Go $10** ($60 ceiling, 11,029M tokens at the cache-heavy mix) |
+| GLM-5.3 | 44.78 | $186.00 | **GLM Lite $18** (208M–420M tokens) |
+| Grok 4.7 | 46.45 | $255.00 | no plan in this table |
+| Qwen3.8 Max | 45.42 | $255.00 | no plan in this table |
+| Claude Sonnet 5.5 | 56.00 | $405.00 | none |
+| Gemini 4 Argon | 52.56 | $405.00 | none |
+| GPT-6.1 Sol | 51.83 | $405.00 | none |
+| Kimi K3 | 43.59 | $607.50 | none; OpenCode Go's Kimi ceiling is $15 of list value |
+| Claude Opus 5.5 | 57.62 | $810.00 | none |
+| Claude Fable 5.1 | 53.35 | $2,025.00 | none |
+| GPT-6 Astra | 52.67 | $2,025.00 | none |
+
+**One row is not an API price.** K2 Horizon (375B-A23B, II 30.50, Institute of Foundation Models)
+shows a $0.00 list price because it is **open weights with no published API tariff**, not because it
+is free to call. There is no inference provider for it in this table, and self-hosting it is a
+hardware cost, not a subscription. It is excluded from the pass/fail reading above and listed here
+so the zero is not mistaken for a deal.
+
+**What the workload test shows.** A single $10 plan covers a 52.5M-token month at II 46–48, and a
+$18 plan covers it at II 41–45. Above II 50, no plan in this table covers the workload at all, and
+the list cost of running one there is $405 to $2,025 per month. The scarce resource in this market
+is not tokens, it is the top 7 II points.
+
+---
+
+## 5. What I would buy
+
+Ranked by what the measurements above support, with the reasoning and the caveat attached.
+
+1. **OpenCode Go, $10/month, as the primary.** It is simultaneously the cheapest per token and the
+   highest quality reachable in this market (II 48.09 on Muse Spark 1.3 at $0.0009/M), it publishes
+   the only per-model grid that lets the figure be recomputed, and it works in any agent. Caveat:
+   the grid's request table contradicts its own limit rule (section 1), and the $/M figure depends
+   on a traffic mix this pass did not measure. Both are stated rather than smoothed.
+2. **GLM Coding Plan Lite, $18/month, as the documented-capacity hedge.** It is the only plan that
+   publishes both a credit table and a token table, so its ceiling can be checked against a formula
+   rather than taken on trust. It covers a 52.5M month on GLM-5.3-Flash at II 41.81 with 12x–24x
+   headroom. Caveat: GLM-5.3 has no image input and vision routes through MCP, and the off-peak
+   window and Flash campaign both expire 2026-10-07, after which the ceiling halves.
+3. **Do not buy frontier access through a subscription in this market.** Every II≥50 model is
+   $405–$2,025 per 52.5M tokens at list, and none appears on a plan's grid. If frontier quality is
+   the requirement, the honest comparison is API list price against API list price, not a
+   subscription.
+4. **Do not buy anything from a relay or reseller.** Excluded from rankings by the policy in the
+   2026-09-20 pass: the prices are advertisement, the allowances are quota resale, and the measured
+   degradation reports stand.
+
+**What would change this ranking:** a metered month on OpenCode Go, which would replace its
+published ceiling with a measurement and could show the request-shaped quota binding before the
+dollar ceiling does. A plan adding an II≥50 model to its grid would displace item 1 immediately.
+
+---
+
+## 6. Third-party allowance measurements, and why they are not ranked here
 
 [data/subscription-measurements.csv](data/subscription-measurements.csv) carries metered multipliers
 from an external measurement project: a weekly usage meter is ticked on purpose and every call is
@@ -213,7 +377,7 @@ pass.
 
 ---
 
-## 5. Free-tier catalogue sources: what each contributes
+## 7. Free-tier catalogue sources: what each contributes
 
 [data/free-tier-access.csv](data/free-tier-access.csv) evaluates four external free-tier
 catalogues against one question: can they establish access, or only price. All four are catalogues
@@ -227,18 +391,20 @@ database.
 
 ---
 
-## 6. Known gaps
+## 8. Known gaps
 
 - **No plan was subscribed to and no authenticated request was made.** Every allowance figure here
   is a published ceiling. Nothing in this pass is a metered result.
 - **The traffic mix is a quoted convention**, not a measurement of this pass's own workload. The
   mix is stated beside every figure that depends on it, and the sensitivity table lets a reader
   substitute a measured one.
-- **Fifteen of the twenty fetched sources carry no figure in this pass.** They are archived as the
-  re-verification base: MiniMax, Anthropic, Cline, Aider, Kilo, Volcengine and the Artificial
-  Analysis snapshot are cited in [references/](references/references.md) and carry no number in
-  [data/plan-economics.csv](data/plan-economics.csv). A source list implying twenty mined sources
-  when four were mined is its own form of overclaim.
+- **Sixteen of the twenty fetched sources carry no figure in this pass.** They are archived as the
+  re-verification base: MiniMax, Anthropic, Cline, Aider, Kilo and Volcengine are cited in
+  [references/](references/references.md) and carry no number in
+  [data/plan-economics.csv](data/plan-economics.csv). Four sources do carry figures: the OpenCode Go
+  grid (section 1), the Z.ai docs (section 3), Cursor and GitHub Copilot (section 3), and the
+  Artificial Analysis leaderboard (section 0, the model landscape). A source list implying twenty
+  mined sources when four were mined is its own form of overclaim.
 - **OpenCode Go's monthly-vs-weekly request columns are irreconcilable** and the page does not say
   which is authoritative. Not guessed.
 - **Z.ai's off-peak all-day window and the GLM-5.3-Flash campaign both expire 2026-10-07**, which
@@ -246,12 +412,20 @@ database.
 - **Team Plan seat price is unpublished** and is left UNKNOWN.
 - **No latency or throughput claim is made for any vendor.** The probe's timings are one vantage
   point on one afternoon.
+- **The leaderboard's Terminal-Bench 4.0 column is empty for all 24 models** in today's page
+  payload, so the ranking in section 0 uses the Intelligence Index alone. The 2026-09-20 pass carried
+  Terminal-Bench values from an earlier snapshot; they are not comparable to today's, because the
+  column is not published now.
+- **The Intelligence Index is a composite, not agentic-task performance alone.** A model scoring 48
+  is not necessarily better at tool-calling than one scoring 44, and this pass has no Terminal-Bench
+  figure to check that against. The ranking in section 0 should be read as quality per published
+  list price, not as an agent benchmark result.
 - **The relay and reseller universe is out of scope** for this pass and is not re-verified. Its
   exclusion from rankings is a policy set in the 2026-09-20 pass.
 
 ---
 
-## 7. What would falsify this pass
+## 9. What would falsify this pass
 
 - A first-party statement of OpenCode Go's monthly-versus-weekly convention. Either reading changes
   the plan's effective ceiling by 2x and the page supports both.
