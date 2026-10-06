@@ -38,14 +38,26 @@ def flight_blob(raw: str) -> str:
 def model_objects(blob: str) -> list[dict]:
     """Every model object in the payload, identified by its slug and an II.
 
-    The payload stores models under keys such as `initialModels` and `allModels`,
-    and a model's `id` is a UUID rather than a number, so objects are located by
-    their slug field and brace-matched to the closing brace. A model object
-    exceeds 400 KB only in pathological cases; the practical limit here is raised
-    so that a long object is not truncated mid-scan and silently dropped.
+    The payload stores models under keys such as `initialModels` and `allModels`.
+    Two shapes ship on the site and both are real: `/models` carries objects that
+    open `{"id":"<uuid>","slug":"<slug>"`, while `/leaderboards/models` carries
+    bare `{"slug":"<slug>"` objects with no `id`. Matching only the uuid+slug
+    shape recovered **zero** models from the leaderboard payload, so a lookup
+    against that page reported every model as notFound - including
+    `mimo-v2-6-flash`, which the leaderboard does carry at II 37.88. The shape is
+    therefore detected per object rather than assumed, and both openings are
+    accepted.
+
+    A model object exceeds 400 KB only in pathological cases; the practical limit
+    here is raised so that a long object is not truncated mid-scan and silently
+    dropped.
     """
     found, seen = [], set()
-    for match in re.finditer(r'\{"id":"[0-9a-f\-]{36}","slug":"[a-z0-9.\-]+"', blob):
+    for match in re.finditer(
+        r'\{"id":"[0-9a-f\-]{36}","slug":"[a-z0-9.\-]+"'
+        r'|\{"slug":"[a-z0-9.\-]+"',
+        blob,
+    ):
         start = match.start()
         depth, in_string, escape = 0, False, False
         for end in range(start, min(start + 2_000_000, len(blob))):

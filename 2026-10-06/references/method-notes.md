@@ -1,7 +1,7 @@
 # Method notes
 
 Retrieval and measurement techniques that generalise past this pass, with the limitation each one
-has. No host details, no session history.
+has.
 
 ---
 
@@ -12,13 +12,20 @@ JavaScript-served pages and gets past some Cloudflare interstitials, so it is wo
 a direct request returns a 403, a 429, or an empty shell. `tools/fetch-source.py --via jina` does
 this and records which route produced the bytes.
 
-Measured on this pass:
+Measured on this pass. **These three measurements are not in `data/fetch-log.json` and no bytes from
+them are archived** — they are recorded here as demonstrations of the technique, not as sources any
+figure in this pass rests on. Nothing in [references/references.md](references.md) quotes them:
 
 | URL | direct | via `r.jina.ai` |
 |---|---|---|
 | `https://docs.anthropic.com/en/docs/about-claude/pricing` | 301, 167 B | **200, 31,314 B** |
 | `https://www.reddit.com/r/opencode/` | 403, 1,522 B | 200, 469 B — and the body is Reddit's own block page |
 | `https://imagen.runpod.io/` | — | 422, 246 B |
+
+> **CORRECTED 2026-10-07.** These three rows were previously presented under a `data/fetch-log.json`
+> that does not contain them and with no archived artefact for any of them, which made an unlogged
+> demonstration look like a logged retrieval. The distinction is now stated at the table rather than
+> left for a reader to notice.
 
 **Limitation.** It is a second source, not a better first source. The text is an extraction of
 someone else's render, so a figure read this way is not the vendor's bytes and the log records the
@@ -55,15 +62,23 @@ an empty result; an empty result and a refused request are different claims.
 `gh api --paginate` is how a large issue tracker gets mined. Two things to know before quoting a
 count:
 
-**GitHub's `open_issues_count` includes pull requests.** Measured on two repos in this pass:
+**GitHub's `open_issues_count` includes pull requests.** Re-verified 2026-10-07; the issue-only
+figure is the one to quote, and the two sum exactly to the repo counter:
 
-| repo | `open_issues_count` | issues only (`is:issue is:open`) | PRs only (`is:pr is:open`) |
-|---|---|---|---|
-| `anomalyco/opencode` | 6,242 | 4,615 | 1,627 |
-| `Wei-Shaw/sub2api` | 3,570 | 2,625 | 945 |
+| repo | `open_issues_count` | issues only (`is:issue is:open`) | PRs only (`is:pr is:open`) | sum |
+|---|---|---|---|---|
+| `anomalyco/opencode` | 6,245 | **4,616** | 1,629 | 6,245 |
+| `Wei-Shaw/sub2api` | 3,570 | **2,625** | 945 | 3,570 |
 
-Both sum exactly. A tracker quoted as "3,571 open issues" is overcounting by 945, which is a 56%
-overstatement and it reads as a health signal when it is a mix of two different things.
+Quoting `open_issues_count` alone overstates the issue count by 37% on `anomalyco/opencode` and by
+36% on `Wei-Shaw/sub2api`, and it reads as a health signal when it is a mix of two different things.
+
+> **CORRECTED 2026-10-07.** The earlier version of this table read `anomalyco/opencode` at 6,242 /
+> 4,615 / 1,627 and carried a sentence asserting that "a tracker quoted as **3,571 open issues** is
+> overcounting by 945". **"3,571" appears nowhere in this repository.** The real open-issue count for
+> `Wei-Shaw/sub2api` is **2,625**, and 3,570 is the issues-plus-PRs figure; a reader quoting 3,571 as
+> an issue count is off by 946. `anomalyco/opencode` has moved from 6,242 to 6,245 since 2026-10-06,
+> which is why the date is on the table.
 
 ```bash
 gh api "search/issues?q=repo:OWNER/NAME+is:issue+is:open&per_page=1" --jq .total_count

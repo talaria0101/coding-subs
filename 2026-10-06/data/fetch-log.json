@@ -86,5 +86,44 @@
     "route": "direct",
     "attempt": 1,
     "saved_as": "2026-10-06\\sources\\fenno-models.json"
+  },
+  {
+    "url": "https://artificialanalysis.ai/leaderboards/models",
+    "http": 200,
+    "bytes": 2433852,
+    "ms": null,
+    "sha256": "06e5272f174c38e8f6799c1f6d8f0d68a416ace0459376dd5bd5d359b5a39f81",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Fetched 2026-10-07 to re-check a leaderboard row recorded 2026-10-06. This page, not /models, is the one that lists mimo-v2-6-flash (II 37.8843590141754). See data/aa-lookup.csv.",
+    "saved_as": "2026-10-06\\sources\\aa-leaderboard-models.html"
+  },
+  {
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "http": 200,
+    "bytes": 23982,
+    "ms": null,
+    "sha256": "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Re-fetched 2026-10-07 to settle a misquotation. Byte-identical to the 2026-10-06 archive, so the page did not change: the correction is to what was read out of it, not to the page. See references.md R5.",
+    "saved_as": null
+  },
+  {
+    "url": "https://api.fenno.ai/api/v1/models",
+    "http": 200,
+    "bytes": 11905,
+    "ms": null,
+    "sha256": "46ff5fead0acdb72e5f2d264ca9a9235523c5b9cc49c7952ab5b736e22950bfc",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Re-fetched 2026-10-07 looking for the '100B tokens/day' delivery ceiling this pass attributed to Fenno. Byte-identical to the 2026-10-06 archive and the operator's site returned no such figure, so the claim is downgraded rather than sourced. See data/relay-providers.csv.",
+    "saved_as": null
   }
 ]

@@ -23,3 +23,4 @@ inkling,Inkling (Xhigh),Thinking Machines,2026-07-15,24.9848,,,,1000000,yes,yes,
 nvidia-nemotron-3-ultra-550b-a55b,Nemotron 3 Ultra 550B A55B (Reasoning),NVIDIA,2026-06-04,22.9279,,,0.3636,262144,yes,no,0.6,2.5,0.16,1.075,,no
 muse-glimmer,Muse Glimmer (High),Meta,2026-08-10,17.4754,,,,131072,yes,yes,0.325,1.35,0.04,0.5813,,no
 mistral-medium-3-5,Mistral Medium 3.5,Mistral,2026-04-29,14.1889,,,0.3333,256000,yes,yes,1.5,7.5,0.15,3,,no
+mimo-v2-6-flash,MiMo-V2.6-Flash,Xiaomi,,37.8844,,,,1000000,yes,,,,,,,no

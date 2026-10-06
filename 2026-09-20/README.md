@@ -61,7 +61,7 @@ numbers, labeled as such; ADVERTISED = marketing; UNKNOWN = unpublished, never g
 | **Why it outranks everything** | ~13B tokens/month on a model rated II 48.09. At Muse Spark 1.3 API list ($1.25/$4.25) that usage is worth **$16,200–$55,200/month** (all-input to all-output bounds) — **1,082–3,680×** the price, the largest subsidy in this market by far |
 | **What would falsify it** | launch-window generosity; mix skews to cheap input tokens; throttling after the promo; dashboard "tokens" != model tokens. Treat as the deal to verify first-hand this month, not a guarantee |
 | **BEST DEAL (documented)** | **Z.ai GLM Coding Plan Lite — $18/month**: the only vendor publishing token tables (Lite GLM-5.3 @95% cache: **48–97M tokens/week ≈ 208–420M/month**). Now ranked below Muse on the numbers; its earlier #1 was substantially an artifact of being the only vendor with published tables. The Flash campaign's bonus quota ended Sep 20 |
-| **BEST DEAL (verified $10 tier)** | **OpenCode Go — $10/month** (rev 2, previously missed): published per-model request/usage grid across 27 open models, up to ~$60/mo of list-value usage; runs in any agent |
+| **BEST DEAL (verified $10 tier)** | **OpenCode Go — $10/month** (rev 2, previously missed): published per-model request/usage grid across 27 open models, up to ~$60/mo of list-value usage; runs in any agent. **SUPERSEDED 2026-10-06 and 2026-10-07: this row reads the per-model ceilings as independent budgets. The monthly caps are a shared pool, so "up to ~$60/mo" is what the models divide, not $60 each; and the additive reading was never 6x — the sum of all 37 per-model ceilings is $1,335 against a $10 plan.** |
 | **CHEAPEST ENTRY** | **Command Code Go — $1/month** ($10 credits, up to ~$20 usage with deals, ~15K requests, up to 1M context) — deal multiples ADVERTISED, unmeasured |
 | **CHEAPEST FRONTIER QUALITY** | ChatGPT Plus $20 (GPT-5.6 Sol II 46.97) and Claude Pro $20 (1M-context Claude Code) — both re-verified, unchanged |
 | **BEST FREE** | Google Antigravity free tier — Gemini 3.8/3.7/3.6 Flash + 3.1 Pro + Claude Sonnet 4.6 & Opus 4.6 (thinking) + gpt-oss-120b, weekly-refreshed quota |
@@ -203,7 +203,7 @@ price), MiniMax Plus (capacity still unpublished; M3 slipped to II 29.22).
 | Kimi CN legacy pricing | ¥199 ≈ $29.62 | $39 international for the same tier | 1.32× regional arbitrage (official CN billing required) |
 | Gemini 3.8 Flash via AI Pro / free Antigravity | $19.99 / $0 | $152/mo for the reference workload at intro API rates; 2× after Dec 31, 2026 | quota-limited |
 | Muse Spark 1.3 via Muse Code High Usage (USER-REPORTED) | $15/mo | ~13B reported tokens/mo = $16,238–$55,208 at Spark list (all-input/all-output bounds) | **1,082–3,680×**, launch-window subsidy, unverified |
-| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage on **one** model; the 27 models divide that pool | ~6× face, single-model. **SUPERSEDED 2026-10-06** |
+| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage on **one** model; the 27 models divide that pool | ~6× face, single-model. **SUPERSEDED 2026-10-06; the 6× restated 2026-10-07.** The ~6× is the $60 single-model ceiling against a $10 plan, which is right for one model and is not a statement about the 37-model grid: the sum of all 37 per-model ceilings on the Go plan is **$1,335**, i.e. 133.5× summed. The row is marked superseded precisely because a reader would take "~6× face" as applying to the whole row. |
 
 **Where there is still NO arbitrage:** Copilot (API-parity credits), OpenCode Zen (explicit zero
 markup), Cline/Roo (BYOK), Cursor (usage-metered overage), Zed (API +10%), Kilo Pass (provider
@@ -289,8 +289,12 @@ prices are advertisement rather than a rate card, and its allowances are quota r
 > register intact and applies four row-level tests instead — a published rate card or allowance, a
 > quantified reputation, a documented delivery ceiling, and recorded failure modes from issue
 > evidence — with the reason for every exclusion being a measured property rather than a category.
-> See [../2026-10-06/README.md](../2026-10-06/README.md) §7 and
+> See [../2026-10-06/README.md](../2026-10-06/README.md) §8 and
 > [../2026-10-06/data/relay-providers.csv](../2026-10-06/data/relay-providers.csv).
+>
+> **POINTER CORRECTED 2026-10-07.** This pointer read "§7", which in the 2026-10-06 report is
+> "What would falsify this pass" and carries no standard at all. The four tests and the four verdicts
+> are in **§8, "The relay measurement standard"**.
 
 ## Workload test (52.5M tokens/month = 15M in + 37.5M out)
 

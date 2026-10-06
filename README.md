@@ -11,7 +11,7 @@ coding-agent usage by subscription** — model landscape, provider arbitrage, pu
 | **2026-09-13** | [2026-09-13/README.md](2026-09-13/README.md) | Full pass: 45-model landscape (AA snapshot), 44 access plans across 26 provider groups, workload tests, rankings |
 | **2026-09-20** | [2026-09-20/README.md](2026-09-20/README.md) | Re-verification + delta pass: all first-party sources re-fetched, 26 logged changes (Trae repriced upward, Kimi tiers restructured with the weekly window removed, Claude Code limits settled ~17% below the promo level, new Command Code / Devin / Kiro / Factory / Warp / Zed / Replit ladders), every non-USD price normalized at a cited FX rate, and the relay/sponsor "0.03x" market quarantined into a red-flag advisory instead of a ranking |
 | **2026-10-02** | [2026-10-02/README.md](2026-10-02/README.md) | Method pass: 20 first-party sources fetched serially with a per-source log, the OpenCode Go per-model grid parsed to 78 reproducible rows, the finding that a $/M token price is undefined until its traffic mix is stated (5.3x to 29.0x swing, median 13.6x), an anonymous-access measurement of 25 free-tier endpoints, and a re-derivation of a metered allowance project |
-| **2026-10-06** | [2026-10-06/README.md](2026-10-06/README.md) | Correction pass: the market's negative result stated as arithmetic rather than as a search gap (**no plan reaches >=10,000M tokens/month for <=$10 on a verified model**; $10 of raw credit buys at most 5,000M on the cheapest qualifying price), two corrections to earlier passes (**OpenCode Go's $60 is a shared pool, not independent per-model budgets**; the **190x SuperGrok multiplier is retracted by its own source**), the two SKUs whose scores were inherited from other models, relays measured rather than excluded by category, and four new integrity checks |
+| **2026-10-06** | [2026-10-06/README.md](2026-10-06/README.md) | Correction pass: the market's negative result stated as arithmetic rather than as a search gap (**no plan reaches >=10,000M tokens/month for <=$10 on a verified model**; $10 of raw credit buys at most 5,000M on the cheapest qualifying price under a 100%-cache upper bound, and 1,838M at the audited 97% mix), corrections to earlier passes (**the 190x SuperGrok multiplier is retracted by its own source**; OpenCode Go's $60 read as a shared pool, with the vendor-page exhibit demoted to "consistent with, not decisive" on re-reading), the SKUs whose scores were inherited from other models, relays measured against a published four-test standard rather than excluded by category, and six integrity checks |
 
 Each pass directory contains the report (`README.md`), the underlying databases (`data/`),
 numbered citations with access dates (`references/`), and raw snapshots of primary sources
@@ -59,18 +59,26 @@ allowance, its reputation is quantified, its delivery ceiling is documented, and
 are recorded from issue evidence, and every exclusion must name a measured property rather than a
 category.
 
-`python3 tools/validate.py --all` gates every pass on eight things a reader cannot check by eye:
-CSV field-count agreement (a surplus unquoted comma shifts every later column, and 7 rows across
-three files shipped that way in the 2026-09-20 pass while the old validator reported clean);
-agreement between a price, a token count and a $/M on the same row; the presence of a source on every
-number; agreement between row counts quoted in prose and the CSV they describe; **a token figure's
-magnitude against its own column unit** (25.81亿 was read as 25.81 billion when the stored row said
-2,581,000,000); **a capability score traceable to a leaderboard row or explicitly marked notFound**;
-**a per-model ceiling that says whether it is independent or drawn against a shared pool**; and **a
-derived $/M or tokens/month figure that states its traffic mix**. Each check refuses a planted
-defect and accepts correct input; the failing-before evidence is in
+`python3 tools/validate.py --all` gates every pass on **fifteen checks** a reader cannot check by eye,
+registered in the `CHECKS` table at the top of the tool. The ones with a history: CSV field-count
+agreement (a surplus unquoted comma shifts every later column, and 7 rows across three files shipped
+that way in the 2026-09-20 pass while the old validator reported clean); agreement between a price, a
+token count and a $/M on the same row; the presence of a source on every number; agreement between
+row counts quoted in prose and the CSV they describe; a plan row's model joining to a row in the
+landscape; a ladder price appearing in the page it cites; **a money figure quoted in
+`references/*.md` appearing in the archived page that entry cites**; **a cell holding the kind of
+value its column name promises**, which is what an arity-preserving column shift looks like;
+**a token figure's magnitude against its own column unit** (25.81亿 was read as 25.81 billion when
+the stored row said 2,581,000,000); **a capability score traceable to a leaderboard row for that
+exact SKU or explicitly marked notFound**; **a per-model ceiling that says in its `cap_model` column
+whether it is independent or drawn against a shared pool**; and **a derived $/M or tokens/month
+figure that states its traffic mix in a column**.
+
+Each check refuses a planted defect and accepts correct input; the failing-before evidence is in
 [docs/reviews-2026-10-02.md](docs/reviews-2026-10-02.md) and
-[docs/reviews-2026-10-06.md](docs/reviews-2026-10-06.md).
+[docs/reviews-2026-10-06.md](docs/reviews-2026-10-06.md). Four of the 2026-10-06 checks were
+rewritten on 2026-10-07 after each was shown to exit 0 on the very defect it was written for, and
+that is recorded in the review rather than quietly fixed.
 
 ## Conventions
 

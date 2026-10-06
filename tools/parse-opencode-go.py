@@ -73,7 +73,16 @@ def main() -> int:
         print("no price table found", file=sys.stderr)
         return 1
 
-    writer = csv.writer(sys.stdout)
+    # Line terminator is pinned and the stream is reconfigured so that no platform
+# translates it again. `csv.writer` defaults to "\r\n"; on Linux stdout is
+# already binary as far as newlines go and emits "\r\n" unchanged, which is what
+# the committed CSV contains. On Windows, text-mode stdout translates each "\n"
+# into a second "\r", so the same command emits "\r\r\n" and `diff -u` against
+# the committed file fails there. Reconfiguring stdout to newline="" removes the
+# translation, and pinning lineterminator to "\r\n" matches the committed bytes,
+# so the output is byte-identical on either platform.
+    sys.stdout.reconfigure(newline="")
+    writer = csv.writer(sys.stdout, lineterminator="\r\n")
     writer.writerow(
         ["plan", "plan_price_usd_month", "model", "input_per_m", "output_per_m",
          "cached_read_per_m", "cached_write_per_m", "monthly_limit_usd",
