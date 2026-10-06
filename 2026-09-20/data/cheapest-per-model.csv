@@ -1,3 +1,5 @@
+# Derived from the archived sources/modelsdev-api.json payload, read 2026-09-20:
+# the cheapest published per-model price for each canonical model.
 canonical_model,rank,provider_id,provider_name,model_key,input_usd_per_mtok,output_usd_per_mtok
 claude-sonnet-4-6,1,xpersona,Xpersona,claude-sonnet-4-6,0.9,5.55
 claude-sonnet-4-6,2,modelis,Modelis,claude-sonnet-4-6,3,15

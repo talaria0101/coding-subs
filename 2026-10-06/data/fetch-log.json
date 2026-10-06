@@ -125,5 +125,18 @@
     "read_date": "2026-10-07",
     "note": "Re-fetched 2026-10-07 looking for the '100B tokens/day' delivery ceiling this pass attributed to Fenno. Byte-identical to the 2026-10-06 archive and the operator's site returned no such figure, so the claim is downgraded rather than sourced. See data/relay-providers.csv.",
     "saved_as": null
+  },
+  {
+    "url": "https://www.reddit.com/r/opencode/search.rss?q=usage%20limit%20exceeded&restrict_sr=1&sort=new",
+    "http": 200,
+    "bytes": 73408,
+    "ms": null,
+    "sha256": "3a0d1cbb000d7d4dbff9ad1eb4a6fdf0f98df908fe1479af13fa60907f0b1652",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "note": "REQUEST, STATUS AND DATE READ OUT OF THE ARCHIVED FEED; NOT RE-FETCHED. The bytes were archived on 2026-10-06 and no log entry was written for them, which is the gap fetch-log-corroborates now refuses. The request URL and the feed's own <updated> element (2026-10-06T18:09:09+00:00) are both inside the archived file; latency was not recorded and is left null rather than invented. The sha256 and byte count are computed from the committed bytes.",
+    "read_date": "2026-10-06",
+    "saved_as": "2026-10-06\\sources\\reddit-r-opencode-search.xml"
   }
 ]

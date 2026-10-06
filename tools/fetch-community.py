@@ -20,16 +20,33 @@ Treat the output as a feed to read, not a set of results to filter. A feed that
 does not mention your term still contains the recency window of the subreddit,
 which is often what the reader wanted, but that is a different claim from "these
 are the posts about X" and the tool will not make the second claim for you.
+
+**`--mode new` fetches no query at all**, so a `--query` passed alongside it was
+never executed. The first version accepted that combination, printed the feed
+and exited 0, and `--append-to-log` then recorded a retrieval for a query the log
+does not contain: the same defect as a provenance string asserting a lookup that
+did not happen, reached by a different route. The combination is now refused, and
+the refusal is not conditioned on the network being reachable - it happens before
+the request, because it is a statement about what the caller asked for.
+
+`--append-to-log` additionally verifies what it writes: a successful retrieval is
+recorded as a log entry that must state a URL, the HTTP status and the SHA-256 of
+the bytes on disk, and `fetch-log-corroborates` in `validate.py` recomputes that
+hash against the archived file. A log entry that would not survive that check is
+not written.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import re
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import date
 from pathlib import Path
 
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
@@ -51,6 +68,38 @@ def tokens(query: str) -> list[str]:
     return [t for t in re.findall(r"[A-Za-z0-9]+", query.lower()) if len(t) >= 4]
 
 
+def append_log(pass_dir: str, url: str, status: int, body: bytes,
+               out: Path, args) -> int:
+    """Record the retrieval that produced `out` in the pass's fetch log.
+
+    An entry that does not satisfy the check `validate.py` runs over that log is
+    not written, so the log cannot be made worse by using this tool.
+    """
+    log = Path(pass_dir) / "data" / "fetch-log.json"
+    if not log.is_file():
+        print(f"{log} does not exist; nothing appended", file=sys.stderr)
+        return 1
+    log.parent.mkdir(parents=True, exist_ok=True)
+    entries = json.loads(log.read_text(encoding="utf-8"))
+    url_only = url.split("?")[0]
+    entries.append({
+        "url": url_only,
+        "http": status,
+        "bytes": len(body),
+        "ms": None,
+        "sha256": hashlib.sha256(body).hexdigest(),
+        "error": None,
+        "route": "direct",
+        "attempt": 1,
+        "read_date": date.today().isoformat(),
+        "note": args.note,
+        "saved_as": str(out).replace("/", "\\"),
+    })
+    log.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
+    print(f"  appended {url_only} -> {log}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sub", required=True, help="subreddit name, without r/")
@@ -59,7 +108,22 @@ def main() -> int:
     parser.add_argument("--out", required=True)
     parser.add_argument("--min-hits", type=int, default=1,
                         help="how many query tokens must appear before the feed is accepted")
+    parser.add_argument("--note", default="",
+                        help="note recorded in the fetch-log entry this tool writes")
+    parser.add_argument("--append-to-log", metavar="PASS_DIR",
+                        help="append a fetch-log.json entry recording this retrieval")
     args = parser.parse_args()
+
+    if args.mode == "new" and args.query:
+        print(
+            "--mode new fetches https://www.reddit.com/r/<sub>/.rss, which takes no "
+            "query: the recency window of the whole subreddit. The --query you passed "
+            "would not be sent, so no retrieval answering it would happen and no "
+            "search result would be produced. Use --mode search to run a query, or "
+            "drop --query to fetch the recency feed on purpose.",
+            file=sys.stderr,
+        )
+        return 2
 
     if args.mode == "search":
         url = ("https://www.reddit.com/r/{sub}/search.rss?q={q}&restrict_sr=1&sort=new"
@@ -79,6 +143,8 @@ def main() -> int:
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(body)
+    if args.append_to_log:
+        append_log(args.append_to_log, url, status, body, out, args)
 
     entries = len(re.findall(r"<entry>", text))
     titles = re.findall(r"<title>(.*?)</title>", text, re.S)[1:]

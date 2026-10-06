@@ -6,9 +6,9 @@
     "ms": 650,
     "sha256": "594793a77de76dcdd30662a200f1f48599cbf353f08c00e2df8eb9d00e3c0851",
     "error": null,
-    "saved_as": "raw/zai-overview.md",
+    "saved_as": "2026-10-02\\sources\\zai-overview.md",
     "label": "zai-overview.md",
-    "note": "Z.ai GLM Coding Plan overview, markdown"
+    "note": "Z.ai GLM Coding Plan overview, markdownPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://docs.z.ai/devpack/faq.md",
@@ -17,9 +17,9 @@
     "ms": 860,
     "sha256": "af2d4b98eab9b9290dfd1f09abd9e9b7eceb08f07e910d754a51bb346bc72839",
     "error": null,
-    "saved_as": "raw/zai-faq.md",
+    "saved_as": "2026-10-02\\sources\\zai-faq.md",
     "label": "zai-faq.md",
-    "note": "Z.ai devpack FAQ"
+    "note": "Z.ai devpack FAQPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://docs.z.ai/devpack/teamplan.md",
@@ -28,9 +28,9 @@
     "ms": 657,
     "sha256": "246b67a7efbbcab3164a7cb678fcfb4c5abf75275fc31a37bfe0fb82869f5ff2",
     "error": null,
-    "saved_as": "raw/zai-teamplan.md",
+    "saved_as": "2026-10-02\\sources\\zai-teamplan.md",
     "label": "zai-teamplan.md",
-    "note": "Z.ai Team Plan"
+    "note": "Z.ai Team PlanPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://api.z.ai/",
@@ -39,9 +39,9 @@
     "ms": 2059,
     "sha256": "7851fb001d3c930f19b1d6525ca1e63dc975fa36e827af0fe48c6e1b88aab264",
     "error": null,
-    "saved_as": "raw/zai-api-home.html",
+    "saved_as": "2026-10-02\\sources\\zai-api-home.html",
     "label": "zai-api-home.html",
-    "note": "Z.ai API landing"
+    "note": "Z.ai API landingPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://opencode.ai/zen/",
@@ -50,9 +50,9 @@
     "ms": 882,
     "sha256": "6d3c77a9376ca200344abe6adc6bd775739f99c91a154dfededda256ec892b37",
     "error": null,
-    "saved_as": "raw/opencode-zen.html",
+    "saved_as": "2026-10-02\\sources\\opencode-zen.html",
     "label": "opencode-zen.html",
-    "note": "OpenCode Zen gateway catalogue and pricing"
+    "note": "OpenCode Zen gateway catalogue and pricingPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://opencode.ai/docs/zen/",
@@ -61,9 +61,9 @@
     "ms": 1113,
     "sha256": "84a7e4059af111a892596a4d3f2113cc05e7ade3311fbb0835cd3feb220f4175",
     "error": null,
-    "saved_as": "raw/opencode-zen-docs.html",
+    "saved_as": "2026-10-02\\sources\\opencode-zen-docs.html",
     "label": "opencode-zen-docs.html",
-    "note": "OpenCode Zen documentation"
+    "note": "OpenCode Zen documentationPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://opencode.ai/docs/go/",
@@ -72,9 +72,9 @@
     "ms": 1078,
     "sha256": "bdef8d7bf9f3939d25a31fdd8eaeff375402bdae41de57cc0ac5e56bdd1ae994",
     "error": null,
-    "saved_as": "raw/opencode-go.html",
+    "saved_as": "2026-10-02\\sources\\opencode-go.html",
     "label": "opencode-go.html",
-    "note": "OpenCode Go subscription plan"
+    "note": "OpenCode Go subscription planPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://www.minimax.io/",
@@ -83,9 +83,9 @@
     "ms": 2175,
     "sha256": "28145b4b5dd072d54bc9af14f70071763d825fc98b5221131ad38398a445d5d6",
     "error": null,
-    "saved_as": "raw/minimax-home.html",
+    "saved_as": "2026-10-02\\sources\\minimax-home.html",
     "label": "minimax-home.html",
-    "note": "MiniMax global site"
+    "note": "MiniMax global sitePATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://platform.minimax.io/docs/guides/pricing-token-plan",
@@ -94,9 +94,9 @@
     "ms": 1481,
     "sha256": "f89b45310fbdcd753c6dddf5a4c1c176c9756499166fde0b5f3c1c065209bc48",
     "error": null,
-    "saved_as": "raw/minimax-token-plan.md",
+    "saved_as": "2026-10-02\\sources\\minimax-token-plan.md",
     "label": "minimax-token-plan.md",
-    "note": "MiniMax token plan pricing"
+    "note": "MiniMax token plan pricingPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://www.anthropic.com/pricing",
@@ -105,9 +105,9 @@
     "ms": 1747,
     "sha256": "662e0e9628139c6f23c9b9c2c163657ea46acfa053aa95f66c1166540bb338b8",
     "error": null,
-    "saved_as": "raw/anthropic-pricing.html",
+    "saved_as": "2026-10-02\\sources\\anthropic-pricing.html",
     "label": "anthropic-pricing.html",
-    "note": "Anthropic plan pricing"
+    "note": "Anthropic plan pricingPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://support.anthropic.com/en/articles/9797557-1m-context-window",
@@ -116,9 +116,9 @@
     "ms": 1687,
     "sha256": "61faffe51327ece2fd1b6f6d5d1df0b3f0d2f02248f513ed0c89eb91662daf12",
     "error": null,
-    "saved_as": "raw/anthropic-context.html",
+    "saved_as": "2026-10-02\\sources\\anthropic-context.html",
     "label": "anthropic-context.html",
-    "note": "Anthropic 1M context window support doc"
+    "note": "Anthropic 1M context window support docPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://platform.openai.com/docs/pricing",
@@ -127,9 +127,9 @@
     "ms": 1412,
     "sha256": "09a16a138ac06385fe4d6cce7a8d1a8c27cd14be00d4ce954cc6b7544662995d",
     "error": null,
-    "saved_as": "raw/openai-pricing.html",
+    "saved_as": "2026-10-02\\sources\\openai-pricing.html",
     "label": "openai-pricing.html",
-    "note": "OpenAI platform pricing (docs host, avoids 403 on www)"
+    "note": "OpenAI platform pricing (docs host, avoids 403 on www)PATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://docs.cline.bot/",
@@ -138,9 +138,9 @@
     "ms": 1612,
     "sha256": "620a2b089e43116f838e25c24845a47102b1640159fdc753a2c03c18932fbdf7",
     "error": null,
-    "saved_as": "raw/cline-docs.html",
+    "saved_as": "2026-10-02\\sources\\cline-docs.html",
     "label": "cline-docs.html",
-    "note": "Cline docs root"
+    "note": "Cline docs rootPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://aider.chat/",
@@ -149,9 +149,9 @@
     "ms": 201,
     "sha256": "5c4361d45bfdf3a54ec8f3f17c8c8bf7da1aa975e34db2e36d02b6f5ab977770",
     "error": null,
-    "saved_as": "raw/aider-home.html",
+    "saved_as": "2026-10-02\\sources\\aider-home.html",
     "label": "aider-home.html",
-    "note": "Aider home"
+    "note": "Aider homePATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://kilo.ai/",
@@ -160,9 +160,9 @@
     "ms": 1007,
     "sha256": "4d9f87cae3cfebe230339b8de010e2ddbddd15f371b5acc72235e2d9d5dd1ba8",
     "error": null,
-    "saved_as": "raw/kilo-home.html",
+    "saved_as": "2026-10-02\\sources\\kilo-home.html",
     "label": "kilo-home.html",
-    "note": "Kilo Code site"
+    "note": "Kilo Code sitePATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://cursor.com/pricing",
@@ -171,9 +171,9 @@
     "ms": 490,
     "sha256": "db55c1cdd5f80718d2d6e0e8a8d410ed5715336a59d8c8c14a298322382deeee",
     "error": null,
-    "saved_as": "raw/cursor-pricing.html",
+    "saved_as": "2026-10-02\\sources\\cursor-pricing.html",
     "label": "cursor-pricing.html",
-    "note": "Cursor pricing"
+    "note": "Cursor pricingPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://github.com/features/copilot/plans",
@@ -182,9 +182,9 @@
     "ms": 1374,
     "sha256": "b4d6edfe1a0f93c86728ec38d434ddaba8c4841eb982b160f348d32164317528",
     "error": null,
-    "saved_as": "raw/github-copilot-plans.html",
+    "saved_as": "2026-10-02\\sources\\github-copilot-plans.html",
     "label": "github-copilot-plans.html",
-    "note": "GitHub Copilot plans"
+    "note": "GitHub Copilot plansPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://platform.minimax.io/",
@@ -193,9 +193,9 @@
     "ms": 4145,
     "sha256": "406f54785726da49236d242d8da2bc528141d4730fdbaa548fbd7741adbe2831",
     "error": null,
-    "saved_as": "raw/minimax-api.html",
+    "saved_as": "2026-10-02\\sources\\minimax-api.html",
     "label": "minimax-api.html",
-    "note": "MiniMax platform"
+    "note": "MiniMax platformPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://www.volcengine.com/",
@@ -204,9 +204,9 @@
     "ms": 2690,
     "sha256": "34a5fab4a6d1517cda70b8e0d1effa4f01cd3063beb3f66aeaf09f48594d4f2c",
     "error": null,
-    "saved_as": "raw/volcengine-home.html",
+    "saved_as": "2026-10-02\\sources\\volcengine-home.html",
     "label": "volcengine-home.html",
-    "note": "Volcengine (ByteDance) home"
+    "note": "Volcengine (ByteDance) homePATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   },
   {
     "url": "https://artificialanalysis.ai/models",
@@ -215,8 +215,8 @@
     "ms": 860,
     "sha256": "ef2eeee12f9bc9edd0090b24a264edc2029187d236ccd15433627e8bf35ca36c",
     "error": null,
-    "saved_as": "raw/aa-models.html",
+    "saved_as": "2026-10-02\\sources\\aa-models.html",
     "label": "aa-models.html",
-    "note": "Artificial Analysis model leaderboard"
+    "note": "Artificial Analysis model leaderboardPATH REPAIRED 2026-10-07: this entry's saved_as pointed at raw/, the gitignored working directory the fetch was written to, not at the archived copy under 2026-10-02/sources/ where the bytes have always been committed. The recorded sha256 was re-verified against the archived file and matches."
   }
 ]

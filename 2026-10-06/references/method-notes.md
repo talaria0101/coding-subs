@@ -12,9 +12,12 @@ JavaScript-served pages and gets past some Cloudflare interstitials, so it is wo
 a direct request returns a 403, a 429, or an empty shell. `tools/fetch-source.py --via jina` does
 this and records which route produced the bytes.
 
-Measured on this pass. **These three measurements are not in `data/fetch-log.json` and no bytes from
+Measured on 2026-10-06. **These three measurements are not in `data/fetch-log.json` and no bytes from
 them are archived** — they are recorded here as demonstrations of the technique, not as sources any
-figure in this pass rests on. Nothing in [references/references.md](references.md) quotes them:
+figure in this pass rests on. Nothing in [references/references.md](references.md) quotes them, and
+**none of them is reproducible from this repository**, because no request or response was kept. They
+are dated because the surface they describe — an extractor's 200 for an origin's 403 — is the kind of
+thing that changes without the finding changing:
 
 | URL | direct | via `r.jina.ai` |
 |---|---|---|
@@ -43,17 +46,20 @@ https://www.reddit.com/r/<sub>/.rss
 https://www.reddit.com/r/<sub>/search.rss?q=<query>&restrict_sr=1&sort=new
 ```
 
-**The second one silently ignores the query.** Measured: `search.rss?q=zzzznonexistentterm` on
-r/opencode returned HTTP 200, a well-formed Atom feed, and **0 entries**. A request for a term that
+**The second one silently ignores the query.** Measured on 2026-10-06: `search.rss?q=zzzznonexistentterm`
+on r/opencode returned HTTP 200, a well-formed Atom feed, and **0 entries**. A request for a term that
 does not exist and a successful search are indistinguishable from the status line and the XML alone.
+**Not reproducible from this repository**: no response to that request was archived, and the finding
+is about the endpoint's behaviour rather than about this repository's copy of it. `tools/fetch-community.py`
+still refuses such a feed on every run, so the guard is live without the measurement being archived.
 
 The query also appears in the feed's own `<id>` and `<link>` elements, so a naive "does my term
 appear in this document" test passes on the echo. `tools/fetch-community.py` checks the post
 `<title>` and `<content>` only, treats zero entries as failure, and exits 2 when the query was not
 honoured. Treat the output as a feed to read, never as a result set to filter.
 
-**Limitation.** These endpoints are undocumented and rate-limit. Reddit returned 403 to a default
-curl User-Agent on this pass and 200 to a browser-like one, which means reachability here is a
+**Limitation.** These endpoints are undocumented and rate-limit. On 2026-10-06 Reddit returned 403 to
+a default curl User-Agent and 200 to a browser-like one, which means reachability here is a
 property of the request headers and not of the network. Record a 403 as unreachable rather than as
 an empty result; an empty result and a refused request are different claims.
 
@@ -72,6 +78,8 @@ figure is the one to quote, and the two sum exactly to the repo counter:
 
 Quoting `open_issues_count` alone overstates the issue count by 37% on `anomalyco/opencode` and by
 36% on `Wei-Shaw/sub2api`, and it reads as a health signal when it is a mix of two different things.
+**Not reproducible from this repository**: the two commands below are, and anyone re-running them
+will get different totals, because a tracker moves.
 
 > **CORRECTED 2026-10-07.** The earlier version of this table read `anomalyco/opencode` at 6,242 /
 > 4,615 / 1,627 and carried a sentence asserting that "a tracker quoted as **3,571 open issues** is

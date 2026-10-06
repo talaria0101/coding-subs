@@ -36,7 +36,7 @@ MIX_ZAI = "95% cache read / off-peak credit rate"
 
 ROWS = [
     ["OpenCode Go", "OpenCode", "10", "Muse Spark 1.3 Contributor", "muse-spark-1-3-contributor",
-     "unscored:notFound-on-leaderboard-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "unscored:notFound-on-the-page-archived-here-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.00544", MIX_STD, "11029", "0", "0.0009", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "Cheapest qualifying-lane figure in the market and one of four lanes above 10,000M. It "
@@ -46,18 +46,20 @@ ROWS = [
      "corrected here. Also the only Go model with prompt training on and no ZDR, and "
      "region-limited to Meta's permitted regions."],
     ["OpenCode Go", "OpenCode", "10", "MiMo-V2.6-Flash", "mimo-v2-6-flash",
-     "scored:leaderboard-mimo-v2-6-flash-ii-37.8844-on-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "scored:leaderboard:aa-leaderboard-models-on-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.00762", MIX_STD, "7878", "0", "0.0013", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-07",
      "UPDATED 2026-10-07. Recorded as notFound on 2026-10-06 against the archived /models page, "
      "which does not carry it. Re-fetched /leaderboards/models on 2026-10-07: the model is now "
-     "listed at Intelligence Index 37.8844. That is BELOW the 39.4562 capability bar, so the "
-     "market's negative result is unchanged and this row stays out of the ranked table - but the "
-     "row was stale, and the 2026-10-06 absence is superseded rather than deleted. Its yield is "
-     "the joint second-largest in the market at 7,878M because the cache read price is "
-     "$0.0028/M."],
+     "listed at Intelligence Index 37.8844 (data/fetch-log.json records that retrieval, archived as "
+     "sources/aa-leaderboard-models.html; tools/parse-aa-scores.py reads the slug and the score out "
+     "of that payload, and data/aa-lookup.csv carries the row). That is BELOW the 39.4562 "
+     "capability bar, so the market's negative result is unchanged and this row stays out of the "
+     "ranked table - but the row was stale, and the 2026-10-06 absence is superseded rather than "
+     "deleted. Its yield is the joint second-largest in the market at 7,878M because the cache "
+     "read price is $0.0028/M."],
     ["OpenCode Go", "OpenCode", "10", "Muse Spark 1.2 Contributor", "muse-spark-1-2-contributor",
-     "unscored:notFound-on-leaderboard-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "unscored:notFound-on-the-page-archived-here-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.00544", MIX_STD, "11029", "0", "0.0009", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-07",
      "ADDED 2026-10-07. The vendor page lists this lane at the same $0.10/$0.20/$0.002 prices and "
@@ -68,7 +70,7 @@ ROWS = [
      "muse-spark-1-2. Region-limited and prompt training on, same as 1.3 Contributor. Four "
      "notFound SKU lookups in this pass had not been done; see data/aa-lookup.csv."],
     ["OpenCode Go", "OpenCode", "10", "MiMo-V2.5", "mimo-v2-5",
-     "unscored:notFound-on-leaderboard-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "unscored:notFound-on-the-page-archived-here-2026-10-07", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.00762", MIX_STD, "7878", "0", "0.0013", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-07",
      "ADDED 2026-10-07. Priced identically to MiMo-V2.6-Flash on the same page "
@@ -77,7 +79,7 @@ ROWS = [
      "notFound. It is the third of the four cheapest lanes in the market and none of the four "
      "carries a score."],
     ["OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (off-peak)", "deepseek-v4-1-flash",
-     "leaderboard:deepseek-v4-1-flash", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.00966", MIX_STD, "6211", "2899", "0.0016", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The planning number for the best lane in this market: 6211M advertised, against three "
@@ -87,46 +89,46 @@ ROWS = [
      "data/pool-meter-reports.csv (28 / 0.00966 = 2898.5, rounded to 2899); it previously read "
      "2900, which was not the rounded conversion of any meter in that file."],
     ["OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (peak)", "deepseek-v4-1-flash",
-     "leaderboard:deepseek-v4-1-flash", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.01932", MIX_STD, "3106", "0", "0.0032", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The vendor publishes separate peak and off-peak tariffs. Issue 53071 reports the "
      "statutory-holiday off-peak rate not being honoured on 1-7 October 2026, so daytime use "
      "that week billed at the peak rate."],
     ["OpenCode Go", "OpenCode", "10", "GLM-5.3-Flash", "glm-5-3-flash",
-     "leaderboard:glm-5-3-flash", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "60",
      "0.03535", MIX_STD, "1697", "0", "0.0059", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The steadiest row on the plan: the three token classes are priced closer together, so the "
      "traffic mix moves it least."],
     ["OpenCode Go", "OpenCode", "10", "MiMo-V2.6-Pro", "mimo-v2-6-pro",
-     "leaderboard:mimo-v2-6-pro", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
      "0.01874", MIX_STD, "800", "0", "0.0125", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The highest Intelligence Index per dollar on the plan at 46.32 II, and the row that shows "
      "the pool model binding: the per-model cap is $15 against a $60 pool, so min() takes the "
      "$15."],
     ["OpenCode Go", "OpenCode", "10", "Kimi K3", "kimi-k3",
-     "leaderboard:kimi-k3", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
      "0.44100", MIX_STD, "34", "0", "0.2940", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The most expensive model on the plan and the most rationed: a $15 cap against a $60 pool."],
     ["OpenCode Go", "OpenCode", "10", "GPT 6 Luna (<=272K tokens)", "gpt-6-luna",
-     "leaderboard:gpt-6-luna", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
      "0.01466", MIX_STD, "1023", "0", "0.0098", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The vendor splits this model at 272K tokens with different prices either side. Fails the "
      "capability bar at 38.12 II."],
     ["OpenCode Go Plus", "OpenCode", "40", "Muse Spark 1.3 Contributor", "muse-spark-1-3-contributor",
-     "unscored:notFound-on-leaderboard-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "120", "120",
+     "unscored:notFound-on-the-page-archived-here-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "120", "120",
      "0.00544", MIX_STD, "22059", "0", "0.0018", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The ceiling doubles and the price goes up 4x, so $/M gets worse. Two $10 Go plans beat "
      "one $40 Go Plus plan: the pool is $120 against $60 for the single plan, read off the "
      "vendor's own page."],
     ["OpenCode Go Plus", "OpenCode", "40", "DeepSeek V4.1 Flash (off-peak)", "deepseek-v4-1-flash",
-     "leaderboard:deepseek-v4-1-flash", "DOLLAR-CEILING", "SHARED-POOL", "120", "120",
-     "0.00966", MIX_STD, "12423", "0", "0.0081", "FIRST-PARTY-COMPUTED",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "120", "120",
+     "0.00966", MIX_STD, "12422", "0", "0.0032", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-07",
      "CORRECTED 2026-10-07. The vendor page publishes a $120 monthly limit for this model under "
      "Go Plus (sources/opencode-go.md:223) against $60 under Go (line 178), so the published "
@@ -139,9 +141,9 @@ ROWS = [
      "is unresolved: both readings predict this same table, so the row is consistent with a pool "
      "and does not decide the question."],
     ["OpenCode Go", "OpenCode", "10", "LongCat 2.5 Preview Free", "longcat-2-5-preview-free",
-     "unscored:notFound-on-leaderboard-2026-10-07", "FREE-TIER", "UNKNOWN", "", "Unlimited",
+     "unscored:notFound-on-the-page-archived-here-2026-10-07", "FREE-TIER", "UNKNOWN", "", "Unlimited",
      "0.00000", "n/a - no price is charged, so no blend exists", "UNKNOWN", "0", "UNKNOWN",
-     "FIRST-PARTY", "https://opencode.ai/docs/go/", "2026-10-07",
+     "FIRST-PARTY-COMPUTED", "https://opencode.ai/docs/go/", "2026-10-07",
      "ADDED 2026-10-07. A structural negative result has to address a lane priced at $0, so this "
      "row carries it. The vendor page prices every token class 'Free' with an 'Unlimited' "
      "monthly limit annotated 'limited time' (sources/opencode-go.md:165), which is the only "
@@ -153,7 +155,7 @@ ROWS = [
      "leaderboard, so it cannot be verified at or above the II 39.4562 bar. UNKNOWN is the "
      "answer, not a large number."],
     ["GLM Coding Plan Lite", "Z.ai", "18", "GLM-5.3-Flash", "glm-5-3-flash",
-     "leaderboard:glm-5-3-flash", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
      "1264", "0", "0.0142", "FIRST-PARTY-COMPUTED",
      "https://docs.z.ai/devpack/overview.md", "2026-10-06",
      "1264M = 292 M tok/week at the 95% cache off-peak ceiling x 4.33, both published on the page. "
@@ -161,11 +163,11 @@ ROWS = [
      "rather than a per-model cap. The off-peak all-day window and the GLM-5.3-Flash campaign both "
      "expire 2026-10-07; the peak floor is 632M. RECLASSIFIED 2026-10-07: blended_usd_per_mtok read "
      "0.03530 here and on the GLM-5.3 row with evidence_class FIRST-PARTY-COMPUTED, but the "
-     "archived page publishes no \$/Mtok and never published one value for two models whose real "
+     "archived page publishes no $/Mtok and never published one value for two models whose real "
      "rates differ 3x. It is now UNKNOWN and the derived usd_per_mtok (18 / 1264 = 0.01424) is "
      "the published figure."],
     ["GLM Coding Plan Lite", "Z.ai", "18", "GLM-5.3", "glm-5-3",
-     "leaderboard:glm-5-3", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
      "420", "0", "0.0429", "FIRST-PARTY-COMPUTED",
      "https://docs.z.ai/devpack/overview.md", "2026-10-06",
      "420M = 97 M tok/week x 4.33, the off-peak ceiling published on the page. The peak floor is "
@@ -173,29 +175,29 @@ ROWS = [
      "above, though 18 / 420 = 0.04286 against the Flash row's 0.01424. A single published value "
      "for two models 3x apart cannot be first-party; it is now UNKNOWN."],
     ["GLM Coding Plan Pro", "Z.ai", "72", "GLM-5.3-Flash", "glm-5-3-flash",
-     "leaderboard:glm-5-3-flash", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
-     "7599", "0", "0.0095", "CARRIED-FORWARD",
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
+     "7599", "0", "UNKNOWN", "DOCUMENTED",
      "https://docs.z.ai/devpack/overview.md", "2026-10-06",
      "PRICE PROVENANCE: the archived page publishes only 'starting at just 18 USD per month'; "
      "it does not publish the Pro price. Carried from the 2026-09-20 pass and not verifiable "
      "from the sources archived here. RECLASSIFIED 2026-10-07: blended_usd_per_mtok 0.03530 -> "
      "UNKNOWN, same reason as the Lite rows."],
     ["GLM Coding Plan Max", "Z.ai", "160", "GLM-5.3-Flash", "glm-5-3-flash",
-     "leaderboard:glm-5-3-flash", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
-     "17731", "0", "0.0090", "CARRIED-FORWARD",
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
+     "17731", "0", "UNKNOWN", "DOCUMENTED",
      "https://docs.z.ai/devpack/overview.md", "2026-10-06",
      "PRICE PROVENANCE: the archived page publishes only 'starting at just 18 USD per month'; "
      "it does not publish the Max price. Carried from the 2026-09-20 pass and not verifiable "
      "from the sources archived here. RECLASSIFIED 2026-10-07: blended_usd_per_mtok 0.03530 -> "
      "UNKNOWN, same reason as the Lite rows."],
     ["GLM Team Plan Standard Seat", "Z.ai", "UNKNOWN", "GLM-5.3-Flash", "glm-5-3-flash",
-     "leaderboard:glm-5-3-flash", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "UNKNOWN", MIX_ZAI,
      "UNKNOWN", "0", "UNKNOWN", "FIRST-PARTY-COMPUTED",
      "https://docs.z.ai/devpack/teamplan.md", "2026-10-06",
      "The seat price is not published anywhere on the page. Deliberately not estimated. Overage "
      "beyond the weekly credits bills at 10% off API list."],
     ["Command Code GOAT", "Command Code", "10", "DeepSeek V4.1 Flash", "deepseek-v4-1-flash",
-     "leaderboard:deepseek-v4-1-flash", "CREDITS", "PLAN-POOL", "", "", "0.00966", MIX_STD,
+     "leaderboard:aa-models-on-2026-10-06", "CREDITS", "PLAN-POOL", "", "", "0.00966", MIX_STD,
      "6211", "0", "0.0016", "DOCUMENTED",
      "https://commandcode.ai/docs/plans/goat", "2026-10-06",
      "The page publishes '5-hour limit - $14 of usage Weekly limit - $35 of usage Monthly "
@@ -209,7 +211,7 @@ ROWS = [
      "requests are declined rather than billed, because that sentence is not on the archived page "
      "and nothing first-party here supports it."],
     ["SuperGrok Lite", "xAI", "10", "Grok 4.7", "grok-4-7",
-     "leaderboard:grok-4-7", "DOLLAR-METER", "PLAN-POOL", "", "", "UNKNOWN", "METER-RECORDED-ONLY",
+     "leaderboard:aa-models-on-2026-10-06", "DOLLAR-METER", "PLAN-POOL", "", "", "UNKNOWN", "METER-RECORDED-ONLY",
      "UNKNOWN", "0", "UNKNOWN", "MEASURED",
      "https://github.com/phuryn/experiments/tree/main/subscription-multipliers/06-supergrok-lite",
      "2026-10-06",

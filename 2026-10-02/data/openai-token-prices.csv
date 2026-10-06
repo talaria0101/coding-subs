@@ -1,3 +1,5 @@
+# Derived by tools/extract-token-prices.py from the archived OpenAI platform pricing
+# page named in the source column, and regenerable from it.
 model_slug,input_per_m,cached_read_per_m,cache_write_per_m,output_per_m,price_class,source,read_date
 gpt-6-astra,10.0,1.0,12.5,50.0,API-LIST,openai-pricing.html,2026-10-02
 gpt-6.1-sol,2.0,0.1,2.5,10.0,API-LIST,openai-pricing.html,2026-10-02

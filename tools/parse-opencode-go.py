@@ -1,13 +1,35 @@
 #!/usr/bin/env python3
 """Parse the OpenCode Go / Go Plus tables structurally from the fetched HTML.
 
+    python3 tools/parse-opencode-go.py PAGE.html > grid.csv
+
 The earlier tag-splitting approach lost rows and shifted columns, because a row
 whose "Cached Write" cell is "-" or absent does not occupy the same number of
 cells as one that has a price. This reads <table>/<tr>/<th>/<td> instead, so
 column identity comes from the header, not from position.
 
-Emits CSV to stdout and a short consistency report to stderr.
+The page argument is **required**. It used to default to `raw/opencode-go.html`, a
+path that does not exist in this repository - `.gitignore` excludes `research-raw/`
+and the archived pages live under `<pass>/sources/` - so the default could only
+ever have produced a traceback. A tool that fails with a file-not-found at the
+end of a pipeline is worse than one that refuses before reading anything.
+
+Emits CSV to stdout and a short consistency report to stderr. The MIX below is
+the one standard traffic mix this repository uses (97% cache read / 2.5% input /
+0.5% output); every blended figure the parser prints is a function of it.
 """
+
+# The three comment lines the parser writes ahead of the header. They are here
+# rather than in the committed file alone so that this tool regenerates the
+# committed file byte for byte, which is what the CI step diffs.
+PREAMBLE = [
+    "# Derived by tools/parse-opencode-go.py from sources/opencode-go.html, read "
+    "2026-10-02,",
+    "# and regenerable from it byte for byte. Every blended and derived column "
+    "is a",
+    "# function of the traffic_mix column, which is why the grid carries it per "
+    "row.",
+]
 import csv
 import html
 import io
@@ -15,7 +37,15 @@ import re
 import sys
 from pathlib import Path
 
+# The standard traffic mix this repository computes every blended rate under:
+# 97% cache read / 2.5% fresh input / 0.5% output. It is a quoted convention
+# (references R20), not a measurement, and it is the only free parameter in every
+# `blended_per_m` and `tokens_m_at_ceiling` cell this parser emits.
 MIX = {"cached_read": 0.97, "input": 0.025, "output": 0.005}
+
+# The access date of the archived page, carried into the grid so every row's
+# provenance is in the row. Taken from the fetch log rather than from the clock.
+READ_DATE = "2026-10-02"
 
 
 def strip_tags(fragment: str) -> str:
@@ -58,7 +88,16 @@ def pick(header: list[str], row: list[str], name: str):
 
 
 def main() -> int:
-    path = Path(sys.argv[1] if len(sys.argv) > 1 else "raw/opencode-go.html")
+    if len(sys.argv) < 2 or sys.argv[1].startswith("-"):
+        print("usage: parse-opencode-go.py PAGE.html > grid.csv\n"
+              "  PAGE.html is an archived OpenCode Go page, e.g.\n"
+              "  2026-10-02/sources/opencode-go.html", file=sys.stderr)
+        return 2
+    path = Path(sys.argv[1])
+    if not path.is_file():
+        print(f"{path} is not a file. Pass the archived page this grid is parsed "
+              f"from; the archived pages live under <pass>/sources/.", file=sys.stderr)
+        return 2
     raw = path.read_text(encoding="utf-8", errors="replace")
 
     price_tables, request_tables = [], []
@@ -83,12 +122,21 @@ def main() -> int:
 # so the output is byte-identical on either platform.
     sys.stdout.reconfigure(newline="")
     writer = csv.writer(sys.stdout, lineterminator="\r\n")
+    # The preamble is written straight to the stream rather than through
+    # `csv.writer`, which quotes any field containing the delimiter. The
+    # committed lines carry no quoting, so a writer would not reproduce them.
+    # It is emitted here rather than added to the file by hand, because the CI
+    # step that proves this file is reproducible diffs this output against the
+    # committed bytes: a preamble that exists only in the committed file is a
+    # preamble CI cannot reproduce.
+    for line in PREAMBLE:
+        sys.stdout.write(line + "\r\n")
     writer.writerow(
         ["plan", "plan_price_usd_month", "model", "input_per_m", "output_per_m",
          "cached_read_per_m", "cached_write_per_m", "monthly_limit_usd",
          "blended_per_m", "tokens_m_at_ceiling", "usd_per_m_tokens",
          "requests_per_5h", "requests_per_week", "requests_per_month",
-         "monthly_over_weekly"]
+         "monthly_over_weekly", "traffic_mix", "source", "read_date"]
     )
     problems = []
     for index, (header, body) in enumerate(price_tables):
@@ -137,6 +185,13 @@ def main() -> int:
                 "" if tokens is None else f"{tokens:.0f}",
                 "" if per_m is None else f"{per_m:.4f}",
                 *(str(v) if v is not None else "" for v in req), ratio,
+                # Every blended and derived figure above is a function of this
+                # one mix, so the grid carries it per row rather than leaving a
+                # reader to find it in the tool's source.
+                f"{MIX['cached_read'] * 100:g}% cache read / "
+                f"{MIX['input'] * 100:g}% fresh input / "
+                f"{MIX['output'] * 100:g}% output",
+                path.name, READ_DATE,
             ])
 
     print(f"# price tables: {len(price_tables)}, request tables: {len(request_tables)}", file=sys.stderr)

@@ -16,6 +16,15 @@ import re
 import sys
 from pathlib import Path
 
+# The comment lines the parser writes ahead of the header. They live here so the
+# tool regenerates the committed file byte for byte, which is what CI diffs.
+PREAMBLE = [
+    "# Derived by tools/parse-aa-models.py from the archived leaderboard page "
+    "this pass",
+    "# holds, and regenerable from it byte for byte; provenance is that page, "
+    "not the row.",
+]
+
 # The AA payload uses short keys in places; these are the fields this repo ranks on.
 FIELDS = [
     "slug", "name", "creator", "releaseDate", "intelligenceIndex",
@@ -138,6 +147,13 @@ def main() -> int:
 
     buf = io.StringIO()
     writer = csv.writer(buf, lineterminator="\n")
+    # The preamble is emitted here rather than added to the committed file by
+    # hand, because the CI step that proves this file is reproducible diffs this
+    # output against the committed bytes. It is written straight into the buffer
+    # rather than through `writer`, which would quote any line containing a
+    # comma; none of these lines is quoted in the committed file.
+    for line in PREAMBLE:
+        buf.write(line + "\n")
     writer.writerow(FIELDS)
     for m in models:
         writer.writerow([cell(m, f) for f in FIELDS])

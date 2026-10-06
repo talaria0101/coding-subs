@@ -1,3 +1,5 @@
+# Derived by tools/parse-aa-models.py from the archived leaderboard page this pass
+# holds, and regenerable from it byte for byte; provenance is that page, not the row.
 slug,name,creator,releaseDate,intelligenceIndex,terminalbenchV40,terminalbenchV21,terminalbenchHard,contextWindowTokens,isOpenWeights,inputModalityImage,price1mInputTokens,price1mOutputTokens,cacheHitPrice,price1mBlended0To3To1,medianOutputSpeed,deprecated
 claude-opus-5-5,"Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-22,57.6224,,,,1000000,no,yes,4,20,0.2,8,,no
 claude-sonnet-5-5,"Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-28,56.0001,,,,1000000,no,yes,2,10,0.2,4,,no

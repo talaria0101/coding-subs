@@ -25,8 +25,8 @@ limits: [references/method-notes.md](references/method-notes.md). Reviews:
 
 | Question | Answer | Evidence class |
 |---|---|---|
-| **Does any plan reach >=10,000M tokens/month for <=$10 on a model verified at or above DeepSeek V4.1 Flash?** | **No, and this is a structural result rather than a gap in searching.** Four lanes nominally clear 10,000M on a $10 OpenCode Go plan — Muse Spark 1.3 Contributor, Muse Spark 1.2 Contributor, MiMo-V2.6-Flash and MiMo-V2.5 — and **three of the four have no Intelligence Index at all**. The only lane in that set the board does score is MiMo-V2.6-Flash, at **II 37.8844**, which is below the 39.4562 bar. The best verified lane is DeepSeek V4.1 Flash, 6,211M advertised and 2,070–2,899M measured. | FIRST-PARTY-COMPUTED |
-| **Why is it structural** | At a 100%-cache-read mix — an upper bound no real workload reaches — **$10 of raw API credit buys at most 5,000M tokens** on the cheapest qualifying price in existence. At this pass's own audited 97% mix it buys **1,838M**. A credit balance therefore cannot produce 10B for $10 at any vendor; only a subscription with a multiplier can, and every multiplier in this market is below 2x. | FIRST-PARTY-COMPUTED |
+| **Does any plan reach >=10,000M tokens/month for <=$10 on a model verified at or above DeepSeek V4.1 Flash?** | **No, and this is a structural result rather than a gap in searching.** Two lanes clear 10,000M on a $10 OpenCode Go plan — Muse Spark 1.3 Contributor and Muse Spark 1.2 Contributor, both at 11,029M — and **neither has an Intelligence Index at all**. The next-largest lane, MiMo-V2.6-Flash at 7,878M, does not clear 10,000M and is the largest lane in the market the board does score; it scores **II 37.8844**, below the 39.4562 bar. So the result does not rest on how many lanes clear the threshold — **not one of them is a model the leaderboard scores at or above the bar.** The best verified lane is DeepSeek V4.1 Flash, 6,211M advertised and 2,070–2,899M measured, where that range is the $20 and $28 meters divided by the same $0.00966/M rate. | FIRST-PARTY-COMPUTED |
+| **Why is it structural** | At a 100%-cache-read mix — an upper bound no real workload reaches — **$10 of raw API credit buys at most 5,000M tokens** on the cheapest qualifying price in existence. At this pass's own audited 97% mix it buys **1,838M**. A credit balance therefore cannot produce 10B for $10 at any vendor; only a subscription with a multiplier can, and the multipliers measured in this market range from **9.3x** (Muse Code High Usage, standard tier) to **114x** (the same run priced at the Contributor tier) — so a multiplier is not the obstacle either. What fails is the conjunction: none of the cheap plans and none of the high-multiplier subscriptions are simultaneously cheap enough and scored high enough. | FIRST-PARTY-COMPUTED |
 | **Best lane that is actually verified** | **OpenCode Go on DeepSeek V4.1 Flash (off-peak), II 39.4562.** 6,211M advertised; **2,070–2,899M measured**, because the $60 is a shared pool rather than a per-model budget. | FIRST-PARTY-COMPUTED / THIRD-PARTY |
 | **Highest verified quality reachable** | GLM-5.3-Flash at II 41.8075 on the same $10 plan (1,697M), or MiMo-V2.6-Pro at **II 46.3242** on the same plan for 800M, whose ceiling is the $15 per-model cap rather than the $60 pool. | FIRST-PARTY-COMPUTED |
 | **Correction to the 2026-10-02 pass** | Its top row ranked Muse Spark 1.3 Contributor at **II 48.09**. That is the **base model's** score. The Contributor tier is a different, discounted SKU with no score, and it is the only Go model that trains on your prompts with no ZDR. | DOCUMENTED |
@@ -130,7 +130,15 @@ An independent instrument reached the same model of the world and recorded it pe
 `min(共享月池$60, 模型Usage $60)` — "per-model allowances within one plan are not additive" [R20].
 
 **The honest planning number is therefore 11,029M advertised / 2,070–2,899M measured** on the
-qualifying lane, and `data/plan-economics.csv` carries `cap_model`, `monthly_pool_usd`,
+qualifying lane. That range is two independent meters at the two ends: the lower bound is a user
+blocked at **$20** of total account spend [R14], the upper a user reading **$7.56** of spend
+against a meter showing 27% consumed, which extrapolates to **$28** [R15]. Both are divided by
+the same off-peak blended rate of $0.00966/M: 20 / 0.00966 = 2,070 and 28 / 0.00966 = 2,899. The
+ratio between the two bounds is **1.4x**, not the 2.9x an earlier version of this README stated.
+Three further meters sit inside the range ($4.38 → 453M, $22.18 → 2,296M, $24.53 → 2,539M),
+and the widest spread in the file is **6.4x**, from $4.38 to $28.
+
+`data/plan-economics.csv` carries `cap_model`, `monthly_pool_usd`,
 `per_model_cap_usd` and `tokens_m_advertised` / `tokens_m_measured` as separate columns so the two
 cannot be read as one figure.
 
@@ -175,8 +183,13 @@ any reading of how the money is divided. That much is arithmetic on the page.
 "up to ~$60/mo of list-value usage across 27 models" and "~6x face". That row now carries a dated
 superseding note in `2026-09-20/data/providers-database.csv` and in its README, and the correction is
 in [../docs/reviews-2026-10-06.md](../docs/reviews-2026-10-06.md). The "~6× face" figure is itself
-marked SUPERSEDED and was never 6x on any reading: the sum of all 37 per-model ceilings on the Go
-plan is **$1,335** against a $10 plan, which is 133.5x summed and 6x only for a single $60 model.
+marked SUPERSEDED and was never 6x on any reading: the Go plan's grid publishes **39 rows**, of
+which **38 carry a dollar monthly limit** and one (LongCat 2.5 Preview Free) is marked Unlimited. The
+38 dollar ceilings sum to **$1,365** against a $10 plan, which is **136.5x summed** and 6x only for a
+single $60 model. The Go Plus grid has the same 39 rows and sums to **$4,410**, or 441x.
+> **CORRECTED 2026-10-07.** This paragraph previously said "37 per-model ceilings" and "$1,335".
+> Both were wrong: the archived grid at [sources/opencode-go.md](sources/opencode-go.md) has 38 dollar
+> ceilings summing to $1,365. A check now recomputes the count and the sum from the archived table.
 
 ---
 
@@ -188,26 +201,41 @@ plan is **$1,335** against a $10 plan, which is 133.5x summed and 6x only for a 
 2. a leaderboard Intelligence Index **for that exact SKU**, and
 3. the SKU scores at or above **39.4562**, DeepSeek V4.1 Flash.
 
-Of the 20 rows in [data/plan-economics.csv](data/plan-economics.csv), **14** have a first-party
-ceiling *and* a leaderboard score for the same SKU. Six are shown below; the other eight are named
-in `plan-economics.csv` and excluded here for one of three reasons stated in its notes: the SKU
-scores below the bar (GPT 6 Luna at II 38.12; Grok 4.7 under SuperGrok Lite, which carries no
-published token allowance at all), the row restates a model already shown under a second plan or a
-second tariff (DeepSeek V4.1 Flash peak, and the same model on Go Plus and on Command Code GOAT),
-or the row rests on a price this pass could not re-verify from its own archived sources (the Z.ai
-Pro and Max rows, which are `CARRIED-FORWARD`).
+Of the 20 rows in [data/plan-economics.csv](data/plan-economics.csv), **11 satisfy all three
+conditions**. Six are shown below; the other five are named here with the reason, so the count is
+reproducible from the CSV rather than asserted:
 
-> **CORRECTED 2026-10-07.** This section previously opened "Every plan x model where a first-party
-> ceiling and a leaderboard score both exist", which claims completeness the table does not have.
-> The omitted set includes **the market's second-largest qualifying lane**, which is the kind of row
-> that changes a reader's decision. The filter is now written out and the count is stated rather than
-> implied.
+| Qualifying row not shown | Why it is omitted |
+|---|---|
+| DeepSeek V4.1 Flash **peak**, OpenCode Go | Same SKU as the ranked off-peak row under the second published tariff. The off-peak tariff is the qualifying one; peak is 2x the rate. |
+| DeepSeek V4.1 Flash, **OpenCode Go Plus** | Same SKU on a $40 plan. Ranks behind the $10 row on every figure a buyer compares. |
+| GLM-5.3-Flash, **GLM Coding Plan Lite** | Same model as the ranked GLM-5.3 row, on the cheaper plan; ranks behind it. |
+| GLM-5.3-Flash, **GLM Coding Plan Pro** | Same model, higher price. |
+| GLM-5.3-Flash, **GLM Coding Plan Max** | Same model, highest price. |
+
+The nine rows that do **not** satisfy all three conditions are: five with a first-party ceiling and
+no leaderboard score for that SKU (both Muse Spark Contributor tiers on Go and Go Plus, MiMo-V2.5,
+LongCat 2.5 Preview Free — the last with no published ceiling at all); GPT 6 Luna at II 38.1245,
+below the bar; MiMo-V2.6-Flash at II 37.8844, below the bar; and SuperGrok Lite, which carries a
+score (Grok 4.7 at II 46.4466) but publishes no token allowance, so there is no first-party ceiling
+to convert.
+
+> **CORRECTED 2026-10-07.** This section previously said **14** qualifying rows and **eight**
+> omitted, and attributed the omissions to three causes including rows "that are `CARRIED-FORWARD`".
+> Neither number is derivable from [data/plan-economics.csv](data/plan-economics.csv): the filter
+> above selects **11**, and the four Z.ai Pro/Max rows it used to cite as un-verifiable are now
+> `DOCUMENTED` for their ceilings and `UNKNOWN` for their $/M. The six rows in the table are the
+> six that are not a duplicate SKU-under-another-plan.
+
+> **CORRECTED 2026-10-07 (earlier).** This section previously opened "Every plan x model where a
+> first-party ceiling and a leaderboard score both exist", which claims completeness the table does
+> not have. The filter is written out and the count is stated rather than implied.
 
 Ordered by tokens per dollar. `tools/derive-yields.py` recomputes any row.
 
 | Plan | $/mo | Model | II | Verdict | Yield (M/mo) | $/M |
 |---|---|---|---|---|---|---|
-| **OpenCode Go** | **10** | **DeepSeek V4.1 Flash (off-peak)** | **39.4562** | **best verified lane** | **6,211 advertised / 2,070–2,899 measured** | **$0.0016** |
+| **OpenCode Go** | **10** | **DeepSeek V4.1 Flash (off-peak)** | **39.4562** | **best verified lane** | **6,211 advertised / 2,070–2,899 measured** ($20 and $28 meters at $0.00966/M) | **$0.0016** |
 | OpenCode Go | 10 | GLM-5.3-Flash | 41.8075 | best quality at volume | 1,697 | $0.0059 |
 | OpenCode Go | 10 | MiMo-V2.6-Pro | **46.3242** | best II per dollar; $15 cap binds | 800 | $0.0125 |
 | OpenCode Go | 10 | Kimi K3 | 43.5938 | $15 cap, dearest model | 34 | $0.2940 |

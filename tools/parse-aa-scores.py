@@ -15,8 +15,22 @@ from a low-scoring one, and a low-scoring one is merely disappointing while an
 unscored one cannot be ranked at all.
 
 So this tool emits a row for **every** sought slug, including the misses, with a
-`lookup_verdict` of `scored` or `notFound`, and exits non-zero when a probe
-cannot be resolved anywhere. A missing row is an answer here, not a gap.
+`lookup_verdict` of `scored` or `notFound`.
+
+**Exit codes.** `0` means every sought slug resolved to a leaderboard row.
+`1` means the page yielded no models and nothing could be looked up at all.
+`2` means at least one sought slug is absent from the board, and lists them. The
+docstring used to claim a non-zero exit whenever a probe could not be resolved
+anywhere while the code returned 0 unconditionally, so a `notFound` - the result
+this tool exists to produce - was reported as a clean run and nothing in the
+transcript recorded it.
+
+Note on what a `notFound` means. It means *this page* does not list the slug.
+The leaderboard ships two different payloads, and a model absent from one can be
+listed on the other: `mimo-v2-6-flash` is not on `/models` and is on
+`/leaderboards/models` at II 37.8844. Run this against both and the count each
+recovers is printed, because "24 models" is a property of a page rather than of
+the board.
 """
 from __future__ import annotations
 
@@ -89,10 +103,11 @@ def main() -> int:
     print(f"board carries {len(models)} models; {len(sought)} slugs looked up -> {args.out}")
     if misses:
         print(f"  notFound ({len(misses)}): {', '.join(misses)}")
-        print("  A notFound row is a result. It means the leaderboard has no Intelligence")
+        print("  A notFound row is a result. It means this page has no Intelligence")
         print("  Index for that SKU, so no score may be published for it and no row")
-        print("  borrowing another SKU's score may be ranked.")
-    return 0
+        print("  borrowing another SKU's score may be ranked. It is not a statement")
+        print("  about the board: /models and /leaderboards/models are different payloads.")
+    return 2 if misses else 0
 
 
 if __name__ == "__main__":
