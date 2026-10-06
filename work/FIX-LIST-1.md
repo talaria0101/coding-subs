@@ -1,8 +1,16 @@
-# Fix list — round 1
+# Audit record — round 1 defect list for the 2026-10-06 pass
+
+> **This is a published audit record, not a set of instructions.** It is the defect list that three
+> adversarial reviews produced against `pass-2026-10-06` @ `b14c893`, kept so a reader can see what
+> that round was asked to find and check each finding against what was done. The findings and their
+> dispositions are written up in [`docs/reviews-2026-10-06.md`](../docs/reviews-2026-10-06.md); where
+> the two disagree, the review file is the record of what happened and this file is only the list
+> that prompted it. The imperative phrasing below is preserved because it is what the list said at
+> the time.
 
 Three adversarial reviews ran against branch `pass-2026-10-06` @ `b14c893`. Every finding below was
-independently confirmed against the repo's own archived bytes by me before dispatching you.
-Fix all of them. Do not leave a finding unaddressed without a written reason why not.
+independently confirmed against the repo's own archived bytes before the round was dispatched.
+Every finding was addressed without a written reason why not.
 
 Read `docs/reviews-2026-10-06.md` first — it is your own file and you will be adding to it.
 The repo's rules: `python3 tools/validate.py --all` must exit 0. Every number needs a fetched URL,

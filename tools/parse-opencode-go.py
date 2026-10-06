@@ -118,9 +118,17 @@ def main() -> int:
 # the committed CSV contains. On Windows, text-mode stdout translates each "\n"
 # into a second "\r", so the same command emits "\r\r\n" and `diff -u` against
 # the committed file fails there. Reconfiguring stdout to newline="" removes the
-# translation, and pinning lineterminator to "\r\n" matches the committed bytes,
-# so the output is byte-identical on either platform.
-    sys.stdout.reconfigure(newline="")
+# translation, and pinning lineterminator to "\r\n" matches the committed bytes.
+#
+# The encoding is pinned too, and the newline fix above did not cover it.
+# Reconfiguring for newlines made the *line terminator* platform-independent but
+# left stdout's *encoding* as whatever the console defaults to, which on a stock
+# Windows host is cp1252. The preamble carries a character cp1252 cannot encode,
+# so the bare CI step still died on Windows with `UnicodeEncodeError: 'charmap'
+# codec can't encode character ...` while passing on Linux. The committed bytes
+# are UTF-8, so the output encoding is pinned to UTF-8 rather than inherited from
+# the environment.
+    sys.stdout.reconfigure(encoding="utf-8", newline="")
     writer = csv.writer(sys.stdout, lineterminator="\r\n")
     # The preamble is written straight to the stream rather than through
     # `csv.writer`, which quotes any field containing the delimiter. The

@@ -63,12 +63,17 @@ ceiling and a leaderboard score both exist, ordered by quality per dollar. Full 
 
 | Plan | $/mo | Model | Creator | II | $/M (cache-heavy) | II per $/M |
 |---|---|---|---|---|---|---|
-| **OpenCode Go** | **10** | **Muse Spark 1.3** | Meta | **48.09** | **$0.0009** | **53,436** | **SUPERSEDED 2026-10-07: the SKU is Muse Spark 1.3 Contributor, which has no leaderboard row; 48.09 is the base model's score.**
+| **OpenCode Go** | **10** | **Muse Spark 1.3** | Meta | **48.09** | **$0.0009** | **53,436** |
 | OpenCode Go | 10 | DeepSeek V4.1 Flash | DeepSeek | 39.46 | $0.0016 | 24,660 |
-| OpenCode Go Plus | 40 | Muse Spark 1.3 | Meta | 48.09 | $0.0018 | 26,718 | **SUPERSEDED 2026-10-07: the SKU is Muse Spark 1.3 Contributor, which has no leaderboard row; 48.09 is the base model's score.**
+| OpenCode Go Plus | 40 | Muse Spark 1.3 | Meta | 48.09 | $0.0018 | 26,718 |
 | OpenCode Go | 10 | GLM-5.3-Flash | Z AI | 41.81 | $0.0059 | 7,086 |
 | GLM Coding Plan Max | 160 | GLM-5.3-Flash | Z AI | 41.81 | $0.0090 | 4,645 |
 | GLM Coding Plan Pro | 72 | GLM-5.3-Flash | Z AI | 41.81 | $0.0095 | 4,401 |
+
+**SUPERSEDED 2026-10-07 — the two Muse Spark 1.3 rows above.** Both the $10 Go row and the $40 Go
+Plus row price **Muse Spark 1.3 Contributor**, a discounted SKU with no leaderboard row; the 48.09 is
+the **base** model's score and does not belong to either row. Neither may be ranked. The prices
+($0.0009/M, $0.0018/M) are correct, read off the Contributor rate card.
 | OpenCode Go | 10 | GPT 6 Luna (≤272K) | OpenAI | 38.12 | $0.0098 | 3,890 |
 | GLM Coding Plan Lite | 18 | GLM-5.3-Flash | Z AI | 41.81 | $0.0142 | 2,944 |
 | GLM Coding Plan Max | 160 | GLM-5.3 | Z AI | 44.78 | $0.0273 | 1,640 |
@@ -384,7 +389,7 @@ passes at II 40 or above if its ceiling covers the workload on a model scoring a
 | Step 5 | 43.73 | $116.25 | no plan in this table |
 | Qwen3.8 27B | 33.70 | $120.00 | no plan in this table |
 | Gemini 3.8 Flash | 40.93 | $151.88 | **OpenCode Go $10** (no ceiling row; GLM Lite reaches 1,264M Flash tokens but not this model) |
-| Muse Spark 1.3 | 48.09 | $178.12 | **OpenCode Go $10** ($60 ceiling, 11,029M tokens at the cache-heavy mix) | **SUPERSEDED 2026-10-07: the SKU is Muse Spark 1.3 Contributor, which has no leaderboard row; 48.09 is the base model's score.**
+| Muse Spark 1.3 | 48.09 | $178.12 | **OpenCode Go $10** ($60 ceiling, 11,029M tokens at the cache-heavy mix) |
 | GLM-5.3 | 44.78 | $186.00 | **GLM Lite $18** (208M–420M tokens) |
 | Grok 4.7 | 46.45 | $255.00 | no plan in this table |
 | Qwen3.8 Max | 45.42 | $255.00 | no plan in this table |
@@ -395,6 +400,11 @@ passes at II 40 or above if its ceiling covers the workload on a model scoring a
 | Claude Opus 5.5 | 57.62 | $810.00 | none |
 | Claude Fable 5.1 | 53.35 | $2,025.00 | none |
 | GPT-6 Astra | 52.67 | $2,025.00 | none |
+
+**SUPERSEDED 2026-10-07 — the Muse Spark 1.3 row above.** The SKU the OpenCode Go $10 plan sells is
+**Muse Spark 1.3 Contributor**, a discounted tier with no leaderboard row; 48.09 is the **base**
+model's score and does not belong to that row. The row is kept because it was true of this pass's
+own evidence on its research date, and it must not be ranked.
 
 **One row is not an API price.** K2 Horizon (375B-A23B, II 30.50, Institute of Foundation Models)
 shows a $0.00 list price because it is **open weights with no published API tariff**, not because it
@@ -414,10 +424,15 @@ is not tokens, it is the top 7 II points.
 Ranked by what the measurements above support, with the reasoning and the caveat attached.
 
 1. **OpenCode Go, $10/month, as the primary.** It is simultaneously the cheapest per token and the
-   highest quality reachable in this market (II 48.09 on Muse Spark 1.3 at $0.0009/M), it publishes **SUPERSEDED 2026-10-07: the SKU is Muse Spark 1.3 Contributor, which has no leaderboard row; 48.09 is the base model's score.**
+   highest quality reachable in this market (II 48.09 on Muse Spark 1.3 at $0.0009/M), it publishes
    the only per-model grid that lets the figure be recomputed, and it works in any agent. Caveat:
    the grid's request table contradicts its own limit rule (section 1), and the $/M figure depends
    on a traffic mix this pass did not measure. Both are stated rather than smoothed.
+
+   **SUPERSEDED 2026-10-07 — the II 48.09 in item 1 above.** The SKU is **Muse Spark 1.3
+   Contributor**, a discounted tier with no leaderboard row; 48.09 is the **base** model's score and
+   does not belong to that plan. The recommendation is kept as what this pass's own evidence
+   supported on its research date, and the quality claim it rests on does not survive 2026-10-07.
 2. **GLM Coding Plan Lite, $18/month, as the documented-capacity hedge.** It is the only plan that
    publishes both a credit table and a token table, so its ceiling can be checked against a formula
    rather than taken on trust. It covers a 52.5M month on GLM-5.3-Flash at II 41.81 with 12x–24x

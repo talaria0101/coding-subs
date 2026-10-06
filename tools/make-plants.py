@@ -657,6 +657,101 @@ def plant_field_count(dest: Path) -> str:
 
 
 
+def plant_lookup_against_board(dest: Path) -> str:
+
+    """The lookup claiming a score the archived leaderboard does not hold.
+
+    `unscored-model` treats `aa-lookup.csv` as the authority on whether the board
+    carries a SKU and never checks the lookup itself, so an authority nobody
+    validates is an authority that can be edited into agreement with a defect.
+    This is the direction that matters: the Contributor SKU is marked
+    `present_on_board=yes` with the base model's score, and `unscored-model`
+    reads that as a verified score and stays silent.
+    """
+
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+
+    set_cell(dest / "2026-10-06" / "data" / "aa-lookup.csv",
+             ("muse-spark-1-2-contributor",), "present_on_board", "yes")
+
+    set_cell(dest / "2026-10-06" / "data" / "aa-lookup.csv",
+             ("muse-spark-1-2-contributor",), "intelligence_index", "39.5759")
+
+    return "lookup-against-board"
+
+
+def plant_no_future_pass(dest: Path) -> str:
+
+    """A pass directory dated after the machine's clock.
+
+    `no-future-pass` refuses a pass whose date is in the future, which is how a
+    dated supersession or a typo would otherwise pass unexamined. It is the one
+    check whose fixture has to be named for the day it runs: the copy below is
+    dated a year out, so it trips on any clock this repository will be read on.
+    """
+
+    shutil.copytree(ROOT / "2026-10-06", dest / "2099-12-31", dirs_exist_ok=True)
+
+    # The copy's fetch log still points `saved_as` at `2026-10-06`, which is not
+    # where the bytes now live, and `provenance-in-log` falls back to the pass
+    # directory's name as the read date of every entry that carries none. Under a
+    # 2099 directory name that fallback postdates the provenance strings in the
+    # data, so `provenance-in-log` would fire alongside the check this plant is
+    # named for. Repointing the log at the plant's own directory and stamping the
+    # original read date onto each entry leaves the future date as the only
+    # defect, which is what the plant is for.
+    log = dest / "2099-12-31" / "data" / "fetch-log.json"
+    entries = json.loads(log.read_text(encoding="utf-8"))
+    for entry in entries:
+        entry["saved_as"] = str(entry.get("saved_as") or "").replace(
+            "2026-10-06\\\\sources", "2099-12-31\\\\sources")
+        entry["read_date"] = "2026-10-06"
+    log.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
+
+    return "no-future-pass"
+
+
+def plant_layout(dest: Path) -> str:
+
+    """A pass directory with its `references/` removed.
+
+    `layout` is the gate's first check and the one with no plant: every pass in
+    the tree has all four directories, so nothing demonstrated it. Deleting
+    `references/` is the smallest change that trips it — the check requires
+    `data/`, `references/`, `sources/` and a README in each pass directory, and a
+    pass without its references cannot be checked for quoted money or ladder
+    prices at all.
+    """
+
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+
+    shutil.rmtree(dest / "2026-10-06" / "references")
+
+    return "layout"
+
+
+def plant_model_slug_joins(dest: Path) -> str:
+
+    """A plan row naming a model the landscape does not carry.
+
+    `model-slug-joins` has no plant for the same reason `layout` did: every
+    plan row in the tree joins, so nothing demonstrated it. Changing one
+    `model_slug` to a slug that is in neither the landscape nor the lookup
+    reproduces the defect it exists for — a plan row whose model cannot be
+    joined, which is how a ranked table silently comes out empty.
+    """
+
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+
+    # Addressed by the leading fields that identify the off-peak row. Two rows
+    # share this slug, so the plan price is part of the key to land on one.
+    set_cell(dest / "2026-10-06" / "data" / "plan-economics.csv",
+             ("OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (off-peak)"),
+             "model_slug", "deepseek-v9-9-ultra")
+
+    return "model-slug-joins"
+
+
 def plant_gate_count(dest: Path) -> str:
     """The root README claiming a number of checks the registry does not hold.
 
@@ -666,7 +761,7 @@ def plant_gate_count(dest: Path) -> str:
     """
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
     wrong = ROOT.joinpath("README.md").read_text(encoding="utf-8").replace(
-        "gates every pass on **nineteen checks**",
+        "gates every pass on **twenty checks**",
         "gates every pass on **eleven checks**", 1)
     assert "eleven checks" in wrong, "the root README's check count is not where it was expected"
     (dest / "README.md").write_text(wrong, encoding="utf-8")
@@ -745,6 +840,22 @@ PLANTS = [
 
      "root README claiming eleven checks"),
 
+    ("layout", plant_layout,
+
+     "references/ deleted from the pass directory"),
+
+    ("lookup-against-board", plant_lookup_against_board,
+
+     "lookup claims the Contributor SKU is on the board at the base model's score"),
+
+    ("model-slug-joins", plant_model_slug_joins,
+
+     "plan row names a slug in neither the landscape nor the lookup"),
+
+    ("no-future-pass", plant_no_future_pass,
+
+     "pass directory dated after the machine's clock"),
+
 ]
 
 
@@ -783,11 +894,25 @@ def main() -> int:
 
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT
 
-    for name, expected, note in build(out):
+    made = build(out)
+
+    for name, expected, note in made:
 
         print(f"{name:22} -> expects [{expected}]   {note}")
 
     print(f"\n{len(PLANTS)} plants under {rel(out)}/")
+
+    # The manifest is what lets `tests/run-plants.sh` assert that each plant is
+    # caught *by the check it is named for* rather than merely by something. The
+    # harness used to print the tripped check names without comparing them, so a
+    # plant tripped by the wrong check still read as a pass.
+    (out / "manifest.json").write_text(
+        json.dumps(
+            {"plants": [{"name": n, "expects": [e], "note": note} for n, e, note in made]},
+            indent=2,
+        ) + "\n",
+        encoding="utf-8",
+    )
 
     return 0
 

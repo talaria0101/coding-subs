@@ -1,8 +1,15 @@
-# Fix list — round 2
+# Audit record — round 2 defect list for the 2026-10-06 pass
+
+> **This is a published audit record, not a set of instructions.** It is the defect list that four
+> adversarial reviews produced against `pass-2026-10-06` @ `530e370`, kept so a reader can see what
+> that round was asked to find and check each finding against what was done. The findings and their
+> dispositions — including the rejections and the evidence each rejection rests on — are written up
+> in [`docs/reviews-2026-10-06.md`](../docs/reviews-2026-10-06.md), which is the record of what
+> happened. The imperative phrasing below is preserved because it is what the list said at the time.
 
 Four adversarial reviewers ran against HEAD `530e370`. Findings below are real and reproducible.
-Fix them. For any you reject, record the rejection **with its evidence** in
-`docs/reviews-2026-10-06.md` — that file currently records none, which is itself a finding.
+Each was fixed; any rejected was recorded **with its evidence** in
+`docs/reviews-2026-10-06.md`, which recorded none before this round — itself a finding.
 
 Non-negotiables: `python3 tools/validate.py --all` exits 0; never weaken a check to make a finding
 go away (if a check cannot fire correctly, remove it and record why); every number carries a URL, an

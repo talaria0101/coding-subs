@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -64,12 +65,13 @@ CHECKS: dict[str, str] = {
     "evidence-vocabulary": "an evidence class outside the set the root README declares",
     "no-future-pass": "a pass directory cannot be dated after the machine's clock",
     "fetch-log-corroborates": "every archived source needs a log entry and every logged hash must be the hash of the bytes",
-    "report-matches-data": "row counts and cited paths the report quotes must match the CSVs",
+    "report-matches-data": "row counts, cited paths and fetch tallies the report quotes must match the CSVs and the log",
     "model-slug-joins": "a plan row naming a model must join to a model in the landscape",
     "ladder-price-on-page": "a ladder price must appear in the page it cites",
     "quoted-money-on-page": "a figure quoted in references/*.md must be on the page it cites",
     "unit-scale": "25.81 yi (10^8) was read as 25.81 billion and reached a headline verdict",
     "unscored-model": "a score inherited from a different SKU ranks as a real capability score",
+    "lookup-against-board": "a lookup row must say what the archived leaderboard payload actually holds",
     "provenance-in-log": "a provenance string asserting a dated lookup no fetch log entry records",
     "shared-cap": "a per-model ceiling was published without saying the ceilings share a pool",
     "mix-declared": "a derived $/M or tokens/month figure whose row omits its traffic mix",
@@ -902,7 +904,13 @@ def check_dates(pass_dir: Path) -> None:
 
 
 def check_report_matches_data(pass_dir: Path) -> None:
-    """A path or a row count the prose states is a claim about the files on disk."""
+    """A path, a row count or a fetch tally the prose states must match disk.
+
+    Three quantities are compared against the files on disk: a cited `data/`
+    path, a row count the prose states for that CSV, and - through
+    `_check_fetch_tallies` - the count of retrievals the report states against
+    `data/fetch-log.json`. All three are claims a reader cannot check by eye.
+    """
     report = pass_dir / "README.md"
     data = pass_dir / "data"
     if not report.is_file() or not data.is_dir():
@@ -960,6 +968,115 @@ def check_report_matches_data(pass_dir: Path) -> None:
             f"[report-matches-data] {rel(report)} cites data/{name} but it is not "
             f"in {where}/"
         )
+
+    _check_fetch_tallies(pass_dir, report, text)
+
+
+def _fetch_tallies(pass_dir: Path) -> dict[str, int] | None:
+    """The log's own counts, or None when this pass keeps no fetch log.
+
+    `entries` is every recorded retrieval, `ok` the subset that returned HTTP 200,
+    `archived` the distinct files the log says it wrote and `on_disk` the sources
+    actually committed. The four are different quantities and the gap between
+    `entries` and `archived` is the interesting one: re-fetching a page whose
+    bytes came back unchanged records a retrieval without archiving a second copy,
+    so a report that says "twelve fetches" and "ten distinct results" can be
+    right on both and still read as a contradiction.
+    """
+    log = pass_dir / "data" / "fetch-log.json"
+    if not log.is_file():
+        return None
+    try:
+        entries = json.loads(log.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(entries, list):
+        return None
+    sources = pass_dir / "sources"
+    return {
+        "entries": len(entries),
+        "ok": sum(1 for e in entries if str(e.get("http")) == "200"),
+        "archived": len({str(e.get("saved_as") or "").replace(chr(92), "/").split("/")[-1]
+                         for e in entries if e.get("saved_as")}),
+        "on_disk": len([p for p in sources.iterdir() if p.is_file()]) if sources.is_dir() else 0,
+    }
+
+
+def _check_fetch_tallies(pass_dir: Path, report: Path, text: str) -> None:
+    """A report's count of its own retrievals must be the log's count.
+
+    The row-count check above compares the report against the CSVs. Nothing
+    compared it against `fetch-log.json`, so "Eleven fetches ... 11/11 returned
+    200, and the nine distinct results are archived" survived against a log
+    holding twelve entries and ten archived files — three wrong numbers, none of
+    them near a CSV.
+
+    Three forms are matched, because the counts appear in three grammatical
+    positions and a check that reads only one of them reads none of the two
+    others:
+
+    * `N/M returned 200`, or the `all N` it is written as when the report says
+      every attempt succeeded;
+    * `N fetches`, and the spelled-out form;
+    * `the N distinct results are archived`.
+
+    A count is only checked in a position whose tally exists, so a pass that
+    keeps no fetch log is not asked about numbers it never claimed.
+    """
+    tallies = _fetch_tallies(pass_dir)
+    if tallies is None:
+        return
+    spelled = "|".join(
+        sorted((w for w in NUM_WORDS if 1 <= NUM_WORDS[w] <= 99), key=len, reverse=True)
+    )
+    token = rf"(\d+|{spelled})"
+
+    def as_int(raw: str) -> int | None:
+        raw = raw.strip().lower()
+        return int(raw) if raw.isdigit() else NUM_WORDS.get(raw)
+
+    def claimed(match: re.Match, group: int = 1) -> int | None:
+        return as_int(match.group(group))
+
+    where = rel(report)
+
+    def fail(position: str, said: int, actual: int) -> None:
+        failures.append(
+            f"[report-matches-data] {where} says {position} is {said}, "
+            f"data/fetch-log.json records {actual}"
+        )
+
+    # "11/11 returned 200" - the numerator is the successes and the denominator
+    # is the attempts, and both are claims about the same list.
+    for match in re.finditer(rf"{token}\s*/\s*{token}\s+returned\s+200", text, re.IGNORECASE):
+        numerator, denominator = claimed(match), claimed(match, 2)
+        if numerator is not None and numerator != tallies["ok"]:
+            fail("the number of fetches that returned 200", numerator, tallies["ok"])
+        if denominator is not None and denominator != tallies["entries"]:
+            fail("the number of fetches", denominator, tallies["entries"])
+
+    # "all twelve fetches"
+    for match in re.finditer(rf"all\s+{token}\s+fetches\b", text, re.IGNORECASE):
+        said = claimed(match)
+        if said is not None and said != tallies["entries"]:
+            fail("the number of fetches", said, tallies["entries"])
+
+    # "the nine distinct results are archived"
+    for match in re.finditer(
+            rf"{token}\s+distinct\s+(?:results?|sources?|pages?|files?)\s+are\s+archived",
+            text, re.IGNORECASE):
+        said = claimed(match)
+        if said is not None and said != tallies["archived"]:
+            fail("the number of distinct results archived", said, tallies["archived"])
+
+    # A bare "20 first-party sources fetched serially", which is the form the
+    # 2026-10-02 pass uses.
+    for match in re.finditer(
+            rf"\b{token}\s+(?:first-party\s+)?(?:fetches|sources)\s+fetched\b",
+            text, re.IGNORECASE):
+        said = claimed(match)
+        if said is not None and said != tallies["entries"]:
+            fail("the number of fetches", said, tallies["entries"])
 
 
 def check_model_slug_joins(pass_dir: Path) -> None:
@@ -1909,6 +2026,106 @@ def check_unscored_model(pass_dir: Path) -> None:
             )
 
 
+def _leaderboard_models(pass_dir: Path) -> dict[str, float] | None:
+    """slug -> Intelligence Index, read out of the archived leaderboard payload.
+
+    The payload is a React Server Component flight string with escaped quotes, so
+    the scores cannot be seen by grepping the raw HTML — the bar model itself,
+    `deepseek-v4-1-flash` at 39.4562, is invisible to `grep -c "39\\.4562"` on that
+    file. `tools/parse-aa-models.py` is the repository's own answer to that, and it
+    is imported here rather than reimplemented so the check and the parser cannot
+    drift apart: the earlier rejection in this review rested on a grep that could
+    not see the payload, and the correction was to ask the parser.
+
+    Returns None when the pass archives no leaderboard payload or the parser
+    cannot load, in which case there is nothing to check the lookup against.
+    """
+    for name in ("aa-leaderboard-models.html", "aa-models.html"):
+        page = pass_dir / "sources" / name
+        if not page.is_file():
+            continue
+        spec = importlib.util.spec_from_file_location(
+            "repo_parse_aa_models", Path(__file__).resolve().parent / "parse-aa-models.py"
+        )
+        if spec is None or spec.loader is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        try:
+            spec.loader.exec_module(module)
+        except Exception:
+            return None
+        raw = page.read_text(encoding="utf-8", errors="replace")
+        try:
+            blob = module.flight_blob(raw)
+        except Exception:
+            return None
+        board: dict[str, float] = {}
+        for obj in module.model_objects(blob):
+            slug = obj.get("slug")
+            index = obj.get("intelligenceIndex")
+            if slug and index is not None:
+                board[slug] = float(index)
+        if board:
+            return board
+    return None
+
+
+def check_lookup_against_board(pass_dir: Path) -> None:
+    """A lookup row must say what the archived leaderboard payload actually holds.
+
+    `unscored-model` reads `aa-lookup.csv` as the authority on whether the board
+    carries a SKU, and it never checks the lookup itself. Flipping
+    `muse-spark-1-2-contributor` to `present_on_board=yes` with a score makes that
+    check read a score the board does not publish as a verified one, and the gate
+    exits 0: a file that is the authority for every other check is itself unchecked.
+
+    The comparison is against the archived payload, parsed by the repository's own
+    parser, on the two fields the lookup asserts: `present_on_board` and
+    `intelligence_index`. A slug the payload carries but the lookup marks absent is
+    a notFound the payload contradicts; a slug the lookup marks present that the
+    payload does not carry is a presence it invents; and a score that disagrees with
+    the payload's for the same slug is a figure no page holds.
+
+    A row whose `read_date` predates the pass's own leaderboard fetch is exempt,
+    because a lookup recorded against an earlier page was true of that page. The
+    lookup already carries the `mimo-v2-6-flash` case in exactly this form.
+    """
+    lookup = pass_dir / "data" / "aa-lookup.csv"
+    if not lookup.is_file():
+        return
+    board = _leaderboard_models(pass_dir)
+    if board is None:
+        return
+    header, rows = read_rows(lookup)
+    if "sought_slug" not in header or "present_on_board" not in header:
+        return
+    ls = header.index("sought_slug")
+    lp = header.index("present_on_board")
+    li = header.index("intelligence_index") if "intelligence_index" in header else None
+    for offset, row in enumerate(data_rows(rows), start=1):
+        if len(row) <= max(ls, lp):
+            continue
+        slug = row[ls].strip()
+        present = row[lp].strip().lower() == "yes"
+        score = _num(row[li]) if li is not None and len(row) > li else None
+        on_board = slug in board
+        if present and not on_board:
+            failures.append(
+                f"[lookup-against-board] {rel(lookup)} data row {offset} records "
+                f"present_on_board=yes for {slug!r}, but the archived leaderboard "
+                f"payload does not carry that slug. tools/parse-aa-models.py "
+                f"recovers it from neither payload this pass archives."
+            )
+            continue
+        if present and score is not None and abs(board[slug] - score) > 0.001:
+            failures.append(
+                f"[lookup-against-board] {rel(lookup)} data row {offset} records "
+                f"{slug!r} at {score:g}, but the archived leaderboard payload "
+                f"carries it at {board[slug]:g}. A score that disagrees with the "
+                f"page it is attributed to is a figure no page holds."
+            )
+
+
 def check_shared_cap(pass_dir: Path) -> None:
     """A per-model dollar ceiling must say whether it is independent or pooled.
 
@@ -2058,6 +2275,7 @@ def validate(pass_dir: Path) -> None:
     check_quoted_money_on_page(pass_dir)
     check_unit_scale(pass_dir)
     check_unscored_model(pass_dir)
+    check_lookup_against_board(pass_dir)
     check_provenance_in_log(pass_dir)
     check_shared_cap(pass_dir)
     check_mix_declared(pass_dir)

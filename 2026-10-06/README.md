@@ -3,9 +3,11 @@
 **Research date: 2026-10-06 (UTC), with four source re-fetches on 2026-10-07 recorded separately in
 the same log.** No plan was subscribed to and no authenticated request was made.
 Every token figure in this pass is arithmetic on first-party published numbers, with the arithmetic
-printed and reproducible. Eleven fetches with a per-attempt log
-([data/fetch-log.json](data/fetch-log.json)); 11/11 returned 200, and the nine distinct results are
-archived under [sources/](sources/) with their SHA-256. Databases:
+printed and reproducible. Twelve fetches with a per-attempt log
+([data/fetch-log.json](data/fetch-log.json)); **12/12 returned 200, and the ten distinct results are
+archived** under [sources/](sources/) with their SHA-256. Two of the twelve are re-fetches of pages
+already archived, whose bytes came back unchanged and are therefore not written twice — the log
+records their `sha256` against the URL but leaves `saved_as` empty. Databases:
 [data/plan-economics.csv](data/plan-economics.csv) (20 plan x model rows),
 [data/pool-meter-reports.csv](data/pool-meter-reports.csv) (6 independent meter readings),
 [data/aa-lookup.csv](data/aa-lookup.csv) (16 SKU lookups against the leaderboard, including the
@@ -26,10 +28,10 @@ limits: [references/method-notes.md](references/method-notes.md). Reviews:
 | Question | Answer | Evidence class |
 |---|---|---|
 | **Does any plan reach >=10,000M tokens/month for <=$10 on a model verified at or above DeepSeek V4.1 Flash?** | **No, and this is a structural result rather than a gap in searching.** Two lanes clear 10,000M on a $10 OpenCode Go plan — Muse Spark 1.3 Contributor and Muse Spark 1.2 Contributor, both at 11,029M — and **neither has an Intelligence Index at all**. The next-largest lane, MiMo-V2.6-Flash at 7,878M, does not clear 10,000M and is the largest lane in the market the board does score; it scores **II 37.8844**, below the 39.4562 bar. So the result does not rest on how many lanes clear the threshold — **not one of them is a model the leaderboard scores at or above the bar.** The best verified lane is DeepSeek V4.1 Flash, 6,211M advertised and 2,070–2,899M measured, where that range is the $20 and $28 meters divided by the same $0.00966/M rate. | FIRST-PARTY-COMPUTED |
-| **Why is it structural** | At a 100%-cache-read mix — an upper bound no real workload reaches — **$10 of raw API credit buys at most 5,000M tokens** on the cheapest qualifying price in existence. At this pass's own audited 97% mix it buys **1,838M**. A credit balance therefore cannot produce 10B for $10 at any vendor; only a subscription with a multiplier can, and the multipliers measured in this market range from **9.3x** (Muse Code High Usage, standard tier) to **114x** (the same run priced at the Contributor tier) — so a multiplier is not the obstacle either. What fails is the conjunction: none of the cheap plans and none of the high-multiplier subscriptions are simultaneously cheap enough and scored high enough. | FIRST-PARTY-COMPUTED |
+| **Why is it structural** | At a 100%-cache-read mix — an upper bound no real workload reaches — **$10 of raw API credit buys at most 5,000M tokens** on the cheapest qualifying price in the sweep — $0.002 per 1M across the OpenCode Go grid, the Z.ai docs, the DeepSeek pricing page, the Command Code GOAT page and the xAI Grok docs. At this pass's own audited 97% mix it buys **1,838M**. A credit balance therefore cannot produce 10B for $10 at any vendor; only a subscription with a multiplier can, and the multipliers measured in this market range from **9.3x** (Muse Code High Usage, standard tier) to **114x** (the same run priced at the Contributor tier) — so a multiplier is not the obstacle either. What fails is the conjunction: none of the cheap plans and none of the high-multiplier subscriptions are simultaneously cheap enough and scored high enough. | FIRST-PARTY-COMPUTED |
 | **Best lane that is actually verified** | **OpenCode Go on DeepSeek V4.1 Flash (off-peak), II 39.4562.** 6,211M advertised; **2,070–2,899M measured**, because the $60 is a shared pool rather than a per-model budget. | FIRST-PARTY-COMPUTED / THIRD-PARTY |
 | **Highest verified quality reachable** | GLM-5.3-Flash at II 41.8075 on the same $10 plan (1,697M), or MiMo-V2.6-Pro at **II 46.3242** on the same plan for 800M, whose ceiling is the $15 per-model cap rather than the $60 pool. | FIRST-PARTY-COMPUTED |
-| **Correction to the 2026-10-02 pass** | Its top row ranked Muse Spark 1.3 Contributor at **II 48.09**. That is the **base model's** score. The Contributor tier is a different, discounted SKU with no score, and it is the only Go model that trains on your prompts with no ZDR. | DOCUMENTED |
+| **Correction to the 2026-10-02 pass** | Its top row ranked Muse Spark 1.3 Contributor at **II 48.09**. That is the **base model's** score. The Contributor tier is a different, discounted SKU with no score, and it is one of only two Go models that train on your prompts with no ZDR — the two Contributor tiers, 1.3 and 1.2. | DOCUMENTED |
 | **Correction to the 2026-10-02 pass** | Its SuperGrok row published **190x ±21**. The source **retracted** that on 2026-10-03: the measuring account had a linked X Premium+ subscription. Correct figures are 80x ±4 at $70, 18.0x ±0.3 at $30, 15.7x ±0.8 for Lite. | MEASURED |
 | **Relays** | No longer excluded by category. Measured against a four-part standard (§8), **0 of 3** evaluated providers are rankable and the fourth row is software, not a provider. The one with a public rate card prices at **5.33x the official rate for the same model**. | FIRST-PARTY |
 | **Confidence** | **HIGH on the ceilings, MEDIUM on the blended $/M figures, and not HIGH on everything.** The ceilings are read from each vendor's own page. The $/M figures depend on a quoted traffic mix, not a measured workload. One price quotation in this pass was found to be wrong on 2026-10-07 after publication (R5, DeepSeek) and four published numbers inherited it — a price read from a page is evidence only while it still matches that page, which is why `validate.py` now checks every quoted figure against the archived bytes. **No metered result in this pass.** | — |
@@ -42,9 +44,13 @@ The target is >=10,000M tokens/month for <=$10 on a model verified at or above D
 (II 39.4562). No plan in this market meets it. The interesting part is that **it could not**, and
 that fact is arithmetic rather than an absence of searching.
 
-**The cheapest qualifying price in existence is $0.002 per 1M** — the cached-read rate on Muse Spark
-1.3 Contributor on OpenCode Go [R1]. Two bounds, because they are different claims and only one of
-them is an upper bound:
+**Across the pages this pass read — the OpenCode Go grid [R1], the Z.ai dev-pack and team-plan
+docs, the DeepSeek pricing page [R4], the Command Code GOAT page and the xAI Grok docs, plus the
+relay rate cards in §8 — the cheapest qualifying price is $0.002 per 1M**: the cached-read rate on
+Muse Spark 1.3 Contributor on OpenCode Go [R1]. That is a bound on the pages fetched and read here,
+not a claim about every vendor in the market; a vendor whose page this pass did not read could in
+principle price below it. Two bounds on the yield, because they are different claims and only one
+of them is an upper bound:
 
 ```
 100% cache-read mix (upper bound):   $10 / $0.002 per 1M  =  5,000M tokens
@@ -247,7 +253,7 @@ cheapest lanes in the market:
 
 | SKU | Yield (M/mo) | Why it is not ranked |
 |---|---|---|
-| Muse Spark 1.3 Contributor (OpenCode Go) | 11,029 | **No Intelligence Index.** `notFound` on the archived leaderboard page [R2]. Cheapest lane in existence, region-limited, and the only Go model with prompt training on and no ZDR. |
+| Muse Spark 1.3 Contributor (OpenCode Go) | 11,029 | **No Intelligence Index.** `notFound` on the archived leaderboard page [R2]. Cheapest lane in existence, region-limited, and — with 1.2 Contributor below — one of the only two Go models with prompt training on and no ZDR. |
 | Muse Spark 1.2 Contributor (OpenCode Go) | 11,029 | **No Intelligence Index.** Also `notFound`. Same prices, same $60 cap, same yield as 1.3 Contributor — the pass's earlier claim that 1.3 Contributor was the only lane above 10,000M was false on its own archived page. |
 | MiMo-V2.6-Flash (OpenCode Go) | 7,878 | **Scored at II 37.8844**, observed 2026-10-07 on `/leaderboards/models`. Below the 39.4562 bar, so it fails the gate — but by 1.57 points, not by absence. |
 | MiMo-V2.5 (OpenCode Go) | 7,878 | **No Intelligence Index.** `notFound`. Identical prices to V2.6-Flash, so identical yield. |
@@ -418,6 +424,6 @@ surface, and no figure is offered for any other.
 | `2026-10-02/data/plan-economics.csv` | Contributor row re-slugged and marked `unscored:`; every DOLLAR-CEILING row records the pool; `traffic_mix` and `aa_score_provenance` columns added |
 | `2026-09-20/` | The additive-pooling row and the "~6x face" and "across 27 models" readings carry dated superseding notes; the category exclusion of relays is marked superseded by a measurement standard, and the pointer to that standard corrected from §7 (which was "What would falsify this pass") to §8 here |
 | `2026-10-06/` | **Corrected 2026-10-07.** R5's DeepSeek price quotation replaced with the bytes on the page and four derived numbers restated; the Go Plus exhibit demoted from decisive to consistent-with; the `mimo-v2-6-flash` leaderboard row superseded with its 2026-10-07 score; four plan rows added (Muse Spark 1.2 Contributor, MiMo-V2.5, LongCat 2.5 Preview Free, and the corrected Go Plus DeepSeek row); the Z.ai blended $/M cells reclassified from `FIRST-PARTY-COMPUTED` to UNKNOWN |
-| `tools/validate.py` | Four checks added: `unit-scale`, `unscored-model`, `shared-cap`, `mix-declared`. **Corrected 2026-10-07:** all four rewritten after each was shown not to fire on the defect it was written for, and two added — `field-columns` (an arity-preserving column shift) and `quoted-money-on-page` (a figure quoted in `references/*.md` that is not on the page it cites) |
+| `tools/validate.py` | Four checks added: `unit-scale`, `unscored-model`, `shared-cap`, `mix-declared`. **Corrected 2026-10-07:** **seven** checks rewritten after each was shown not to fire on the defect it was written for (the four above, plus `field-columns`, `cost-arithmetic` and `fetch-log-corroborates`), and **three** added — `field-columns` (an arity-preserving column shift), `quoted-money-on-page` (a figure quoted in `references/*.md` that is not on the page it cites), and `evidence-vocabulary` (an evidence class outside the declared set). The per-check evidence is in [../docs/reviews-2026-10-06.md](../docs/reviews-2026-10-06.md) §11 and §12; the count the registry holds is `python3 tools/validate.py --all`'s own `gate-count-claims` check. |
 | `tools/` | `fetch-source.py`, `fetch-community.py`, `parse-aa-scores.py`, `derive-yields.py`, `add-leaderboard-rows.py` added. **Corrected 2026-10-07:** `parse-aa-models.py` accepts the bare `{"slug":…}` object shape the leaderboard page ships, and `parse-opencode-go.py` pins its line terminator and disables newline translation so its output is byte-identical on Linux and Windows |
 | `README.md` (root) | This pass listed; the relay exclusion replaced by the measurement standard; the gate description corrected to match the number of checks `validate.py` registers |

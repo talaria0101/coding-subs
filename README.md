@@ -11,7 +11,7 @@ coding-agent usage by subscription** — model landscape, provider arbitrage, pu
 | **2026-09-13** | [2026-09-13/README.md](2026-09-13/README.md) | Full pass: 45-model landscape (AA snapshot), 44 access plans across 26 provider groups, workload tests, rankings |
 | **2026-09-20** | [2026-09-20/README.md](2026-09-20/README.md) | Re-verification + delta pass: all first-party sources re-fetched, 26 logged changes (Trae repriced upward, Kimi tiers restructured with the weekly window removed, Claude Code limits settled ~17% below the promo level, new Command Code / Devin / Kiro / Factory / Warp / Zed / Replit ladders), every non-USD price normalized at a cited FX rate, and the relay/sponsor "0.03x" market quarantined into a red-flag advisory instead of a ranking |
 | **2026-10-02** | [2026-10-02/README.md](2026-10-02/README.md) | Method pass: 20 first-party sources fetched serially with a per-source log, the OpenCode Go per-model grid parsed to 78 reproducible rows, the finding that a $/M token price is undefined until its traffic mix is stated (5.3x to 29.0x swing, median 13.6x), an anonymous-access measurement of 25 free-tier endpoints, and a re-derivation of a metered allowance project |
-| **2026-10-06** | [2026-10-06/README.md](2026-10-06/README.md) | Correction pass: the market's negative result stated as arithmetic rather than as a search gap (**no plan reaches >=10,000M tokens/month for <=$10 on a verified model**; $10 of raw credit buys at most 5,000M on the cheapest qualifying price under a 100%-cache upper bound, and 1,838M at the audited 97% mix), corrections to earlier passes (**the 190x SuperGrok multiplier is retracted by its own source**; OpenCode Go's $60 read as a shared pool, with the vendor-page exhibit demoted to "consistent with, not decisive" on re-reading), the SKUs whose scores were inherited from other models, relays measured against a published four-test standard rather than excluded by category, and nineteen integrity checks |
+| **2026-10-06** | [2026-10-06/README.md](2026-10-06/README.md) | Correction pass: the market's negative result stated as arithmetic rather than as a search gap (**no plan reaches >=10,000M tokens/month for <=$10 on a verified model**; $10 of raw credit buys at most 5,000M on the cheapest qualifying price under a 100%-cache upper bound, and 1,838M at the audited 97% mix), corrections to earlier passes (**the 190x SuperGrok multiplier is retracted by its own source**; OpenCode Go's $60 read as a shared pool, with the vendor-page exhibit demoted to "consistent with, not decisive" on re-reading), the SKUs whose scores were inherited from other models, relays measured against a published four-test standard rather than excluded by category, and twenty integrity checks |
 
 Each pass directory contains the report (`README.md`), the underlying databases (`data/`),
 numbered citations with access dates (`references/`), and raw snapshots of primary sources
@@ -59,7 +59,7 @@ allowance, its reputation is quantified, its delivery ceiling is documented, and
 are recorded from issue evidence, and every exclusion must name a measured property rather than a
 category.
 
-`python3 tools/validate.py --all` gates every pass on **nineteen checks** a reader cannot check by eye,
+`python3 tools/validate.py --all` gates every pass on **twenty checks** a reader cannot check by eye,
 registered in the `CHECKS` table at the top of the tool. The ones with a history: CSV field-count
 agreement (a surplus unquoted comma shifts every later column, and 7 rows across three files shipped
 that way in the 2026-09-13 and 2026-09-20 passes while the old validator reported clean - **two rows
@@ -69,8 +69,8 @@ earlier "across three files" was wrong on both the count and the files); agreeme
 token count and a $/M on the same row, resolved by role rather than by a fixed column list; **a row's
 token count being the division the row states it performed**, which is a second quantity on the same
 row and is invisible to the first; the presence of a source on every number; **an evidence class
-drawn from the table above**; agreement between row counts and cited paths in prose and what is on
-disk; a plan row's model joining to a row in the landscape; a ladder price appearing in the page it
+drawn from the table above**; agreement between row counts, cited paths **and the fetch tallies** in
+prose and what is on disk; a plan row's model joining to a row in the landscape; a ladder price appearing in the page it
 cites, **a price of zero refused rather than matched against any bare digit on the page**; **a money
 figure quoted in `references/*.md` appearing in the archived page that entry cites, attributed to the
 entry rather than to a line, and a dated correction exempting only the lines that record the
@@ -78,7 +78,9 @@ superseded figure**; **a cell holding the kind of value its column name promises
 arity-preserving column shift looks like; **a token figure's magnitude against its own column unit,
 at both ends of the plausible band** (25.81亿 is 10^8, so 25.81 of them is 2,581,000,000 and not 25.81
 billion); **a capability score traceable to a leaderboard row for that exact SKU or explicitly marked
-notFound**; **a per-model ceiling that says in its `cap_model` column whether it is independent or
+notFound**; **a leaderboard-lookup row checked against the archived payload itself, so the file every
+other check treats as the authority cannot assert a SKU or a score the board does not carry**; **a
+per-model ceiling that says in its `cap_model` column whether it is independent or
 drawn against a shared pool**; **a derived $/M or tokens/month figure that states its traffic mix in a
 column**; **every recorded SHA-256 recomputed against the archived bytes, and every archived source
 accounted for by a log entry**; **a provenance string forbidden from asserting a dated reading no
@@ -107,8 +109,8 @@ refusals as well as read about them.
 | Tool | What it does |
 |---|---|
 | `tools/validate.py` | The data-integrity gate. `python3 tools/validate.py --all` runs every pass and every check. |
-| `tools/make-plants.py` | Generates the eighteen plant fixtures each check is demonstrated against, from real repository data with one cell changed. |
-| `tests/run-plants.sh` | Runs every plant once, showing the refusal, then runs each pass and the whole repository showing the acceptance. Exits non-zero if a plant passes. |
+| `tools/make-plants.py` | Generates the 22 plant fixtures each check is demonstrated against, from real repository data with one cell changed, and writes `manifest.json` naming the check each plant must trip. |
+| `tests/run-plants.sh` | Runs every plant once and asserts it is caught **by the check it is named for**, then runs each pass and the whole repository showing the acceptance. Exits non-zero if a plant passes, or if one is refused by a check other than its own. |
 | `tools/fetch-firstparty.py` | Serial fetcher: one URL, one request, one file, one log line. Never retries a failure into a success. |
 | `tools/fetch-source.py` | Fetcher with more than one route: `--via jina` adds a text-extraction second source for JS-rendered or blocked pages, `--retries` backs off on 429/5xx only, and every attempt is logged with the route that produced it. Never converts a failure into a success. |
 | `tools/fetch-community.py` | Fetches Reddit as a feed and **asserts the query was honoured** rather than assuming it: `search.rss` silently ignores `q=` and returns recency-ordered posts. Exits non-zero when it was ignored. |
