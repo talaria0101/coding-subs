@@ -11,6 +11,7 @@ coding-agent usage by subscription** — model landscape, provider arbitrage, pu
 | **2026-09-13** | [2026-09-13/README.md](2026-09-13/README.md) | Full pass: 45-model landscape (AA snapshot), 44 access plans across 26 provider groups, workload tests, rankings |
 | **2026-09-20** | [2026-09-20/README.md](2026-09-20/README.md) | Re-verification + delta pass: all first-party sources re-fetched, 26 logged changes (Trae repriced upward, Kimi tiers restructured with the weekly window removed, Claude Code limits settled ~17% below the promo level, new Command Code / Devin / Kiro / Factory / Warp / Zed / Replit ladders), every non-USD price normalized at a cited FX rate, and the relay/sponsor "0.03x" market quarantined into a red-flag advisory instead of a ranking |
 | **2026-10-02** | [2026-10-02/README.md](2026-10-02/README.md) | Method pass: 20 first-party sources fetched serially with a per-source log, the OpenCode Go per-model grid parsed to 78 reproducible rows, the finding that a $/M token price is undefined until its traffic mix is stated (5.3x to 29.0x swing, median 13.6x), an anonymous-access measurement of 25 free-tier endpoints, and a re-derivation of a metered allowance project |
+| **2026-10-06** | [2026-10-06/README.md](2026-10-06/README.md) | Correction pass: the market's negative result stated as arithmetic rather than as a search gap (**no plan reaches >=10,000M tokens/month for <=$10 on a verified model**; $10 of raw credit buys at most 5,000M on the cheapest qualifying price), two corrections to earlier passes (**OpenCode Go's $60 is a shared pool, not independent per-model budgets**; the **190x SuperGrok multiplier is retracted by its own source**), the two SKUs whose scores were inherited from other models, relays measured rather than excluded by category, and four new integrity checks |
 
 Each pass directory contains the report (`README.md`), the underlying databases (`data/`),
 numbered citations with access dates (`references/`), and raw snapshots of primary sources
@@ -51,18 +52,25 @@ count, latency and SHA-256 of each first-party page at the moment it was read, a
 are committed under `sources/`, so any figure in any pass can be recomputed from the evidence in
 the repo rather than taken on trust. Subscription economics come from first-party pricing pages and
 docs wherever possible, with every unverifiable number labeled UNKNOWN rather than guessed. Prices
-in non-USD currencies are normalized at a cited FX rate with the rate date. The subscription
-universe is **first-party coding-agent plans only**: API relays, sponsor marketplaces and account
-resellers are excluded from rankings by policy (see the 2026-09-20 advisory) because their discounts
-are ToS-violating quota resale and their pricing is advertisement, not a published rate card.
+in non-USD currencies are normalized at a cited FX rate with the rate date. **The relay and reseller
+class was excluded from rankings by category until the 2026-10-06 pass replaced that policy with a
+measurement standard**: a relay or reseller may be ranked if its operator publishes a rate card or an
+allowance, its reputation is quantified, its delivery ceiling is documented, and its failure modes
+are recorded from issue evidence, and every exclusion must name a measured property rather than a
+category.
 
-`python3 tools/validate.py --all` gates every pass on four things a reader cannot check by eye: CSV
-field-count agreement (a surplus unquoted comma shifts every later column, and 7 rows across three
-files shipped that way in the 2026-09-20 pass while the old validator reported clean), agreement
-between a price, a token count and a $/M on the same row, the presence of a source on every number,
-and agreement between row counts quoted in prose and the CSV they describe. The check refuses
-planted defects and accepts correct input; both cases are recorded in
-[docs/reviews-2026-10-02.md](docs/reviews-2026-10-02.md).
+`python3 tools/validate.py --all` gates every pass on eight things a reader cannot check by eye:
+CSV field-count agreement (a surplus unquoted comma shifts every later column, and 7 rows across
+three files shipped that way in the 2026-09-20 pass while the old validator reported clean);
+agreement between a price, a token count and a $/M on the same row; the presence of a source on every
+number; agreement between row counts quoted in prose and the CSV they describe; **a token figure's
+magnitude against its own column unit** (25.81亿 was read as 25.81 billion when the stored row said
+2,581,000,000); **a capability score traceable to a leaderboard row or explicitly marked notFound**;
+**a per-model ceiling that says whether it is independent or drawn against a shared pool**; and **a
+derived $/M or tokens/month figure that states its traffic mix**. Each check refuses a planted
+defect and accepts correct input; the failing-before evidence is in
+[docs/reviews-2026-10-02.md](docs/reviews-2026-10-02.md) and
+[docs/reviews-2026-10-06.md](docs/reviews-2026-10-06.md).
 
 ## Conventions
 
@@ -76,7 +84,12 @@ planted defects and accepts correct input; both cases are recorded in
 
 | Tool | What it does |
 |---|---|
-| `tools/validate.py` | The data-integrity gate. `python3 tools/validate.py --all` runs every pass. |
+| `tools/validate.py` | The data-integrity gate. `python3 tools/validate.py --all` runs every pass and every check. |
 | `tools/fetch-firstparty.py` | Serial fetcher: one URL, one request, one file, one log line. Never retries a failure into a success. |
+| `tools/fetch-source.py` | Fetcher with more than one route: `--via jina` adds a text-extraction second source for JS-rendered or blocked pages, `--retries` backs off on 429/5xx only, and every attempt is logged with the route that produced it. Never converts a failure into a success. |
+| `tools/fetch-community.py` | Fetches Reddit as a feed and **asserts the query was honoured** rather than assuming it: `search.rss` silently ignores `q=` and returns recency-ordered posts. Exits non-zero when it was ignored. |
 | `tools/parse-opencode-go.py` | Structurally parses `<table>` markup out of the OpenCode Go page into a CSV. Re-running it on the archived snapshot reproduces the committed CSV byte for byte. |
+| `tools/parse-aa-models.py` | Extracts the model landscape from the leaderboard's React Server Component payload. |
+| `tools/parse-aa-scores.py` | Looks specific SKUs up on that board and **records the ones it cannot find**, so an unscored model is distinguishable from a low-scoring one. |
+| `tools/derive-yields.py` | Computes a plan's monthly token yield from a ceiling, a price grid and a `--mix`, printing the whole division including the no-cache worst case. Accepts `--ceiling-basis min --pool P --cap C` for pooled plans. |
 | `tools/probe-opencode-zen.py` | Live anonymous-access probe. Sends no `Authorization` header of any kind, by construction, so it cannot test an authenticated path and does not claim to. |

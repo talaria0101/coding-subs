@@ -1,0 +1,25 @@
+slug,name,creator,releaseDate,intelligenceIndex,terminalbenchV40,terminalbenchV21,terminalbenchHard,contextWindowTokens,isOpenWeights,inputModalityImage,price1mInputTokens,price1mOutputTokens,cacheHitPrice,price1mBlended0To3To1,medianOutputSpeed,deprecated
+claude-opus-5-5,"Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-22,57.6224,,,,1000000,no,yes,4,20,0.2,8,,no
+claude-sonnet-5-5,"Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-28,56.0001,,,,1000000,no,yes,2,10,0.2,4,,no
+claude-fable-5-1,"Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-01,53.3549,,,,1000000,no,yes,10,50,0.25,20,,no
+gpt-6-astra,GPT-6 Astra (Max),OpenAI,2026-09-03,52.6737,,,,1000000,no,yes,10,50,1,20,,no
+gemini-4-argon,Gemini 4 Argon (High),Google,2026-09-30,52.5606,,,,1000000,no,yes,2,10,0.1,4,,no
+gpt-6-1-sol,GPT-6.1 Sol (Max),OpenAI,2026-09-29,51.8333,,,,1000000,no,yes,2,10,0.1,4,,no
+muse-spark-1-3,Muse Spark 1.3 (Max),Meta,2026-09-02,48.0923,,,,1000000,no,yes,1.25,4.25,0.15,2,,no
+grok-4-7,Grok 4.7 (Xhigh),SpaceXAI,2026-09-21,46.4466,,,,500000,no,yes,2,6,0.5,3,,no
+mimo-v2-6-pro,MiMo-V2.6-Pro,Xiaomi,2026-09-21,46.3242,,,,1000000,yes,yes,0.435,0.87,0.0036,0.5437,,no
+qwen3-8-max,Qwen3.8 Max (0902),Alibaba,2026-09-02,45.4152,,,,983616,no,yes,2,6,0.25,3,,no
+glm-5-3,GLM-5.3 (Max),Z AI,2026-08-18,44.7774,,,,1000000,yes,no,1.4,4.4,0.26,2.15,,no
+step-5,Step 5 Preview,StepFun,2026-09-18,43.7343,,,,1000000,no,yes,1,2.7,0.05,1.425,,no
+kimi-k3,Kimi K3 (Max),Kimi,2026-07-16,43.5938,,,,1048576,yes,yes,3,15,0.3,6,,no
+glm-5-3-flash,GLM 5.3 Flash,Z AI,2026-08-26,41.8075,,,,1000000,yes,yes,0.15,0.5,0.026,0.2375,,no
+gemini-3-8-flash,Gemini 3.8 Flash (High),Google,2026-09-02,40.9262,,,,1000000,no,yes,0.75,3.75,0.075,1.5,,no
+deepseek-v4-1-flash,DeepSeek V4.1 Flash (Max),DeepSeek,2026-09-10,39.4562,,,,1000000,yes,yes,0.3,1.2,0.006,0.525,,no
+gpt-6-luna,GPT-6 Luna (Max),OpenAI,2026-09-22,38.1245,,,,1000000,no,yes,0.1,0.5,0.01,0.2,,no
+qwen3-8-27b,Qwen3.8 27B (Xhigh),Alibaba,2026-08-14,33.6963,,,,256000,yes,yes,0.5,3,0.1,1.125,,no
+k2-horizon-375b-a23b,K2 Horizon 375B A23B,Institute of Foundation Models,2026-09-03,30.5015,,,,524288,yes,no,0,0,,0,,no
+minimax-m3,MiniMax-M3,MiniMax,2026-06-01,29.2203,,,0.4242,1000000,yes,yes,0.3,1.2,0.06,0.525,,no
+inkling,Inkling (Xhigh),Thinking Machines,2026-07-15,24.9848,,,,1000000,yes,yes,1,4.05,0.17,1.7625,,no
+nvidia-nemotron-3-ultra-550b-a55b,Nemotron 3 Ultra 550B A55B (Reasoning),NVIDIA,2026-06-04,22.9279,,,0.3636,262144,yes,no,0.6,2.5,0.16,1.075,,no
+muse-glimmer,Muse Glimmer (High),Meta,2026-08-10,17.4754,,,,131072,yes,yes,0.325,1.35,0.04,0.5813,,no
+mistral-medium-3-5,Mistral Medium 3.5,Mistral,2026-04-29,14.1889,,,0.3333,256000,yes,yes,1.5,7.5,0.15,3,,no

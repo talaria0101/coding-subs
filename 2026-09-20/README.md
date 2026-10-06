@@ -134,7 +134,7 @@ Weighting as before: 30% capacity, 25% quality, 15% 1M-context, 10% multimodal, 
 |---|---|---|---|---|---|
 | 1 | **Muse Code High Usage (Meta)** | **$15** | Muse Spark 1.3 (48.09) | **USER-REPORTED ~3B tokens/week (≈13B/mo)** on a II-48 model — 1,082–3,680× API value at list; price corroborated by a tracker ($15, recorded 2026-09-17) | Usage USER-REPORTED, quotas undocumented by Meta; verify first-hand; telemetry caveats from 09-13 stand |
 | 2 | **Z.ai GLM Coding Plan Lite** | **$18** | GLM-5.3 (44.78) | The only DOCUMENTED capacity: official 208–420M tokens/mo (@95% cache), 1M ctx, works in Claude Code/OpenCode/Cline/etc | Flash campaign ended today; 95%-cache assumption is best-case; GLM-5.3 below Opus-5 class; vision via MCP only |
-| 3 | **OpenCode Go** | **$10** | 27 open models incl. Kimi K3 (43.59), DeepSeek V4.1 Flash | VERIFIED-TABLE: published per-model grid worth up to ~$60/mo at list; works in ANY agent; zero-markup sibling (Zen) for overflow | Open-models only (no Claude/GPT-premium); request-shaped quotas, not tokens |
+| 3 | **OpenCode Go** | **$10** | 27 open models incl. Kimi K3 (43.59), DeepSeek V4.1 Flash | VERIFIED-TABLE: published per-model grid worth up to ~$60/mo at list **on one model**; works in ANY agent; zero-markup sibling (Zen) for overflow | Open-models only (no Claude/GPT-premium); request-shaped quotas, not tokens. **SUPERSEDED 2026-10-06: the monthly caps are a shared pool, not independent per-model budgets.** The ~$60 is what the 27 models divide, not $60 each — see [../2026-10-06/README.md](../2026-10-06/README.md) §2 |
 | 4 | **Command Code GOAT** | **$10** | per-model allowances incl. GPT-5.6 Sol (46.97) | $10 buys $70 of earmarked credits (+ deals to ~$100 usage); ~75K requests; 1M ctx; $1 Go tier is the cheapest paid entry anywhere | Deal multiples ADVERTISED; "+ processing fee"; young vendor, no third-party track record |
 | 5 | **ChatGPT Plus (Codex)** | $20 | GPT-5.6 Sol (46.97) | Frontier quality, official message tables (Sol 10–100/5h), flex credits with an explicit rate card | Message-based; weekly caps; GPT-5.5 retires Oct 14 (migration churn) |
 | 6 | **Claude Pro** | $20 | Opus 5 (50.78) / Fable 5.1 (53.35) | 1M context in Claude Code (documented); the only true-frontier escape hatch at $20 | Weekly limits now ~17% below the spring promo level; Pro needs usage credits enabled for Opus 1M |
@@ -203,7 +203,7 @@ price), MiniMax Plus (capacity still unpublished; M3 slipped to II 29.22).
 | Kimi CN legacy pricing | ¥199 ≈ $29.62 | $39 international for the same tier | 1.32× regional arbitrage (official CN billing required) |
 | Gemini 3.8 Flash via AI Pro / free Antigravity | $19.99 / $0 | $152/mo for the reference workload at intro API rates; 2× after Dec 31, 2026 | quota-limited |
 | Muse Spark 1.3 via Muse Code High Usage (USER-REPORTED) | $15/mo | ~13B reported tokens/mo = $16,238–$55,208 at Spark list (all-input/all-output bounds) | **1,082–3,680×**, launch-window subsidy, unverified |
-| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage across 27 models | ~6× face |
+| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage on **one** model; the 27 models divide that pool | ~6× face, single-model. **SUPERSEDED 2026-10-06** |
 
 **Where there is still NO arbitrage:** Copilot (API-parity credits), OpenCode Zen (explicit zero
 markup), Cline/Roo (BYOK), Cursor (usage-metered overage), Zed (API +10%), Kilo Pass (provider
@@ -280,6 +280,17 @@ is presented as this pass's own research.
 
 The relay and reseller market is excluded from rankings by policy (see the advisory above). Its
 prices are advertisement rather than a rate card, and its allowances are quota resale.
+
+> **SUPERSEDED 2026-10-06 — the exclusion is replaced by a measurement standard, not by the
+> opposite verdict.** Excluding a class by category means the class is never measured, and this
+> pass found measurable evidence inside it: one operator in the roster publishes a complete
+> 18-model rate card at a public endpoint, and the gateway software most of the roster runs is
+> open source with its enforcement code public. The 2026-10-06 pass keeps this pass's red-flag
+> register intact and applies four row-level tests instead — a published rate card or allowance, a
+> quantified reputation, a documented delivery ceiling, and recorded failure modes from issue
+> evidence — with the reason for every exclusion being a measured property rather than a category.
+> See [../2026-10-06/README.md](../2026-10-06/README.md) §7 and
+> [../2026-10-06/data/relay-providers.csv](../2026-10-06/data/relay-providers.csv).
 
 ## Workload test (52.5M tokens/month = 15M in + 37.5M out)
 

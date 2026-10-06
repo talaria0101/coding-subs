@@ -423,6 +423,16 @@ vendor's own client logs. Published results are SuperGrok 190x ±21, Claude Max 
 ChatGPT Pro $100 10.25x ±0.03, Muse Code High Usage 9.3x ±0.4 (standard) and 114x ±12 (contributor
 vs standard API price).
 
+> **SUPERSEDED 2026-10-06 — the SuperGrok figure is retracted by its own source.** The 190x ±21
+> above was measured on an account with a linked X Premium+ subscription, which confounds the
+> allowance. The source now publishes **80x ±4 at $70** for that X-linked account, **18.0x ±0.3 at
+> $30** for SuperGrok on an account with no X account linked, and **15.7x ±0.8** for SuperGrok Lite
+> at $10. The measurement row is superseded, not deleted, and the corrected table is in
+> [../2026-10-06/data/subscription-measurements.csv](../2026-10-06/data/subscription-measurements.csv).
+> Full re-derivation: [../docs/reviews-2026-10-06.md](../docs/reviews-2026-10-06.md). The lesson
+> generalises past this one plan: **a subscription multiplier read from one account is an upper
+> bound until its confounds are enumerated**, and this one was worth about 10x.
+
 **They are not ranked in this pass, and the reason is structural.** A multiplier is a measurement
 of one plan, on one workload, on one day, read from one account's meter. This pass subscribed to
 nothing and made no authenticated request, so every allowance in
@@ -436,7 +446,10 @@ numbers: the SuperGrok run's per-call cost recomputed from its raw call log at i
 price gives $67.79 against a published $68.86, a 1.6% gap attributable to calls crossing a
 token-threshold price step. Its headline 190x is a meter-tick bracket rather than a whole-run
 average; a whole-run recomputation gives 246x, which is the method difference the source documents
-in its own step 3.
+in its own step 3. **Both figures are superseded by the retraction noted above**: the 190x and its
+246x re-derivation were computed on the X-linked account, so re-deriving a method against a
+confounded run reproduces the method and not the quantity. The bracketing question is still real and
+still applies to the 18.0x figure, but it is now the smaller of the two effects.
 
 The audited standard traffic mix used in section 1 (97% cache read / 2.5% fresh input / 0.5%
 output) is taken from that project's `conventions.json`, revised 2026-09-23 after a 14-sample

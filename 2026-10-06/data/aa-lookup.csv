@@ -1,0 +1,18 @@
+# The result of asking the leaderboard for a model and recording whether it was
+# there. A model that is ABSENT is a different fact from a model that scores low,
+# and a parser that silently drops an absent row makes the two indistinguishable.
+# This pass re-fetched the Artificial Analysis board (sources/aa-models.html, HTTP
+# 200, sha256 dd63a318...) and recovered 24 models, exactly matching the 2026-10-02
+# snapshot. Every model the plans in this pass sell is listed here with the verdict
+# the board actually returned, including the one it does not carry.
+sought_slug,sku_sold_by_plans,present_on_board,intelligence_index,base_model_slug,base_model_index,lookup_verdict,evidence_class,source_url,read_date,notes
+muse-spark-1-3-contributor,Muse Spark 1.3 Contributor (OpenCode Go $60 cap),no,,muse-spark-1-3,48.0923,notFound,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,"The load-bearing absence of this pass. The Contributor tier is the cheapest qualifying-lane SKU in the market and the only one above 10,000M tokens, and the leaderboard has no row for it. The base model's 48.0923 must not be carried across: a contributor tier is a discounted SKU, not the same model. Both vendors that publish a score column print 'not yet scored' for it."
+muse-spark-1-3,Muse Spark 1.3 (base),yes,48.0923,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,The base model scores 48.0923. This is the score the 2026-10-02 pass attached to the Contributor row.
+deepseek-v4-1-flash,DeepSeek V4.1 Flash (OpenCode Go + Command Code GOAT),yes,39.4562,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,"The capability bar for this pass. Off-peak is the qualifying tariff; the peak tariff on the same model bills at 2x."
+glm-5-3-flash,GLM-5.3-Flash (OpenCode Go + Z.ai),yes,41.8075,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,
+mimo-v2-6-flash,MiMo-V2.6-Flash (OpenCode Go),no,,mimo-v2-6-pro,46.3242,notFound,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,"Second SKU in this pass with no leaderboard row, found the same way as the Contributor: the live board carries 24 models and this is not one of them, while mimo-v2-6-pro is. A score of 37.88 is quoted for it in third-party material and is deliberately not carried here. Its yield is 7878M, which would place it second in the yield ranking, so the absence is load-bearing rather than incidental."
+mimo-v2-6-pro,MiMo-V2.6-Pro (OpenCode Go $15 cap),yes,46.3242,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,The highest Intelligence Index per dollar on the plan; the per-model $15 cap is what limits it.
+grok-4-7,Grok 4.7 (OpenCode Go + SuperGrok Lite),yes,46.4466,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,
+kimi-k3,Kimi K3 (OpenCode Go $15 cap),yes,43.5938,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,
+gpt-6-luna,GPT 6 Luna (OpenCode Go $15 cap),yes,38.1245,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,Fails the capability bar.
+glm-5-3,GLM-5.3 (Z.ai),yes,44.7774,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,
