@@ -1,5 +1,8 @@
+# Derived by tools/extract-plans.py from the archived pages named in vendor_source, and
+# regenerable from them. price_value 0 means the vendor publishes no price on that page,
+# not that the plan was seen to cost nothing; the extraction column records which.
 vendor_source,plan,price_value,currency,extraction,read_date
-anthropic-pricing.html,Claude Free,0,USD,TEXT,2026-10-02
+anthropic-pricing.html,Claude Free,0,USD,NOT-PUBLISHED,2026-10-02
 anthropic-pricing.html,Claude Pro (annual),17,USD,TEXT,2026-10-02
 anthropic-pricing.html,Claude Pro (monthly),20,USD,TEXT,2026-10-02
 anthropic-pricing.html,Claude Max (from),100,USD,TEXT,2026-10-02
@@ -9,19 +12,19 @@ anthropic-pricing.html,Claude Team Standard seat (monthly),25,USD,TEXT,2026-10-0
 anthropic-pricing.html,Claude Team Premium seat (annual),100,USD,TEXT,2026-10-02
 anthropic-pricing.html,Claude Team Premium seat (monthly),125,USD,TEXT,2026-10-02
 anthropic-pricing.html,Claude Enterprise,UNKNOWN,USD,NOT-PUBLISHED,2026-10-02
-cursor-pricing.html,Cursor Hobby,0,USD,JSONLD,2026-10-02
+cursor-pricing.html,Cursor Hobby,0,USD,NOT-PUBLISHED,2026-10-02
 cursor-pricing.html,Cursor Pro,20,USD,JSONLD,2026-10-02
 cursor-pricing.html,Cursor Pro+,60,USD,JSONLD,2026-10-02
 cursor-pricing.html,Cursor Ultra,200,USD,JSONLD,2026-10-02
 cursor-pricing.html,Cursor Teams (per user),40,USD,JSONLD,2026-10-02
-github-copilot-plans.html,Copilot Free,0,USD,TEXT,2026-10-02
+github-copilot-plans.html,Copilot Free,0,USD,NOT-PUBLISHED,2026-10-02
 github-copilot-plans.html,Copilot Pro,10,USD,TEXT,2026-10-02
 github-copilot-plans.html,Copilot Pro+,39,USD,TEXT,2026-10-02
 github-copilot-plans.html,Copilot Max,100,USD,TEXT,2026-10-02
 github-copilot-plans.html,Copilot Pro flex allotment,5,USD,TEXT,2026-10-02
 github-copilot-plans.html,Copilot Pro+ flex allotment,31,USD,TEXT,2026-10-02
 github-copilot-plans.html,Copilot Max flex allotment,100,USD,TEXT,2026-10-02
-kilo-home.html,Kilo Individual,0,USD,JSONLD,2026-10-02
+kilo-home.html,Kilo Individual,0,USD,NOT-PUBLISHED,2026-10-02
 opencode-go.html,OpenCode Go,10,USD,FIRST-PARTY-GRID,2026-10-02
 opencode-go.html,OpenCode Go Plus,40,USD,FIRST-PARTY-GRID,2026-10-02
 zai-overview.md,Z.ai GLM Coding Plan Lite,18,USD,FIRST-PARTY-DOC,2026-10-02

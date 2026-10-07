@@ -86,6 +86,14 @@ def header_index(header: list[str]) -> dict:
                 roles[role] = i
     return roles
 
+# The comment lines the parser writes ahead of the header. They live here so the
+# tool regenerates the committed file byte for byte, which is what CI diffs.
+PREAMBLE = [
+    "# Derived by tools/extract-token-prices.py from the archived OpenAI platform "
+    "pricing",
+    "# page named in the source column, and regenerable from it.",
+]
+
 
 def main() -> int:
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -125,6 +133,12 @@ def main() -> int:
     fields = ["model_slug", "input_per_m", "cached_read_per_m", "cache_write_per_m",
               "output_per_m", "price_class", "source", "read_date"]
     writer = csv.DictWriter(buf, fieldnames=fields, lineterminator="\n")
+    # Written straight into the buffer rather than through `writer`, which would
+    # quote any line containing a comma. They are emitted here rather than added
+    # to the committed file by hand because the CI step that proves this file is
+    # reproducible diffs this output against the committed bytes.
+    for line in PREAMBLE:
+        buf.write(line + "\n")
     writer.writeheader()
     for record in rows:
         writer.writerow({k: ("" if record.get(k) is None else record.get(k)) for k in fields})

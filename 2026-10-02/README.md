@@ -24,6 +24,15 @@ Raw snapshots: [sources/](sources/). Reviews:
 
 ## 0. The short answer
 
+> **SUPERSEDED 2026-10-07 — three of the rows below publish a score the SKU does not have.** They
+> print **"Muse Spark 1.3 at II 48.09"**, but the plan sells only the **Contributor** tier and 48.09
+> is the **base** `muse-spark-1-3`'s score; the Contributor has no leaderboard row. Affected: "Cheapest
+> large allowance per dollar", "Best quality per dollar, first-party ceiling", and "Cheapest per
+> token under a no-cache assumption" (the last states only a price, so it is corrected on naming
+> alone). The prices are right; the scores are borrowed. The corrected ranking, which drops both
+> Muse Spark rows and promotes DeepSeek V4.1 Flash, is in
+> [../2026-10-06/README.md](../2026-10-06/README.md) §3.
+
 | Question | Answer | Evidence class |
 |---|---|---|
 | **Cheapest large allowance per dollar** | **OpenCode Go, $10/month.** On its own published grid it reaches **Muse Spark 1.3 at II 48.09 for $0.0009/M** under a cache-heavy mix, and DeepSeek V4.1 Flash at II 39.46 for $0.0016/M. 39 models, per-model ceilings $6–$240, works in any agent. | FIRST-PARTY-COMPUTED |
@@ -42,6 +51,16 @@ ceiling and a leaderboard score both exist, ordered by quality per dollar. Full 
 [data/plan-economics.csv](data/plan-economics.csv) and
 [data/models-database.csv](data/models-database.csv).
 
+> **SUPERSEDED 2026-10-07 — the top row of this table names the wrong SKU.** It reads
+> "Muse Spark 1.3 | Meta | **48.09**". The vendor sells **only** a Contributor tier on this plan
+> (see [../2026-10-06/README.md](../2026-10-06/README.md) §4.2), and the 48.09 is the Intelligence
+> Index of the **base** `muse-spark-1-3`, a model that appears on no plan grid. The Contributor SKU
+> has **no leaderboard row at all**. Every row in this table and in the short answer above that
+> prints `Muse Spark 1.3` with `48.09` — the short answer's two top rows, this table's rows 1 and 3,
+> §1's "the plan here reaches is II 48.09", and the recommendation table's Muse Spark row — carries
+> an inherited score, and none of them may be ranked. The prices ($0.0009/M, 11,029M) are correct:
+> they are read off the Contributor rate card. Only the **score** is borrowed.
+
 | Plan | $/mo | Model | Creator | II | $/M (cache-heavy) | II per $/M |
 |---|---|---|---|---|---|---|
 | **OpenCode Go** | **10** | **Muse Spark 1.3** | Meta | **48.09** | **$0.0009** | **53,436** |
@@ -50,6 +69,11 @@ ceiling and a leaderboard score both exist, ordered by quality per dollar. Full 
 | OpenCode Go | 10 | GLM-5.3-Flash | Z AI | 41.81 | $0.0059 | 7,086 |
 | GLM Coding Plan Max | 160 | GLM-5.3-Flash | Z AI | 41.81 | $0.0090 | 4,645 |
 | GLM Coding Plan Pro | 72 | GLM-5.3-Flash | Z AI | 41.81 | $0.0095 | 4,401 |
+
+**SUPERSEDED 2026-10-07 — the two Muse Spark 1.3 rows above.** Both the $10 Go row and the $40 Go
+Plus row price **Muse Spark 1.3 Contributor**, a discounted SKU with no leaderboard row; the 48.09 is
+the **base** model's score and does not belong to either row. Neither may be ranked. The prices
+($0.0009/M, $0.0018/M) are correct, read off the Contributor rate card.
 | OpenCode Go | 10 | GPT 6 Luna (≤272K) | OpenAI | 38.12 | $0.0098 | 3,890 |
 | GLM Coding Plan Lite | 18 | GLM-5.3-Flash | Z AI | 41.81 | $0.0142 | 2,944 |
 | GLM Coding Plan Max | 160 | GLM-5.3 | Z AI | 44.78 | $0.0273 | 1,640 |
@@ -64,6 +88,10 @@ ceiling and a leaderboard score both exist, ordered by quality per dollar. Full 
    plan here reaches is II 48.09 (Muse Spark 1.3): a gap of **9.53 II points** to the top model at
    II 57.62, and **4.47 points** to the best non-Anthropic entry at II 52.56 (Gemini 4 Argon). Every
    plan in the table is buying last month's frontier.
+   > **SUPERSEDED 2026-10-07.** "The best quality any plan here reaches is II 48.09" is false for
+   > the reason the table above states: the plan sells **Muse Spark 1.3 Contributor**, which has no
+   > score. **The best *verifiable* quality reachable in this market is II 46.32 (MiMo-V2.6-Pro) on
+   > OpenCode Go at $0.0125/M**, and the gap to the frontier is **11.30 points**, not 9.53.
 2. **The same model costs 2.4x more through one vendor than another.** GLM-5.3-Flash is $0.0059/M
    on an OpenCode Go dollar ceiling and $0.0142/M on Z.ai Lite credits. Both are first-party, same
    model, same day. The difference is that one vendor meters in dollars-per-model and the other in
@@ -373,6 +401,11 @@ passes at II 40 or above if its ceiling covers the workload on a model scoring a
 | Claude Fable 5.1 | 53.35 | $2,025.00 | none |
 | GPT-6 Astra | 52.67 | $2,025.00 | none |
 
+**SUPERSEDED 2026-10-07 — the Muse Spark 1.3 row above.** The SKU the OpenCode Go $10 plan sells is
+**Muse Spark 1.3 Contributor**, a discounted tier with no leaderboard row; 48.09 is the **base**
+model's score and does not belong to that row. The row is kept because it was true of this pass's
+own evidence on its research date, and it must not be ranked.
+
 **One row is not an API price.** K2 Horizon (375B-A23B, II 30.50, Institute of Foundation Models)
 shows a $0.00 list price because it is **open weights with no published API tariff**, not because it
 is free to call. There is no inference provider for it in this table, and self-hosting it is a
@@ -395,6 +428,11 @@ Ranked by what the measurements above support, with the reasoning and the caveat
    the only per-model grid that lets the figure be recomputed, and it works in any agent. Caveat:
    the grid's request table contradicts its own limit rule (section 1), and the $/M figure depends
    on a traffic mix this pass did not measure. Both are stated rather than smoothed.
+
+   **SUPERSEDED 2026-10-07 — the II 48.09 in item 1 above.** The SKU is **Muse Spark 1.3
+   Contributor**, a discounted tier with no leaderboard row; 48.09 is the **base** model's score and
+   does not belong to that plan. The recommendation is kept as what this pass's own evidence
+   supported on its research date, and the quality claim it rests on does not survive 2026-10-07.
 2. **GLM Coding Plan Lite, $18/month, as the documented-capacity hedge.** It is the only plan that
    publishes both a credit table and a token table, so its ceiling can be checked against a formula
    rather than taken on trust. It covers a 52.5M month on GLM-5.3-Flash at II 41.81 with 12x–24x
@@ -419,9 +457,21 @@ dollar ceiling does. A plan adding an II≥50 model to its grid would displace i
 [data/subscription-measurements.csv](data/subscription-measurements.csv) carries metered multipliers
 from an external measurement project: a weekly usage meter is ticked on purpose and every call is
 priced at the vendor's public API list price, with a floor and ceiling per step bracketed from the
-vendor's own client logs. Published results are SuperGrok 190x ±21, Claude Max 20x 45.3x ±1.0,
+vendor's own client logs. Published results are SuperGrok 190x ±21 (**SUPERSEDED 2026-10-06 —
+retracted by its own source; see the note below. Current: 80x ±4 at $70, 18.0x ±0.3 at $30,
+15.7x ±0.8 for Lite**), Claude Max 20x 45.3x ±1.0,
 ChatGPT Pro $100 10.25x ±0.03, Muse Code High Usage 9.3x ±0.4 (standard) and 114x ±12 (contributor
 vs standard API price).
+
+> **SUPERSEDED 2026-10-06 — the SuperGrok figure is retracted by its own source.** The 190x ±21
+> above was measured on an account with a linked X Premium+ subscription, which confounds the
+> allowance. The source now publishes **80x ±4 at $70** for that X-linked account, **18.0x ±0.3 at
+> $30** for SuperGrok on an account with no X account linked, and **15.7x ±0.8** for SuperGrok Lite
+> at $10. The measurement row is superseded, not deleted, and the corrected table is in
+> [../2026-10-06/data/subscription-measurements.csv](../2026-10-06/data/subscription-measurements.csv).
+> Full re-derivation: [../docs/reviews-2026-10-06.md](../docs/reviews-2026-10-06.md). The lesson
+> generalises past this one plan: **a subscription multiplier read from one account is an upper
+> bound until its confounds are enumerated**, and this one was worth about 10x.
 
 **They are not ranked in this pass, and the reason is structural.** A multiplier is a measurement
 of one plan, on one workload, on one day, read from one account's meter. This pass subscribed to
@@ -434,9 +484,14 @@ carried with attribution, date, method and uncertainty, and the ceilings are lab
 Two figures from that source were re-derived independently as a check on the method rather than the
 numbers: the SuperGrok run's per-call cost recomputed from its raw call log at its own stated list
 price gives $67.79 against a published $68.86, a 1.6% gap attributable to calls crossing a
-token-threshold price step. Its headline 190x is a meter-tick bracket rather than a whole-run
+token-threshold price step. Its headline 190x (**SUPERSEDED 2026-10-06, retracted by the source;
+the current figure is 18.0x ±0.3 on an account with no X Premium+ linked — not 190x**) is a
+meter-tick bracket rather than a whole-run
 average; a whole-run recomputation gives 246x, which is the method difference the source documents
-in its own step 3.
+in its own step 3. **Both figures are superseded by the retraction noted above**: the 190x and its
+246x re-derivation were computed on the X-linked account, so re-deriving a method against a
+confounded run reproduces the method and not the quantity. The bracketing question is still real and
+still applies to the 18.0x figure, but it is now the smaller of the two effects.
 
 The audited standard traffic mix used in section 1 (97% cache read / 2.5% fresh input / 0.5%
 output) is taken from that project's `conventions.json`, revised 2026-09-23 after a 14-sample

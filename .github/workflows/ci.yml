@@ -31,6 +31,13 @@ jobs:
         run: |
           python3 tools/extract-token-prices.py 2026-10-02/sources/openai-pricing.html /tmp/oai.csv --market
           diff -u 2026-10-02/data/openai-token-prices.csv /tmp/oai.csv
+      # Every check must be shown refusing the defect it was written for AND
+      # accepting correct data. This is the only thing in the repository that
+      # proves a check CAN fire: the acceptance runs above show the gate accepts
+      # good data, and nothing else proves the refusals still happen. Without it
+      # a check that silently stopped firing would pass CI forever.
+      - name: every check refuses its planted defect and accepts correct data
+        run: bash tests/run-plants.sh
       # The plan ladder is hand-curated because the generic text extractor cannot
       # tell a plan name from a feature label. This is the check that keeps a
       # hand-curated row honest against the page it cites.

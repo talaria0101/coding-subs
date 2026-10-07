@@ -1,3 +1,5 @@
+# Rows derived from the archived models.dev API response in sources/modelsdev-api.json,
+# read 2026-09-20; every figure comes from that one payload.
 provider_id,name,api,models,models_with_price,models_paid,models_zero,min_input,min_output,npm,is_plan
 302ai,302.AI,https://api.302.ai/v1,117,117,117,0,0.06,0.25,@ai-sdk/openai-compatible,0
 abacus,Abacus,https://routellm.abacus.ai/v1,108,108,108,0,0.02,0.05,@ai-sdk/openai-compatible,0

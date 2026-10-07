@@ -1,0 +1,142 @@
+[
+  {
+    "url": "https://opencode.ai/docs/go.md",
+    "http": 200,
+    "bytes": 39692,
+    "ms": 5221,
+    "sha256": "e62561c5c6fb7685fafc8bddc9634bdab3aa37c59944a56da83d103d047f7489",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\opencode-go.md"
+  },
+  {
+    "url": "https://docs.z.ai/devpack/overview.md",
+    "http": 200,
+    "bytes": 8315,
+    "ms": 1999,
+    "sha256": "594793a77de76dcdd30662a200f1f48599cbf353f08c00e2df8eb9d00e3c0851",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\zai-overview.md"
+  },
+  {
+    "url": "https://docs.z.ai/devpack/teamplan.md",
+    "http": 200,
+    "bytes": 10353,
+    "ms": 916,
+    "sha256": "246b67a7efbbcab3164a7cb678fcfb4c5abf75275fc31a37bfe0fb82869f5ff2",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\zai-teamplan.md"
+  },
+  {
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "http": 200,
+    "bytes": 23982,
+    "ms": 1527,
+    "sha256": "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\deepseek-pricing.html"
+  },
+  {
+    "url": "https://artificialanalysis.ai/models",
+    "http": 200,
+    "bytes": 1368828,
+    "ms": 3522,
+    "sha256": "10b8c842f830c8a94acd631621ed88e9bb0978b3d5089b54c154322c329a2420",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\aa-models.html"
+  },
+  {
+    "url": "https://commandcode.ai/docs/plans/goat",
+    "http": 200,
+    "bytes": 768429,
+    "ms": 2268,
+    "sha256": "55b166b3fc8ebc4b0c027d3070a9096c09864d467c025d87fd7d742eb4c50baa",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\commandcode-goat.html"
+  },
+  {
+    "url": "https://docs.x.ai/developers/models/grok-4.7",
+    "http": 200,
+    "bytes": 376272,
+    "ms": 1386,
+    "sha256": "0577009faf2a85c01b25b0b2f40a49784cbe38cafb4c4661006e2d06ab1e4ee4",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\xai-grok47.html"
+  },
+  {
+    "url": "https://api.fenno.ai/api/v1/models",
+    "http": 200,
+    "bytes": 11905,
+    "ms": 1688,
+    "sha256": "46ff5fead0acdb72e5f2d264ca9a9235523c5b9cc49c7952ab5b736e22950bfc",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "saved_as": "2026-10-06\\sources\\fenno-models.json"
+  },
+  {
+    "url": "https://artificialanalysis.ai/leaderboards/models",
+    "http": 200,
+    "bytes": 2433852,
+    "ms": null,
+    "sha256": "06e5272f174c38e8f6799c1f6d8f0d68a416ace0459376dd5bd5d359b5a39f81",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Fetched 2026-10-07 to re-check a leaderboard row recorded 2026-10-06. This page, not /models, is the one that lists mimo-v2-6-flash (II 37.8843590141754). See data/aa-lookup.csv.",
+    "saved_as": "2026-10-06\\sources\\aa-leaderboard-models.html"
+  },
+  {
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "http": 200,
+    "bytes": 23982,
+    "ms": null,
+    "sha256": "210f102275ccf1a6542f08a3bc9e4b4c7c83278cb74b35217bffa112df6363b2",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Re-fetched 2026-10-07 to settle a misquotation. Byte-identical to the 2026-10-06 archive, so the page did not change: the correction is to what was read out of it, not to the page. See references.md R5.",
+    "saved_as": null
+  },
+  {
+    "url": "https://api.fenno.ai/api/v1/models",
+    "http": 200,
+    "bytes": 11905,
+    "ms": null,
+    "sha256": "46ff5fead0acdb72e5f2d264ca9a9235523c5b9cc49c7952ab5b736e22950bfc",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "read_date": "2026-10-07",
+    "note": "Re-fetched 2026-10-07 looking for the '100B tokens/day' delivery ceiling this pass attributed to Fenno. Byte-identical to the 2026-10-06 archive and the operator's site returned no such figure, so the claim is downgraded rather than sourced. See data/relay-providers.csv.",
+    "saved_as": null
+  },
+  {
+    "url": "https://www.reddit.com/r/opencode/search.rss?q=usage%20limit%20exceeded&restrict_sr=1&sort=new",
+    "http": 200,
+    "bytes": 73408,
+    "ms": null,
+    "sha256": "3a0d1cbb000d7d4dbff9ad1eb4a6fdf0f98df908fe1479af13fa60907f0b1652",
+    "error": null,
+    "route": "direct",
+    "attempt": 1,
+    "note": "REQUEST, STATUS AND DATE READ OUT OF THE ARCHIVED FEED; NOT RE-FETCHED. The bytes were archived on 2026-10-06 and no log entry was written for them, which is the gap fetch-log-corroborates now refuses. The request URL and the feed's own <updated> element (2026-10-06T18:09:09+00:00) are both inside the archived file; latency was not recorded and is left null rather than invented. The sha256 and byte count are computed from the committed bytes.",
+    "read_date": "2026-10-06",
+    "saved_as": "2026-10-06\\sources\\reddit-r-opencode-search.xml"
+  }
+]

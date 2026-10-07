@@ -1,10 +1,14 @@
 # Relay/reseller market: red-flag register (2026-09-20)
-
-The sub2api / CLIProxyAPI "sponsor" ecosystem, re-verified live on 2026-09-20
-(sub2api README at fbb9006adef8, pushed 2026-09-20T06:57Z). These are NOT coding
-subscriptions and are EXCLUDED from every ranking in this pass. This register exists so a
-reader who meets these offers in the wild can pattern-match them in seconds.
-
+#
+# The sub2api / CLIProxyAPI "sponsor" ecosystem, re-verified live on 2026-09-20
+# (sub2api README at fbb9006adef8, pushed 2026-09-20T06:57Z). These are NOT coding
+# subscriptions and are EXCLUDED from every ranking in this pass. This register exists so a
+# reader who meets these offers in the wild can pattern-match them in seconds.
+#
+# The prose above was uncommented until 2026-10-07, so the blank line after the title ended
+# the preamble early and tools/validate.py's read_rows parsed these four lines and the header
+# as five data rows. It therefore counted this file at 17 rather than the 12 red flags it
+# actually holds. The text is unchanged; only the comment markers are.
 flag_id,item,class,what_it_claims,red_flag,evidence
 R01,sub2api README,"platform warning","'Using this project may violate the terms of service of Anthropic and other upstream providers.'","The platform's own README, while selling sponsor slots to quota resellers",sub2api-readme-today.md
 R02,AIGoCode sponsor copy,"quota resale","'stable, efficient ... zero risk of account suspension'","'Zero risk of account suspension' is impossible for a ToS-violating resale; directly contradicts R01",sub2api-readme-today.md
@@ -17,4 +21,4 @@ R08,CCTK.AI sponsor copy,"relay","'same model capabilities at a fraction of the 
 R09,CodexEverywhere (third-party snapshot),"pool resale","Codex Plus Pool at 0.03x official","Seller's own docs called the Plus Pool 'unstable'; Grok free pool suspended after xAI degraded free-tier intelligence",third-party snapshot 2026-09-20 (coding-subs third-party pass)
 R10,sponsor table mechanics,"paid placement","'Want to appear here? mailto:support@sub2api.org'","Placement is paid/affiliate; inclusion is an advertisement, not a quality signal",sub2api-readme-today.md
 R11,Wei-Shaw tracker,"degradation reports","Issues #6871/#7202/#6957 report 'jiangzhi' (intelligence degradation) on relayed models","No relay can prove model identity; cheap resale of consumer quotas degrades under upstream anti-abuse pressure",third-party reference set (issues cited there)
-R12,provenance,"measurement hygiene","The third-party reachability probe ran through a third-party reverse proxy (api.rv.pkgforge.dev)","Relay-market "uptime" figures measured through a reverse proxy measure the proxy, not the provider; nothing in this market is independently measured",third-party pass README
+R12,provenance,"measurement hygiene","The third-party reachability probe ran through a third-party reverse proxy (api.rv.pkgforge.dev)","Relay-market ""uptime"" figures measured through a reverse proxy measure the proxy, not the provider; nothing in this market is independently measured",third-party pass README

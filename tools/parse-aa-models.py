@@ -16,6 +16,15 @@ import re
 import sys
 from pathlib import Path
 
+# The comment lines the parser writes ahead of the header. They live here so the
+# tool regenerates the committed file byte for byte, which is what CI diffs.
+PREAMBLE = [
+    "# Derived by tools/parse-aa-models.py from the archived leaderboard page "
+    "this pass",
+    "# holds, and regenerable from it byte for byte; provenance is that page, "
+    "not the row.",
+]
+
 # The AA payload uses short keys in places; these are the fields this repo ranks on.
 FIELDS = [
     "slug", "name", "creator", "releaseDate", "intelligenceIndex",
@@ -38,14 +47,26 @@ def flight_blob(raw: str) -> str:
 def model_objects(blob: str) -> list[dict]:
     """Every model object in the payload, identified by its slug and an II.
 
-    The payload stores models under keys such as `initialModels` and `allModels`,
-    and a model's `id` is a UUID rather than a number, so objects are located by
-    their slug field and brace-matched to the closing brace. A model object
-    exceeds 400 KB only in pathological cases; the practical limit here is raised
-    so that a long object is not truncated mid-scan and silently dropped.
+    The payload stores models under keys such as `initialModels` and `allModels`.
+    Two shapes ship on the site and both are real: `/models` carries objects that
+    open `{"id":"<uuid>","slug":"<slug>"`, while `/leaderboards/models` carries
+    bare `{"slug":"<slug>"` objects with no `id`. Matching only the uuid+slug
+    shape recovered **zero** models from the leaderboard payload, so a lookup
+    against that page reported every model as notFound - including
+    `mimo-v2-6-flash`, which the leaderboard does carry at II 37.88. The shape is
+    therefore detected per object rather than assumed, and both openings are
+    accepted.
+
+    A model object exceeds 400 KB only in pathological cases; the practical limit
+    here is raised so that a long object is not truncated mid-scan and silently
+    dropped.
     """
     found, seen = [], set()
-    for match in re.finditer(r'\{"id":"[0-9a-f\-]{36}","slug":"[a-z0-9.\-]+"', blob):
+    for match in re.finditer(
+        r'\{"id":"[0-9a-f\-]{36}","slug":"[a-z0-9.\-]+"'
+        r'|\{"slug":"[a-z0-9.\-]+"',
+        blob,
+    ):
         start = match.start()
         depth, in_string, escape = 0, False, False
         for end in range(start, min(start + 2_000_000, len(blob))):
@@ -126,6 +147,13 @@ def main() -> int:
 
     buf = io.StringIO()
     writer = csv.writer(buf, lineterminator="\n")
+    # The preamble is emitted here rather than added to the committed file by
+    # hand, because the CI step that proves this file is reproducible diffs this
+    # output against the committed bytes. It is written straight into the buffer
+    # rather than through `writer`, which would quote any line containing a
+    # comma; none of these lines is quoted in the committed file.
+    for line in PREAMBLE:
+        buf.write(line + "\n")
     writer.writerow(FIELDS)
     for m in models:
         writer.writerow([cell(m, f) for f in FIELDS])

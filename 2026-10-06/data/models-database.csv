@@ -1,5 +1,18 @@
-# Derived by tools/parse-aa-models.py from the archived leaderboard page this pass
-# holds, and regenerable from it byte for byte; provenance is that page, not the row.
+# Derived from the archived leaderboard page this pass holds; provenance is that page,
+# not the row. NOT byte-for-byte regenerable by tools/parse-aa-models.py: this pass's
+# page is /models and the parser reproduces the 2026-10-02 pass's file exactly, but the
+# vendor changed several model names between the two archives ("Claude Opus 5.5 (Adaptive
+# Reasoning, Max Effort, Default Fallback)" here, "Claude Opus 5.5 (Max, Default Fallback)"
+# from this pass's own page), so a regeneration differs in the name column and nowhere else.
+# The 2026-10-02 pass is the first whose file the parser reproduces exactly, and CI proves
+# that step.
+# PER-ROW PROVENANCE 2026-10-07: the header above says this file derives from the /models
+# archive, and that is true of 23 of the 25 rows. TWO rows are not from it and are named here
+# rather than left to look like they are: mimo-v2-6-flash (II 37.8844) and
+# mistral-medium-3-5 (II 14.1889) are absent from sources/aa-models.html and come from the
+# /leaderboards/models archive instead (references.md R21). Both scores are genuine; only the
+# file-level provenance statement was wrong. Conversely mistral-large-4 is in the /models
+# archive and is NOT in this file, which is why the counts are 23 here against 24 there.
 slug,name,creator,releaseDate,intelligenceIndex,terminalbenchV40,terminalbenchV21,terminalbenchHard,contextWindowTokens,isOpenWeights,inputModalityImage,price1mInputTokens,price1mOutputTokens,cacheHitPrice,price1mBlended0To3To1,medianOutputSpeed,deprecated
 claude-opus-5-5,"Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-22,57.6224,,,,1000000,no,yes,4,20,0.2,8,,no
 claude-sonnet-5-5,"Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-28,56.0001,,,,1000000,no,yes,2,10,0.2,4,,no
@@ -25,3 +38,4 @@ inkling,Inkling (Xhigh),Thinking Machines,2026-07-15,24.9848,,,,1000000,yes,yes,
 nvidia-nemotron-3-ultra-550b-a55b,Nemotron 3 Ultra 550B A55B (Reasoning),NVIDIA,2026-06-04,22.9279,,,0.3636,262144,yes,no,0.6,2.5,0.16,1.075,,no
 muse-glimmer,Muse Glimmer (High),Meta,2026-08-10,17.4754,,,,131072,yes,yes,0.325,1.35,0.04,0.5813,,no
 mistral-medium-3-5,Mistral Medium 3.5,Mistral,2026-04-29,14.1889,,,0.3333,256000,yes,yes,1.5,7.5,0.15,3,,no
+mimo-v2-6-flash,MiMo-V2.6-Flash,Xiaomi,,37.8844,,,,1000000,yes,,,,,,,no

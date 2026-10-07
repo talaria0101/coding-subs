@@ -5,10 +5,18 @@ coding-subscription source from the [2026-09-13 pass](../2026-09-13/README.md) s
 logs what changed, adds the new entrants the old pass missed, normalizes every non-USD price to
 dollars at a cited FX rate, and quarantines the relay/reseller "sponsor" market into an advisory
 instead of a ranking. Databases: [data/providers-database.csv](data/providers-database.csv)
-(68 plan rows, 30 provider groups), [data/models-database.csv](data/models-database.csv)
+(77 plan rows, 36 provider groups), [data/models-database.csv](data/models-database.csv)
 (48 models with a fresh Intelligence-Index column), [data/delta-vs-2026-09-13.csv](data/delta-vs-2026-09-13.csv)
-(26 logged changes), [data/relay-market-flags.csv](data/relay-market-flags.csv) (12 red flags),
+(40 logged changes), [data/relay-market-flags.csv](data/relay-market-flags.csv) (12 red flags),
 [data/currency-normalization.csv](data/currency-normalization.csv). Numbered citations:
+
+> **ROW COUNTS CORRECTED 2026-10-07.** This list said 68 plan rows, 30 provider groups and 26
+> logged changes. The files hold **77**, **36** and **40**; the counts had gone stale as rows were
+> added and nothing re-read them. They were invisible because `report-matches-data`'s row-count
+> pattern only matched a count within 40 characters of the path when the words "N rows" followed,
+> and this list writes "N plan rows", "N provider groups" and "N logged changes". That pattern has
+> been widened to the count itself, which is why the three are now checked. "12 red flags" was
+> already correct and is unchanged.
 [references/references.md](references/references.md). Raw snapshots: [sources/](sources/).
 
 Why a same-week pass: the 2026-09-13 report's own freshness warnings had expiry dates inside
@@ -58,10 +66,10 @@ numbers, labeled as such; ADVERTISED = marketing; UNKNOWN = unpublished, never g
 | Field | Value |
 |---|---|
 | **BEST DEAL FOUND (reported)** | **Meta Muse Code High Usage — $15/month, ~3B tokens/week as reported by a subscriber** (price corroborated by a third-party tracker, first recorded 2026-09-17; usage USER-REPORTED; Meta publishes no quotas) |
-| **Why it outranks everything** | ~13B tokens/month on a model rated II 48.09. At Muse Spark 1.3 API list ($1.25/$4.25) that usage is worth **$16,200–$55,200/month** (all-input to all-output bounds) — **1,082–3,680×** the price, the largest subsidy in this market by far |
+| **Why it outranks everything** | ~13B tokens/month on a model rated II 48.09. At Muse Spark 1.3 API list ($1.25/$4.25) that usage is worth **$16,200–$55,200/month** (all-input to all-output bounds) — **1,082–3,680×** the price, the largest subsidy in this market by far. **SUPERSEDED 2026-10-06:** the 48.09 is the **base** model `muse-spark-1-3`. The SKU this plan measures is **Muse Spark 1.3 Contributor**, which the leaderboard does not list, so the ranking argument rests on a score for a product this pass did not verify. The $16,200–$55,200 range itself is still arithmetic on published list prices and stands; what it prices is a model with no score. See [../2026-10-06/README.md](../2026-10-06/README.md) §2 |
 | **What would falsify it** | launch-window generosity; mix skews to cheap input tokens; throttling after the promo; dashboard "tokens" != model tokens. Treat as the deal to verify first-hand this month, not a guarantee |
 | **BEST DEAL (documented)** | **Z.ai GLM Coding Plan Lite — $18/month**: the only vendor publishing token tables (Lite GLM-5.3 @95% cache: **48–97M tokens/week ≈ 208–420M/month**). Now ranked below Muse on the numbers; its earlier #1 was substantially an artifact of being the only vendor with published tables. The Flash campaign's bonus quota ended Sep 20 |
-| **BEST DEAL (verified $10 tier)** | **OpenCode Go — $10/month** (rev 2, previously missed): published per-model request/usage grid across 27 open models, up to ~$60/mo of list-value usage; runs in any agent |
+| **BEST DEAL (verified $10 tier)** | **OpenCode Go — $10/month** (rev 2, previously missed): published per-model request/usage grid across 27 open models, up to ~$60/mo of list-value usage; runs in any agent. **SUPERSEDED 2026-10-06 and 2026-10-07: this row reads the per-model ceilings as independent budgets. The monthly caps are a shared pool, so "up to ~$60/mo" is what the models divide, not $60 each; and the additive reading was never 6x — the sum of all 37 per-model ceilings is $1,335 against a $10 plan.** |
 | **CHEAPEST ENTRY** | **Command Code Go — $1/month** ($10 credits, up to ~$20 usage with deals, ~15K requests, up to 1M context) — deal multiples ADVERTISED, unmeasured |
 | **CHEAPEST FRONTIER QUALITY** | ChatGPT Plus $20 (GPT-5.6 Sol II 46.97) and Claude Pro $20 (1M-context Claude Code) — both re-verified, unchanged |
 | **BEST FREE** | Google Antigravity free tier — Gemini 3.8/3.7/3.6 Flash + 3.1 Pro + Claude Sonnet 4.6 & Opus 4.6 (thinking) + gpt-oss-120b, weekly-refreshed quota |
@@ -132,15 +140,15 @@ Weighting as before: 30% capacity, 25% quality, 15% 1M-context, 10% multimodal, 
 
 | # | Plan | Price/mo | Best model (II 2026-09-20) | Why it's here | Main limitation |
 |---|---|---|---|---|---|
-| 1 | **Muse Code High Usage (Meta)** | **$15** | Muse Spark 1.3 (48.09) | **USER-REPORTED ~3B tokens/week (≈13B/mo)** on a II-48 model — 1,082–3,680× API value at list; price corroborated by a tracker ($15, recorded 2026-09-17) | Usage USER-REPORTED, quotas undocumented by Meta; verify first-hand; telemetry caveats from 09-13 stand |
+| 1 | **Muse Code High Usage (Meta)** | **$15** | Muse Spark 1.3 Contributor (no score; base model 48.09) | **USER-REPORTED ~3B tokens/week (≈13B/mo)** on a II-48 model — 1,082–3,680× API value at list; price corroborated by a tracker ($15, recorded 2026-09-17) | Usage USER-REPORTED, quotas undocumented by Meta; verify first-hand; telemetry caveats from 09-13 stand. **SUPERSEDED 2026-10-06: this row prices the Contributor SKU at the base model's score. Muse Spark 1.3 Contributor has no leaderboard row; 48.09 is `muse-spark-1-3`, a different product. See [../2026-10-06/README.md](../2026-10-06/README.md) §2.** |
 | 2 | **Z.ai GLM Coding Plan Lite** | **$18** | GLM-5.3 (44.78) | The only DOCUMENTED capacity: official 208–420M tokens/mo (@95% cache), 1M ctx, works in Claude Code/OpenCode/Cline/etc | Flash campaign ended today; 95%-cache assumption is best-case; GLM-5.3 below Opus-5 class; vision via MCP only |
-| 3 | **OpenCode Go** | **$10** | 27 open models incl. Kimi K3 (43.59), DeepSeek V4.1 Flash | VERIFIED-TABLE: published per-model grid worth up to ~$60/mo at list; works in ANY agent; zero-markup sibling (Zen) for overflow | Open-models only (no Claude/GPT-premium); request-shaped quotas, not tokens |
+| 3 | **OpenCode Go** | **$10** | 27 open models incl. Kimi K3 (43.59), DeepSeek V4.1 Flash | VERIFIED-TABLE: published per-model grid worth up to ~$60/mo at list **on one model**; works in ANY agent; zero-markup sibling (Zen) for overflow | Open-models only (no Claude/GPT-premium); request-shaped quotas, not tokens. **SUPERSEDED 2026-10-06: the monthly caps are a shared pool, not independent per-model budgets.** The ~$60 is what the 27 models divide, not $60 each — see [../2026-10-06/README.md](../2026-10-06/README.md) §2 |
 | 4 | **Command Code GOAT** | **$10** | per-model allowances incl. GPT-5.6 Sol (46.97) | $10 buys $70 of earmarked credits (+ deals to ~$100 usage); ~75K requests; 1M ctx; $1 Go tier is the cheapest paid entry anywhere | Deal multiples ADVERTISED; "+ processing fee"; young vendor, no third-party track record |
 | 5 | **ChatGPT Plus (Codex)** | $20 | GPT-5.6 Sol (46.97) | Frontier quality, official message tables (Sol 10–100/5h), flex credits with an explicit rate card | Message-based; weekly caps; GPT-5.5 retires Oct 14 (migration churn) |
 | 6 | **Claude Pro** | $20 | Opus 5 (50.78) / Fable 5.1 (53.35) | 1M context in Claude Code (documented); the only true-frontier escape hatch at $20 | Weekly limits now ~17% below the spring promo level; Pro needs usage credits enabled for Opus 1M |
 | 7 | **Google AI Pro (+ Antigravity 2.0)** | $19.99 | Gemini 3.8 Flash (40.93) + Claude Sonnet/Opus 4.6 (thinking) | Three labs in one sub; best multimodal agent; free tier exists | Quotas are opaque compute units; 3.8 Flash API intro price doubles Jan 1, 2027 (subscription pricing so far unaffected) |
 | 8 | **Claude Max 5x** | $100 | Opus 5 (50.78) / Fable 5.1 (53.35) | The real Opus-5-class experience, 1M verified, priority access | ~5x Pro ESTIMATED ~50M+/mo; 5.5x the price of #1; limits −17% vs promo |
-| 9 | **Muse Code Power (Meta)** | onboarding-only | Muse Spark 1.3 (48.09) | 20x tier of the best reported deal; 1M ctx; image+video uploads | Prices still shown only at onboarding; young product |
+| 9 | **Muse Code Power (Meta)** | onboarding-only | Muse Spark 1.3 Contributor (no score; base model 48.09) | 20x tier of the best reported deal; 1M ctx; image+video uploads | Prices still shown only at onboarding; young product. **SUPERSEDED 2026-10-06: this row prices the Contributor SKU at the base model's score. Muse Spark 1.3 Contributor has no leaderboard row; 48.09 is `muse-spark-1-3`, a different product. See [../2026-10-06/README.md](../2026-10-06/README.md) §2.** |
 | 10 | **Z.ai GLM Coding Plan Pro** | $72 | GLM-5.3 (44.78) | Official 1.26–2.51B tokens/mo estimate — heavy-usage king per dollar among DOCUMENTED plans | Same ceiling as #2 |
 | 11 | **Kimi Code (new Plus/Pro tiers)** | from ~$19–39 (THIRD-PARTY, "pricing unchanged") | Kimi K3 (43.59, 1M ctx from Pro) | Weekly window GONE for new members — only a 5h rolling window now; genuinely better fairness than legacy | New-tier prices not published outside the JS paywall; CN pricing 24% under international for the same legacy tier |
 | 12 | **Kiro Pro / Pro Max** | $20 / $100 | premium models (unspecified credits) | Clear credit ladder with $0.04 add-on pricing — the most honest metered ladder on the West coast | Credit-to-token value unpublished; capacity UNKNOWN |
@@ -203,7 +211,7 @@ price), MiniMax Plus (capacity still unpublished; M3 slipped to II 29.22).
 | Kimi CN legacy pricing | ¥199 ≈ $29.62 | $39 international for the same tier | 1.32× regional arbitrage (official CN billing required) |
 | Gemini 3.8 Flash via AI Pro / free Antigravity | $19.99 / $0 | $152/mo for the reference workload at intro API rates; 2× after Dec 31, 2026 | quota-limited |
 | Muse Spark 1.3 via Muse Code High Usage (USER-REPORTED) | $15/mo | ~13B reported tokens/mo = $16,238–$55,208 at Spark list (all-input/all-output bounds) | **1,082–3,680×**, launch-window subsidy, unverified |
-| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage across 27 models | ~6× face |
+| Open models via OpenCode Go (VERIFIED-TABLE) | $10/mo | up to ~$60/mo of list-value usage on **one** model; the 27 models divide that pool | ~6× face, single-model. **SUPERSEDED 2026-10-06; the 6× restated 2026-10-07.** The ~6× is the $60 single-model ceiling against a $10 plan, which is right for one model and is not a statement about the 37-model grid: the sum of all 37 per-model ceilings on the Go plan is **$1,335**, i.e. 133.5× summed. The row is marked superseded precisely because a reader would take "~6× face" as applying to the whole row. |
 
 **Where there is still NO arbitrage:** Copilot (API-parity credits), OpenCode Zen (explicit zero
 markup), Cline/Roo (BYOK), Cursor (usage-metered overage), Zed (API +10%), Kilo Pass (provider
@@ -280,6 +288,21 @@ is presented as this pass's own research.
 
 The relay and reseller market is excluded from rankings by policy (see the advisory above). Its
 prices are advertisement rather than a rate card, and its allowances are quota resale.
+
+> **SUPERSEDED 2026-10-06 — the exclusion is replaced by a measurement standard, not by the
+> opposite verdict.** Excluding a class by category means the class is never measured, and this
+> pass found measurable evidence inside it: one operator in the roster publishes a complete
+> 18-model rate card at a public endpoint, and the gateway software most of the roster runs is
+> open source with its enforcement code public. The 2026-10-06 pass keeps this pass's red-flag
+> register intact and applies four row-level tests instead — a published rate card or allowance, a
+> quantified reputation, a documented delivery ceiling, and recorded failure modes from issue
+> evidence — with the reason for every exclusion being a measured property rather than a category.
+> See [../2026-10-06/README.md](../2026-10-06/README.md) §8 and
+> [../2026-10-06/data/relay-providers.csv](../2026-10-06/data/relay-providers.csv).
+>
+> **POINTER CORRECTED 2026-10-07.** This pointer read "§7", which in the 2026-10-06 report is
+> "What would falsify this pass" and carries no standard at all. The four tests and the four verdicts
+> are in **§8, "The relay measurement standard"**.
 
 ## Workload test (52.5M tokens/month = 15M in + 37.5M out)
 
@@ -368,7 +391,7 @@ Verdicts per the five levels; "capacity" = published allowance, never a relay's 
 
 **Frontier quality per dollar (quality-only):** 1. GLM Lite (TB-v4 0.419 at $18) · 2. ChatGPT Plus
 (Sol 46.97 at $20) · 3. Command Code GOAT (Sol allowance at $10, unproven) · 4. Muse Code
-(Spark 1.3 48.09) · 5. Claude Pro (Opus 5) · 6. Alibaba Coding Plan Pro (Qwen3.8-Max-class models
+(Spark 1.3 48.09 — **SUPERSEDED 2026-10-06: the Contributor SKU has no leaderboard row; 48.09 is the base model**) · 5. Claude Pro (Opus 5) · 6. Alibaba Coding Plan Pro (Qwen3.8-Max-class models
 at $50) · 7. Kimi Pro · 8. Google AI Pro · 9. Claude Max 5x · 10. Copilot Max.
 
 ---

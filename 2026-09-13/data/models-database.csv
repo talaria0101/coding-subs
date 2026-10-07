@@ -1,3 +1,8 @@
+# Derived from the archived leaderboard page this pass holds; provenance is that page,
+# not the row. NOT byte-for-byte regenerable by tools/parse-aa-models.py: this file uses
+# the column names of the 2026-09-20 schema, and the parser now emits the newer one. The
+# 2026-10-02 pass is the first whose file the parser reproduces exactly, and CI proves
+# that step.
 model_slug,name,provider,release_date,aa_intelligence_index,terminal_bench_v4,context_window_tokens,ctx_ge_1m,image_input,api_input_usd_per_m,api_output_usd_per_m,aa_blended_price_1_1_usd_per_m
 claude-fable-5-1,"Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)",Anthropic,2026-09-01,53.37,0.52,1000000,YES,YES,10,50,30
 gpt-6-astra,GPT-6 Astra (max),OpenAI,2026-09-03,52.81,0.591,1000000,YES,YES,10,50,30
