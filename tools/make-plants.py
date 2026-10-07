@@ -1,166 +1,88 @@
 #!/usr/bin/env python3
-
 """Regenerate the plant fixtures the gate is demonstrated against.
-
-
 
     python3 tools/make-plants.py [OUT_DIR]
 
-
-
 Every check in `validate.py` has to be shown refusing a planted defect *and*
-
 accepting correct data. A check that has only been seen failing cannot be
-
 distinguished from a check that cannot pass, and a check that cannot pass is
-
 indistinguishable from one that passes everything.
 
-
-
 The fixtures are generated rather than committed as CSVs because each one is a
-
 copy of real repository data with a specific cell changed. Committing the copies
-
 would let them drift from the data they were derived from and a reader could not
-
 tell whether the plant still demonstrates what it claims. The generator names the
-
 pass, the file, the line, the change and the check it is meant to trip, so the
-
 relationship between a plant and the defect it reproduces is legible without
-
 opening either file.
 
-
-
 `tests/run-plants.sh` regenerates them into a temporary directory, runs the gate
-
 once per plant, and fails if a plant that is supposed to be refused passes. It
-
 also runs an acceptance case per plant. Run it before committing any change to
-
 `validate.py`.
-
 """
-
 from __future__ import annotations
 
-
-
 import csv
-
 import hashlib
-
 import io
-
 import json
-
 import shutil
-
 import sys
-
 from pathlib import Path
-
-
 
 NL = chr(10)
 ROOT = Path(__file__).resolve().parent.parent
-
 DEFAULT_OUT = ROOT / "tests" / "plants"
 
 
-
-
-
 def split_csv(path: Path) -> tuple[list[str], list[str], list[list[str]]]:
-
     lines = path.read_text(encoding="utf-8").splitlines()
-
     start = 0
-
     while start < len(lines) and lines[start].lstrip().startswith("#"):
-
         start += 1
-
     rows = list(csv.reader(io.StringIO("\n".join(lines[start:]))))
-
     return lines[:start], lines[start:start + 1], rows[1:]
 
 
-
-
-
 def write_csv(path: Path, preamble: list[str], body: list[list[str]]) -> None:
-
     buf = io.StringIO()
-
     csv.writer(buf, lineterminator="\n").writerows(body)
-
     path.write_text("\n".join(preamble + [buf.getvalue().rstrip("\n")]) + "\n",
-
                     encoding="utf-8")
 
 
-
-
-
 def set_cell(path: Path, row_key: tuple[str, ...], column: str, value: str) -> None:
-
     """Set one cell on the row whose leading fields equal `row_key`.
 
-
-
     A row is addressed by its leading fields rather than by row number so that a
-
     plant still means what it says when a data file gains or loses a row.
-
     """
-
     preamble, head, rows = split_csv(path)
-
     header = head[0].split(",")
-
     index = header.index(column)
-
     for row in rows:
-
         if tuple(row[: len(row_key)]) == tuple(row_key):
-
             while len(row) <= index:
-
                 row.append("")
-
             row[index] = value
-
             break
-
     else:
-
         raise SystemExit(f"{path}: no row starting with {row_key!r}")
-
     write_csv(path, preamble, [header] + rows)
-
-
-
 
 
 # --- each plant: (name, what it reproduces, what it must trip, build) --------
 
 
-
-
-
 def plant_field_columns(dest: Path) -> str:
     """An arity-preserving column shift, the shape the review describes.
-
     One cell splits - `reputation_quantified` keeps `'yes - 43'` and the star
     count moves into `delivery_ceiling_documented` - and the `source_url` cell is
     emptied to put the count back. The row keeps 17 fields against a 17-field
     header, so `field-count` passes, and every value from the split onward sits one
     column to the left. `field-columns` refuses it because `evidence_class` ends
     up holding a URL.
-
     **A limit on reproducing `b14c893` byte for byte, recorded rather than
     hidden.** That row's header had four contiguous empty cells after the
     failure-mode column and no `measured_exclusion_reason`, so the split value
@@ -189,20 +111,16 @@ def plant_field_columns(dest: Path) -> str:
     relays.write_text(NL.join(lines) + NL, encoding="utf-8")
     return "field-columns"
 
-
 def plant_unscored_model(dest: Path) -> str:
     """The tier slug added to the landscape, carrying the base model's score.
-
     This is the second shape of the inheritance defect. Add
     `muse-spark-1-3-contributor` to `models-database.csv` with the base model's
     48.0923 and the plan row asserts that score for it, and a presence test and a
     tier-word test both pass: the slug is present, and the slug is the row's own.
-
     What the board publishes is the question, and the answer is recorded rather
     than inferred. The 2026-10-06 and 2026-10-07 lookups both returned **notFound**
     for this SKU (`data/aa-lookup.csv`, [R21]), so the score the row asserts is the
     base model's and the correct cell says `unscored:`.
-
     The provenance here names `aa-models` - the archived leaderboard page, which
     `data/fetch-log.json` records - rather than the tier slug, so
     `provenance-in-log` stays silent and the finding lands where it belongs. With
@@ -231,10 +149,8 @@ def plant_unscored_model(dest: Path) -> str:
                  "leaderboard:aa-models-on-2026-10-06")
     return "unscored-model"
 
-
 def plant_scored_no_board_row(dest: Path) -> str:
     """A plan row asserting a leaderboard score the board does not publish.
-
     The provenance names the page the score was read from rather than a SKU, which
     is how every `leaderboard:` row in this repository reads, and the landscape
     carries the slug with no Intelligence Index - the state of every SKU the
@@ -269,16 +185,12 @@ def plant_scored_no_board_row(dest: Path) -> str:
                  "leaderboard:muse-spark-1-3-contributor-on-2026-10-06")
     return "unscored-model"
 
-
 def plant_cost_arithmetic(dest: Path) -> str:
-
     """A token count and a per-M rate that do not follow from the plan price.
-
     This is the defect the check is named for: three cells on one row that
     describe one quantity in three units, and one of them does not follow from
     the other two. Only the advertised token count moves, so `price / tokens` no
     longer reproduces the row's own rate.
-
     An earlier version of this plant shifted the token count *and* the rate
     together by 10x. That row is internally consistent, so `cost-arithmetic`
     correctly stayed silent and the plant demonstrated nothing it was named for;
@@ -286,328 +198,199 @@ def plant_cost_arithmetic(dest: Path) -> str:
     to break the thing it claims to break, or it is evidence about the wrong
     check.
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (off-peak)"),
-
              "tokens_m_advertised", "621")
-
     return "cost-arithmetic"
 
 
-
-
-
 def plant_mix_declared(dest: Path) -> str:
-
     """A derived $/M with the mix column emptied and the notes talking about mix.
 
-
-
     'Vendor caches nothing beyond the discounted tier' satisfies a check that
-
     looks for the substring "cache" anywhere in the row, and says nothing at all
-
     about the mix the $/M was computed under.
-
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go", "OpenCode", "10", "GLM-5.3-Flash"),
-
              "traffic_mix", "")
-
     preamble, head, rows = split_csv(plans)
-
     i = head[0].split(",").index("notes")
-
     for row in rows:
-
         if row and row[0] == "OpenCode Go" and row[3] == "GLM-5.3-Flash":
-
             row[i] = ("MIX ASSUMPTION: the vendor caches nothing beyond the "
-
                       "discounted tier; see the mix note.")
-
     write_csv(plans, preamble, [head[0].split(",")] + rows)
-
     return "mix-declared"
 
 
-
-
-
 def plant_unit_scale(dest: Path) -> str:
-
     """The original defect's direction: a count multiplied by a power of ten.
 
-
-
     `tokens_m_advertised` is in millions, so 11,029 reads as 11,029,000,000
-
     tokens. Copying the cell's digits out of a `yi` note instead of converting
-
     them produces a count 10^6 too large, which is the direction the check's lower
-
     bound could not see.
-
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go", "OpenCode", "10", "Muse Spark 1.3 Contributor"),
-
              "tokens_m_advertised", "11029000000000")
-
     return "unit-scale"
 
 
-
-
-
 def plant_quoted_money(dest: Path) -> str:
-
     """A fabricated quotation plus a second entry with no page of its own.
 
-
-
     The first entry quotes three figures that are not on the DeepSeek page it
-
     cites. The second entry quotes one, names no archived page, and must not be
-
     checked against the first entry's page.
-
     """
-
     dest_pass = dest / "2026-10-06"
-
     (dest_pass / "references").mkdir(parents=True, exist_ok=True)
-
     (dest_pass / "sources").mkdir(parents=True, exist_ok=True)
-
     shutil.copy(ROOT / "2026-10-06" / "sources" / "deepseek-pricing.html",
-
                 dest_pass / "sources" / "deepseek-pricing.html")
-
     (dest_pass / "README.md").write_text("# plant\n", encoding="utf-8")
-
     (dest_pass / "references" / "references.md").write_text(
-
         "## plant\n\n"
-
         "**[R5] DeepSeek - API pricing** - <https://api-docs.deepseek.com/quick_start/pricing>"
-
         " - accessed 2026-10-06 - HTTP 200 - archived as "
-
         "[../sources/deepseek-pricing.html](../sources/deepseek-pricing.html).\n\n"
-
         "> **CORRECTED 2026-10-07.** The superseded quotation below is kept on the record.\n\n"
-
         "Off-peak $0.007 cache hit / $0.22 input miss / $0.66 output; "
-
         "peak $0.014 / $0.44 / $1.32.\n\n"
-
         "**[R6] a second entry naming no archived page**\n\n"
-
         "A figure quoted from a community post, $0.12345, with no sources/ link here.\n",
-
         encoding="utf-8")
-
     return "quoted-money-on-page"
 
 
-
-
-
 def plant_fetch_log(dest: Path) -> str:
-
     """A recorded SHA-256 that is not the hash of the archived bytes."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     log = dest / "2026-10-06" / "data" / "fetch-log.json"
-
     text = log.read_text(encoding="utf-8")
-
     original = "e62561c5c6fb7685fafc8bddc9634bdab3aa37c59944a56da83d103d047f7489"
-
     assert original in text, "opencode-go.md hash not found in the log"
-
     log.write_text(text.replace(original, original[:-1] + "0"), encoding="utf-8")
-
     return "fetch-log-corroborates"
-
-
-
 
 
 def plant_fetch_log_orphan(dest: Path) -> str:
-
     """An archived source with no fetch-log entry at all."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     log = dest / "2026-10-06" / "data" / "fetch-log.json"
-
     entries = json.loads(log.read_text(encoding="utf-8"))
-
     entries = [e for e in entries if "reddit-r-opencode-search.xml" not in str(e.get("saved_as"))]
-
     log.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
-
     return "fetch-log-corroborates"
 
 
+def plant_fetch_log_nested_orphan(dest: Path) -> str:
+    """An unlogged source in a subdirectory of sources/.
 
+    The orphan sweep used to list only the top level of sources/, so a page
+    archived one directory down, which is how a repository tree mirrored into
+    sources/ lands, was never asked for a log entry. It is refused now.
+    """
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+    nested = dest / "2026-10-06" / "sources" / "github" / "unlogged.ts"
+    nested.parent.mkdir(parents=True)
+    nested.write_text("export const unlogged = true;" + NL, encoding="utf-8")
+    return "fetch-log-corroborates"
 
 
 def plant_evidence_label(dest: Path) -> str:
-
     """A figure whose source is a note about a source rather than a source."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go", "OpenCode", "10", "GLM-5.3-Flash"),
-
              "source_url", "ask me later")
-
     return "evidence-label"
 
 
-
-
-
 def plant_evidence_vocabulary(dest: Path) -> str:
-
     """`FIRST-PARTY` in the evidence-class column: not one of the declared six."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     relays = dest / "2026-10-06" / "data" / "relay-providers.csv"
-
     set_cell(relays, ("CCTK.AI",), "evidence_class", "FIRST-PARTY")
-
     return "evidence-vocabulary"
 
 
-
-
-
 def plant_report_matches_data(dest: Path) -> str:
-
     """A row count and a path in the prose that the files on disk do not carry."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     report = dest / "2026-10-06" / "README.md"
-
     text = report.read_text(encoding="utf-8")
-
     marker = "[data/plan-economics.csv](data/plan-economics.csv) (20 plan x model rows)"
-
     assert marker in text, "the row-count sentence was not found"
-
     report.write_text(
-
         text.replace(marker, "[data/plan-economics.csv](data/plan-economics.csv) "
-
                             "(21 plan x model rows)", 1)
-
             + "\nSee [data/agents-universe.csv](data/agents-universe.csv) for the roster.\n",
-
         encoding="utf-8")
-
     return "report-matches-data"
 
 
-
-
-
 def plant_ladder_price(dest: Path) -> str:
-
     """A price of 0 attributed to a page with no price on it."""
-
     shutil.copytree(ROOT / "2026-10-02", dest / "2026-10-02", dirs_exist_ok=True)
-
     ladder = dest / "2026-10-02" / "data" / "plan-ladder.csv"
-
     preamble, head, rows = split_csv(ladder)
-
     index = head[0].split(",").index("extraction")
-
     for row in rows:
-
         if row and row[1] == "Kilo Individual":
-
             row[index] = "JSONLD"
-
     write_csv(ladder, preamble, [head[0].split(",")] + rows)
-
     return "ladder-price-on-page"
 
 
-
-
-
 def plant_cost_identity(dest: Path) -> str:
-
     """The Go Plus row: a yield from the pool and a rate from the cap.
 
-
-
     `cost-arithmetic` cannot see this row because its three columns - plan price,
-
     advertised tokens, cost per million - are internally consistent. The error is
-
     that the advertised count came from a different dollar figure than the rate.
-
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go Plus", "OpenCode", "40", "DeepSeek V4.1 Flash (off-peak)"),
-
              "per_model_cap_usd", "60")
-
     return "cost-identity"
 
 
+def plant_cost_identity_group(dest: Path) -> str:
+    """Two rows of one plan x model x mix that divide different dollar figures.
 
+    The Go Plus Contributor row is relabelled as plan `OpenCode Go`, so the file
+    holds two `OpenCode Go` x Contributor rows under the same mix and the same
+    blended rate, one at 11,029M and one at 22,059M. Each row is consistent with
+    its own ceiling, so the per-row division stays silent; only the group
+    comparison can see that one plan cannot have two yields at one rate. Before
+    the group key was corrected it held the token value, so these two rows
+    landed in separate groups and the comparison never ran.
+    """
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+    plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
+    set_cell(plans, ("OpenCode Go Plus", "OpenCode", "40", "Muse Spark 1.3 Contributor"),
+             "plan", "OpenCode Go")
+    return "cost-identity"
 
 
 def plant_shared_cap(dest: Path) -> str:
-
     """`cap_model` reading PER-MODEL with the notes mentioning a pool."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     set_cell(plans, ("OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (off-peak)"),
-
              "cap_model", "PER-MODEL")
-
     return "shared-cap"
-
-
-
 
 
 def plant_provenance(dest: Path) -> str:
     """A provenance string asserting a reading the log does not record.
-
     The claim names the leaderboard page and a date later than any retrieval in
     the pass's log - the exact shape of the defect this check was written for, in
     which repairing a fabricated quotation added a provenance string asserting a
@@ -626,41 +409,23 @@ def plant_provenance(dest: Path) -> str:
                  "leaderboard:deepseek-v4-1-flash-on-2026-10-06")
     return "provenance-in-log"
 
-
 def plant_field_count(dest: Path) -> str:
-
     """A surplus unquoted comma: the defect the field-count check was added for."""
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     plans = dest / "2026-10-06" / "data" / "plan-economics.csv"
-
     text = plans.read_text(encoding="utf-8")
-
     marker = ("The most expensive model on the plan and the most rationed: a $15 cap "
-
               "against a $60 pool.")
-
     assert marker in text, "the Kimi K3 notes cell was not found unquoted"
-
     plans.write_text(
-
         text.replace(marker, "The most expensive model, and the most rationed: a $15 cap, "
-
                              "against a $60 pool.", 1),
-
         encoding="utf-8")
-
     return "field-count"
 
 
-
-
-
 def plant_lookup_against_board(dest: Path) -> str:
-
     """The lookup claiming a score the archived leaderboard does not hold.
-
     `unscored-model` treats `aa-lookup.csv` as the authority on whether the board
     carries a SKU and never checks the lookup itself, so an authority nobody
     validates is an authority that can be edited into agreement with a defect.
@@ -668,30 +433,21 @@ def plant_lookup_against_board(dest: Path) -> str:
     `present_on_board=yes` with the base model's score, and `unscored-model`
     reads that as a verified score and stays silent.
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     set_cell(dest / "2026-10-06" / "data" / "aa-lookup.csv",
              ("muse-spark-1-2-contributor",), "present_on_board", "yes")
-
     set_cell(dest / "2026-10-06" / "data" / "aa-lookup.csv",
              ("muse-spark-1-2-contributor",), "intelligence_index", "39.5759")
-
     return "lookup-against-board"
 
-
 def plant_no_future_pass(dest: Path) -> str:
-
     """A pass directory dated after the machine's clock.
-
     `no-future-pass` refuses a pass whose date is in the future, which is how a
     dated supersession or a typo would otherwise pass unexamined. It is the one
     check whose fixture has to be named for the day it runs: the copy below is
     dated a year out, so it trips on any clock this repository will be read on.
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2099-12-31", dirs_exist_ok=True)
-
     # The copy's fetch log still points `saved_as` at `2026-10-06`, which is not
     # where the bytes now live, and `provenance-in-log` falls back to the pass
     # directory's name as the read date of every entry that carries none. Under a
@@ -703,18 +459,18 @@ def plant_no_future_pass(dest: Path) -> str:
     log = dest / "2099-12-31" / "data" / "fetch-log.json"
     entries = json.loads(log.read_text(encoding="utf-8"))
     for entry in entries:
-        entry["saved_as"] = str(entry.get("saved_as") or "").replace(
-            "2026-10-06\\\\sources", "2099-12-31\\\\sources")
+        # The log's `saved_as` uses either separator; the literal this used to
+        # replace carried a doubled backslash and matched no entry.
+        saved = str(entry.get("saved_as") or "").replace(chr(92), "/")
+        if saved.startswith("2026-10-06/"):
+            saved = "2099-12-31/" + saved[len("2026-10-06/"):]
+        entry["saved_as"] = saved or entry.get("saved_as")
         entry["read_date"] = "2026-10-06"
     log.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
-
     return "no-future-pass"
 
-
 def plant_layout(dest: Path) -> str:
-
     """A pass directory with its `references/` removed.
-
     `layout` is the gate's first check and the one with no plant: every pass in
     the tree has all four directories, so nothing demonstrated it. Deleting
     `references/` is the smallest change that trips it — the check requires
@@ -722,39 +478,28 @@ def plant_layout(dest: Path) -> str:
     pass without its references cannot be checked for quoted money or ladder
     prices at all.
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     shutil.rmtree(dest / "2026-10-06" / "references")
-
     return "layout"
 
-
 def plant_model_slug_joins(dest: Path) -> str:
-
     """A plan row naming a model the landscape does not carry.
-
     `model-slug-joins` has no plant for the same reason `layout` did: every
     plan row in the tree joins, so nothing demonstrated it. Changing one
     `model_slug` to a slug that is in neither the landscape nor the lookup
     reproduces the defect it exists for — a plan row whose model cannot be
     joined, which is how a ranked table silently comes out empty.
     """
-
     shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
-
     # Addressed by the leading fields that identify the off-peak row. Two rows
     # share this slug, so the plan price is part of the key to land on one.
     set_cell(dest / "2026-10-06" / "data" / "plan-economics.csv",
              ("OpenCode Go", "OpenCode", "10", "DeepSeek V4.1 Flash (off-peak)"),
              "model_slug", "deepseek-v9-9-ultra")
-
     return "model-slug-joins"
-
 
 def plant_gate_count(dest: Path) -> str:
     """The root README claiming a number of checks the registry does not hold.
-
     `gate-count-claims` reads the repository's own README, so the plant carries
     its own copy of it with the number changed and hands the pass directory the
     modified README as its own report.
@@ -769,139 +514,113 @@ def plant_gate_count(dest: Path) -> str:
     return "gate-count-claims"
 
 
+def _gate_count_claim(dest: Path, claim: str) -> str:
+    """The 2026-10-06 pass README with one bold count claim added to it."""
+    shutil.copytree(ROOT / "2026-10-06", dest / "2026-10-06", dirs_exist_ok=True)
+    report = dest / "2026-10-06" / "README.md"
+    text = report.read_text(encoding="utf-8")
+    report.write_text(text + NL + f"This pass is gated on **{claim} checks**." + NL,
+                      encoding="utf-8")
+    return "gate-count-claims"
+
+
+def plant_gate_count_ten(dest: Path) -> str:
+    """A count below eleven. The first parser knew only eleven to twenty, so
+    a bold "ten checks" was never compared with the registry."""
+    return _gate_count_claim(dest, "ten")
+
+
+def plant_gate_count_compound(dest: Path) -> str:
+    """A hyphenated compound. The first parser stopped at "twenty" and the
+    hyphen kept the pattern from matching, so "twenty-one" passed unread."""
+    return _gate_count_claim(dest, "twenty-one")
+
+
+def plant_gate_count_unreadable(dest: Path) -> str:
+    """A count claim in the checked position that is not a number at all. It
+    must be refused rather than skipped, because a claim the gate cannot read is
+    a claim it has not verified."""
+    return _gate_count_claim(dest, "umpteen")
+
+
 PLANTS = [
-
     ("field-columns", plant_field_columns,
-
      "relay-providers.csv Sub2api row, arity preserved, shift on free-text columns"),
-
     ("field-count", plant_field_count,
-
      "plan-economics.csv notes cell with a surplus unquoted comma"),
-
     ("inherited-score", plant_unscored_model,
      "models-database.csv gains the Contributor slug carrying the base model's score"),
     ("scored-no-board-row", plant_scored_no_board_row,
      "plan row names the leaderboard page for a SKU the board does not carry"),
-
     ("cost-arithmetic", plant_cost_arithmetic,
-
      "DeepSeek row: advertised tokens cut 10x while the rate is left alone"),
-
     ("cost-identity", plant_cost_identity,
-
      "Go Plus row: yield from the $120 pool, per-M rate from the $60 cap"),
-
+    ("cost-identity-group", plant_cost_identity_group,
+     "two OpenCode Go x Contributor rows, same rate, 11,029M and 22,059M"),
     ("mix-declared", plant_mix_declared,
-
      "GLM row: traffic_mix emptied, notes mention caches"),
-
     ("unit-scale", plant_unit_scale,
-
      "tokens_m_advertised = 11029000000000, the original defect's direction"),
-
     ("quoted-money-on-page", plant_quoted_money,
-
      "references entry quoting three figures absent from the DeepSeek page"),
-
     ("fetch-log-hash", plant_fetch_log,
-
      "fetch-log sha256 flipped by one hex character"),
-
     ("fetch-log-orphan", plant_fetch_log_orphan,
-
      "an archived source with no fetch-log entry"),
-
+    ("fetch-log-nested", plant_fetch_log_nested_orphan,
+     "an unlogged file in sources/github/, below the old sweep's depth"),
     ("evidence-label", plant_evidence_label,
-
      "source_url reading 'ask me later'"),
-
     ("evidence-vocabulary", plant_evidence_vocabulary,
-
      "evidence_class reading FIRST-PARTY"),
-
     ("report-matches-data", plant_report_matches_data,
-
      "README row count off by one and a CSV path that does not exist"),
-
     ("ladder-price-on-page", plant_ladder_price,
-
      "Kilo Individual priced 0 against a page that states no price"),
-
     ("provenance-in-log", plant_provenance,
-
      "provenance asserting a lookup dated after every log entry"),
-
     ("shared-cap", plant_shared_cap,
-
      "cap_model reading PER-MODEL on a row with a $60 ceiling"),
-
     ("gate-count", plant_gate_count,
-
      "root README claiming eleven checks"),
-
+    ("gate-count-ten", plant_gate_count_ten,
+     "pass README claiming **ten checks**, below the old parser's range"),
+    ("gate-count-compound", plant_gate_count_compound,
+     "pass README claiming **twenty-one checks**, a hyphenated compound"),
+    ("gate-count-unreadable", plant_gate_count_unreadable,
+     "pass README claiming **umpteen checks**, a count that is not a number"),
     ("layout", plant_layout,
-
      "references/ deleted from the pass directory"),
-
     ("lookup-against-board", plant_lookup_against_board,
-
      "lookup claims the Contributor SKU is on the board at the base model's score"),
-
     ("model-slug-joins", plant_model_slug_joins,
-
      "plan row names a slug in neither the landscape nor the lookup"),
-
     ("no-future-pass", plant_no_future_pass,
-
      "pass directory dated after the machine's clock"),
-
 ]
 
 
-
-
-
 def build(out: Path) -> list[tuple[str, str, str]]:
-
     """Create every plant under `out`. Returns (name, expected check, note)."""
-
     if out.exists():
-
         shutil.rmtree(out)
-
     out.mkdir(parents=True)
-
     made = []
-
     for name, builder, note in PLANTS:
-
         dest = out / name
-
         dest.mkdir(parents=True)
-
         expected = builder(dest)
-
         made.append((name, expected, note))
-
     return made
 
 
-
-
-
 def main() -> int:
-
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT
-
     made = build(out)
-
     for name, expected, note in made:
-
         print(f"{name:22} -> expects [{expected}]   {note}")
-
     print(f"\n{len(PLANTS)} plants under {rel(out)}/")
-
     # The manifest is what lets `tests/run-plants.sh` assert that each plant is
     # caught *by the check it is named for* rather than merely by something. The
     # harness used to print the tripped check names without comparing them, so a
@@ -913,27 +632,15 @@ def main() -> int:
         ) + "\n",
         encoding="utf-8",
     )
-
     return 0
 
 
-
-
-
 def rel(path: Path) -> str:
-
     try:
-
         return str(path.resolve().relative_to(ROOT))
-
     except ValueError:
-
         return str(path)
 
 
-
-
-
 if __name__ == "__main__":
-
     sys.exit(main())

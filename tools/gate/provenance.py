@@ -10,6 +10,47 @@ from pathlib import Path
 from .common import check, data_rows, failures, read_rows, rel
 
 
+def _path_inside_pass(pass_dir: Path, saved: str) -> str | None:
+    """`saved_as` as a POSIX path inside `pass_dir`, or None if it names none.
+
+    Three spellings are in use and all three are read: relative to the
+    repository root with either separator (`2026-10-06\\sources\\x.md`,
+    `2026-10-06/sources/x.md`), and relative to the pass (`sources/x.md`). A path
+    that climbs out with `..`, or is absolute, names no file inside the pass.
+    """
+    parts = [p for p in saved.replace(chr(92), "/").split("/") if p not in ("", ".")]
+    if not parts or ".." in parts or saved.startswith(("/", chr(92))) or ":" in parts[0]:
+        return None
+    if parts[0] == pass_dir.name:
+        parts = parts[1:]
+    if not parts or parts[0] not in ("sources", "raw"):
+        return None
+    return "/".join(parts)
+
+
+def _saved_as_candidates(pass_dir: Path, saved: str) -> list[Path]:
+    """Where the file a log entry names may be, most specific first.
+
+    The full path inside the pass comes first, so a source archived in a
+    subdirectory of sources/ is found where the log says it is. The basename
+    fallbacks are what every earlier log relies on: `saved_as` was written with
+    Windows separators, and the 2026-10-02 log pointed it at `raw/`, the
+    gitignored working directory the fetch was written to rather than the
+    archive. Resolving by basename inside this pass removes the separator
+    convention from the question and makes such an entry find the page it
+    archived.
+    """
+    candidates = []
+    inside = _path_inside_pass(pass_dir, saved)
+    if inside is not None:
+        candidates.append(pass_dir.joinpath(*inside.split("/")))
+    basename = saved.replace(chr(92), "/").split("/")[-1]
+    candidates += [pass_dir / "sources" / basename,
+                   pass_dir / "raw" / basename,
+                   pass_dir / basename]
+    return candidates
+
+
 def check_dates(pass_dir: Path) -> None:
     today = str(date.today())
     check(pass_dir.name <= today, f"[no-future-pass] {pass_dir.name} is after the machine date {today}")
@@ -61,15 +102,7 @@ def check_dates(pass_dir: Path) -> None:
         if not saved:
             continue
         recorded = str(entry["sha256"]).lower()
-        # `saved_as` is written with Windows separators, and the 2026-10-02 log
-        # pointed it at `raw/`, the gitignored working directory the fetch was
-        # written to rather than at the archive. Resolving by basename inside
-        # this pass removes the separator convention from the question and makes
-        # a log entry that names the page it archived find it.
-        basename = str(saved).replace(chr(92), "/").split("/")[-1]
-        candidates = [pass_dir / "sources" / basename,
-                      pass_dir / "raw" / basename,
-                      pass_dir / basename]
+        candidates = _saved_as_candidates(pass_dir, str(saved))
         archived = next((p for p in candidates if p.is_file()), None)
         if archived is None:
             failures.append(
@@ -105,20 +138,33 @@ def check_dates(pass_dir: Path) -> None:
 
     # And the other direction: an archived source no log entry accounts for is a
     # page a reader is invited to trust with no record of where it came from.
-    logged = {
-        str(e.get("saved_as") or "").replace(chr(92), "/").split("/")[-1]
-        for e in entries
-    }
-    for path in sorted(p for p in sources.iterdir() if p.is_file()):
-        if path.name not in logged:
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            failures.append(
-                f"[fetch-log-corroborates] {rel(path)} "
-                f"({path.stat().st_size:,} bytes, sha256 {digest[:16]}...) has no entry "
-                f"in {rel(log)}. Every archived source records the retrieval that "
-                f"produced it: URL, HTTP status, byte count and hash. Add the entry, or "
-                f"delete the file and cite nothing to it."
-            )
+    # A top-level source is matched by basename, which is how every log before
+    # 2026-10-07 can be read; a source in a subdirectory of sources/ is matched
+    # by its path inside the pass, because two subdirectories can hold files of
+    # one name.
+    logged_names = set()
+    logged_paths = set()
+    for e in entries:
+        saved = str(e.get("saved_as") or "")
+        if not saved:
+            continue
+        logged_names.add(saved.replace(chr(92), "/").split("/")[-1])
+        inside = _path_inside_pass(pass_dir, saved)
+        if inside is not None:
+            logged_paths.add(inside)
+    for path in sorted(p for p in sources.rglob("*") if p.is_file()):
+        inside = path.relative_to(pass_dir).as_posix()
+        top_level = path.parent == sources
+        if (top_level and path.name in logged_names) or inside in logged_paths:
+            continue
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        failures.append(
+            f"[fetch-log-corroborates] {rel(path)} "
+            f"({path.stat().st_size:,} bytes, sha256 {digest[:16]}...) has no entry "
+            f"in {rel(log)}. Every archived source records the retrieval that "
+            f"produced it: URL, HTTP status, byte count and hash. Add the entry, or "
+            f"delete the file and cite nothing to it."
+        )
 
 
 # The kinds a provenance may put in front of its subject. `scored:` says the

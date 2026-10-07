@@ -7,6 +7,42 @@ from pathlib import Path
 from .common import data_rows, failures, read_rows, rel
 
 
+def _normalise_money(value: str) -> str:
+    """A money figure in the one form every comparison uses.
+
+    Thousands separators are dropped and a fractional part loses its trailing
+    zeros, so 1,200 and 1200.00 both read 1200. An integer keeps its zeros:
+    stripping them would turn 10 into 1.
+    """
+    norm = value.replace(",", "").strip()
+    return norm.rstrip("0").rstrip(".") if "." in norm else norm
+
+
+def _money_on_page(text: str) -> set[str]:
+    """Every money figure a page carries, normalised for comparison.
+
+    A vendor writes the same price several ways: "$18" in prose, "18 USD" in a
+    sentence, and `"price":18` in a JSON-LD Offer block, and a price of $10 may
+    be printed as 10, 10.0 or 10.00. Checking only the first form reports correct
+    figures as missing, which is a false positive that trains a reader to ignore
+    the check, so all three forms are collected and normalised the same way.
+    """
+    found: set[str] = set()
+
+    def add(token: str) -> None:
+        norm = _normalise_money(token)
+        if norm:
+            found.add(norm)
+
+    for token in re.findall(r"\$\s?([\d,]+(?:\.\d+)?)", text):
+        add(token)
+    for token in re.findall(r"(\d+(?:\.\d+)?)\s*(?:USD|dollars)\b", text):
+        add(token)
+    for token in re.findall(r'"price"\s*:\s*"?([\d.]+)"?', text):
+        add(token)
+    return found
+
+
 def check_ladder_prices_on_page(pass_dir: Path) -> None:
     """A ladder price must appear in the bytes of the page it cites.
 
@@ -36,29 +72,13 @@ def check_ladder_prices_on_page(pass_dir: Path) -> None:
     ext_i = header.index("extraction") if "extraction" in header else None
     plan_i = header.index("plan") if "plan" in header else None
 
-    money_on_page: dict[str, set[str]] = {}
-    for path in sorted(p for p in sources.iterdir() if p.is_file()):
-        text = path.read_text(encoding="utf-8", errors="replace")
-        # Normalise thousands separators and the ".00" a page may or may not
-        # print, so $1,200 and 1200 and 1200.00 compare equal. Three forms are
-        # collected because a vendor writes its price three ways: "$18" in prose,
-        # "18 USD" in a sentence, and "price":18 in a JSON-LD Offer block.
-        # Checking only the first reports correct rows as missing, which is a
-        # false positive that trains a reader to ignore the check.
-        found = set()
-
-        def add(token: str) -> None:
-            token = token.replace(",", "").strip()
-            if token:
-                found.add(token.rstrip("0").rstrip(".") if "." in token else token)
-
-        for token in re.findall(r"\$\s?([\d,]+(?:\.\d+)?)", text):
-            add(token)
-        for token in re.findall(r"(\d+(?:\.\d+)?)\s*(?:USD|dollars)\b", text):
-            add(token)
-        for token in re.findall(r'"price"\s*:\s*"?([\d.]+)"?', text):
-            add(token)
-        money_on_page[path.name] = found
+    # One normalisation for every money check: `_money_on_page` collects "$18",
+    # "18 USD" and `"price":18` and folds $1,200, 1200 and 1200.00 together, and
+    # `_normalise_money` folds the row's own figure the same way.
+    money_on_page: dict[str, set[str]] = {
+        path.name: _money_on_page(path.read_text(encoding="utf-8", errors="replace"))
+        for path in sorted(p for p in sources.iterdir() if p.is_file())
+    }
 
     for offset, row in enumerate(data_rows(rows), start=1):
         if len(row) <= max(src_i, price_i):
@@ -71,12 +91,9 @@ def check_ladder_prices_on_page(pass_dir: Path) -> None:
         ):
             continue
         plan = row[plan_i].strip() if plan_i is not None and len(row) > plan_i else "the plan"
-        # Normalise the same way `add` does: strip a trailing ".00", not every
-        # trailing zero. `rstrip("0")` on "10" yields "1", which reports a price
-        # the page plainly contains as missing.
-        norm = price.replace(",", "").strip()
-        if "." in norm:
-            norm = norm.rstrip("0").rstrip(".")
+        # Strip a trailing ".00", not every trailing zero: `rstrip("0")` on "10"
+        # yields "1", which reports a price the page plainly contains as missing.
+        norm = _normalise_money(price)
         if norm == "0":
             failures.append(
                 f"[ladder-price-on-page] {rel(ladder)} data row {offset}: the row prices "
@@ -100,36 +117,6 @@ def check_ladder_prices_on_page(pass_dir: Path) -> None:
 # verdict, and it is demonstrated twice in docs/reviews-2026-10-06.md: once
 # against a planted defect, once against the corrected data. A check that has
 # only been seen failing is indistinguishable from a check that cannot pass.
-
-
-def _money_on_page(text: str) -> set[str]:
-    """Every money figure a page carries, normalised for comparison.
-
-    A vendor writes the same price several ways: "$18" in prose, "18 USD" in a
-    sentence, and `"price":18` in a JSON-LD Offer block, and a price of $10 may
-    be printed as 10, 10.0 or 10.00. Checking only the first form reports correct
-    figures as missing, which is a false positive that trains a reader to ignore
-    the check, so all three forms are collected and normalised the same way.
-    """
-    found: set[str] = set()
-
-    def add(token: str) -> None:
-        token = token.replace(",", "").strip()
-        if token:
-            found.add(token.rstrip("0").rstrip(".") if "." in token else token)
-
-    for token in re.findall(r"\$\s?([\d,]+(?:\.\d+)?)", text):
-        add(token)
-    for token in re.findall(r"(\d+(?:\.\d+)?)\s*(?:USD|dollars)\b", text):
-        add(token)
-    for token in re.findall(r'"price"\s*:\s*"?([\d.]+)"?', text):
-        add(token)
-    return found
-
-
-def _normalise_money(value: str) -> str:
-    norm = value.replace(",", "").strip()
-    return norm.rstrip("0").rstrip(".") if "." in norm else norm
 
 
 # An entry whose dollar figures are the superseded ones being *recorded*. A

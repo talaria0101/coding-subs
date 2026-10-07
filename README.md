@@ -109,10 +109,11 @@ refusals as well as read about them.
 | Tool | What it does |
 |---|---|
 | `tools/validate.py` | The data-integrity gate. `python3 tools/validate.py --all` runs every pass and every check. |
-| `tools/make-plants.py` | Generates the 22 plant fixtures each check is demonstrated against, from real repository data with one cell changed, and writes `manifest.json` naming the check each plant must trip. |
+| `tools/make-plants.py` | Generates the 27 plant fixtures each check is demonstrated against, from real repository data with one cell changed, and writes `manifest.json` naming the check each plant must trip. |
 | `tests/run-plants.sh` | Runs every plant once and asserts it is caught **by the check it is named for**, then runs each pass and the whole repository showing the acceptance. Exits non-zero if a plant passes, or if one is refused by a check other than its own. |
 | `tools/fetch-firstparty.py` | Serial fetcher: one URL, one request, one file, one log line. Never retries a failure into a success. |
-| `tools/fetch-source.py` | Fetcher with more than one route: `--via jina` adds a text-extraction second source for JS-rendered or blocked pages, `--retries` backs off on 429/5xx only, and every attempt is logged with the route that produced it. Never converts a failure into a success. |
+| `tools/fetch-source.py` | Fetcher with explicit routes: `--via direct` (default), `jina` (jina only) or `both` (two files); `--user-agent chrome\|curl\|<string>`; `--retries` backs off on 429/5xx only; every attempt logs route, UA and a POSIX relative `saved_as`. Never converts a failure into a success. |
+| `tools/merge-fetch-logs.py` | Merges fetch logs, rewriting `saved_as` via `--map OLD=NEW`, re-hashing every file, refusing collisions; `--copy-sources DEST` copies or verifies, `--dry-run` writes nothing. |
 | `tools/fetch-community.py` | Fetches Reddit as a feed and **asserts the query was honoured** rather than assuming it: `search.rss` silently ignores `q=` and returns recency-ordered posts. Exits non-zero when it was ignored. |
 | `tools/parse-opencode-go.py` | Structurally parses `<table>` markup out of the OpenCode Go page into a CSV. Re-running it on the archived snapshot reproduces the committed CSV byte for byte. |
 | `tools/parse-aa-models.py` | Extracts the model landscape from the leaderboard's React Server Component payload. |

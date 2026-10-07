@@ -36,6 +36,38 @@ NUM_WORDS = {
     "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
 }
 
+_UNIT_WORDS = {w: n for w, n in NUM_WORDS.items() if n < 20}
+_TENS_WORDS = {
+    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
+    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+}
+
+
+def number_from_words(text: str) -> int | None:
+    """An integer written in digits or in English words from zero to ninety-nine.
+
+    Accepts "ten", "twenty", "twenty-one", "twenty one" and "21". Anything else,
+    including "umpteen", "a hundred" or "twenty-ten", is None: the caller decides
+    whether an unreadable number is an error, and in a count claim it is.
+    """
+    raw = text.strip().lower()
+    if raw.isdigit():
+        return int(raw)
+    parts = [p for p in re.split(r"[-\s]+", raw) if p]
+    if len(parts) == 1:
+        word = parts[0]
+        if word in _UNIT_WORDS:
+            return _UNIT_WORDS[word]
+        if word in _TENS_WORDS:
+            return _TENS_WORDS[word]
+        return None
+    if len(parts) == 2 and parts[0] in _TENS_WORDS:
+        unit = _UNIT_WORDS.get(parts[1])
+        if unit is not None and 1 <= unit <= 9:
+            return _TENS_WORDS[parts[0]] + unit
+    return None
+
+
 # The closed evidence vocabulary, exactly as the root README declares it. A class
 # outside this set is a class no reader of that table can interpret, which is why
 # it is refused rather than merely noted.

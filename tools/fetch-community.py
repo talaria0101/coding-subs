@@ -40,6 +40,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -68,6 +69,19 @@ def tokens(query: str) -> list[str]:
     return [t for t in re.findall(r"[A-Za-z0-9]+", query.lower()) if len(t) >= 4]
 
 
+def posix_relative(path: Path) -> str:
+    """`path` as a POSIX path relative to the working directory.
+
+    The first version wrote `saved_as` with backslashes on every platform. The
+    gate resolves either separator, but a log is read by more than the gate, and
+    a backslash is an ordinary filename character everywhere except Windows.
+    """
+    try:
+        return Path(os.path.relpath(Path(path).resolve(), Path.cwd().resolve())).as_posix()
+    except ValueError:
+        return Path(path).resolve().as_posix()
+
+
 def append_log(pass_dir: str, url: str, status: int, body: bytes,
                out: Path, args) -> int:
     """Record the retrieval that produced `out` in the pass's fetch log.
@@ -93,7 +107,7 @@ def append_log(pass_dir: str, url: str, status: int, body: bytes,
         "attempt": 1,
         "read_date": date.today().isoformat(),
         "note": args.note,
-        "saved_as": str(out).replace("/", "\\"),
+        "saved_as": posix_relative(out),
     })
     log.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
     print(f"  appended {url_only} -> {log}")

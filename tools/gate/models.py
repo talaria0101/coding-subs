@@ -330,7 +330,7 @@ def check_unscored_model(pass_dir: Path) -> None:
             failures.append(
                 f"[unscored-model] {rel(plans)} data row {offset} sells "
                 f"{row[model_i].strip()!r} - a {tier} tier - but model_slug "
-                f"{slug!r} names the untilereded base model, and this row asserts a "
+                f"{slug!r} names the untiered base model, and this row asserts a "
                 f"score for it. A tiered SKU is a different product from its base "
                 f"model and does not inherit its Intelligence Index; look the tier "
                 f"itself up, or write 'unscored:<reason>'."

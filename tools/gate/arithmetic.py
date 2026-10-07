@@ -145,10 +145,11 @@ def check_cost_identity(pass_dir: Path) -> None:
     was wrong anyway.
 
     Two relationships are checked, and they are different relationships. Rows
-    describing the same plan x model x mix x token-measurement must scale
-    together, because a scale factor is the only thing a second reading of one
-    quantity can change. And a row that states both a dollar ceiling and a rate
-    must satisfy ceiling / rate = tokens, which is the division the row claims to
+    describing the same plan x model x mix in one token column must imply one
+    dollar figure, tokens x rate, because tokens = dollars / rate: a second
+    reading of one quantity can change the rate and the count only in inverse
+    proportion. And a row that states both a dollar ceiling and a rate must
+    satisfy ceiling / rate = tokens, which is the division the row claims to
     have performed.
 
     What is deliberately **not** checked is plan price / tokens against the
@@ -186,7 +187,7 @@ def check_cost_identity(pass_dir: Path) -> None:
         pool_name = header[pool_i]
         both_caps = "per_model_cap_usd" in index and "monthly_pool_usd" in index
 
-        groups: dict[tuple, list[tuple[int, float, float]]] = {}
+        groups: dict[tuple, list[tuple[int, float, float, bool]]] = {}
         for offset, row in enumerate(data_rows(rows), start=1):
             if len(row) != len(header):
                 continue
@@ -194,25 +195,42 @@ def check_cost_identity(pass_dir: Path) -> None:
             rate = _num(row[rate_i])
             if not tokens or not rate or tokens <= 0 or rate <= 0:
                 continue
-            key = tuple(row[i].strip().lower() for i in (plan_i, model_i, mix_i, ceil_i))
-            groups.setdefault(key, []).append((offset, tokens, rate))
-        for (plan, model, mix, column), members in groups.items():
+            # The group is plan x model x mix within this file's token column.
+            # The column is fixed per file, so it is not part of the key; keying
+            # on the token *value* put every row with a different count in its own
+            # group, and the comparison below could then only ever see 1.00x.
+            key = tuple(row[i].strip().lower() for i in (plan_i, model_i, mix_i))
+            has_pool = _num(row[pool_i]) is not None
+            groups.setdefault(key, []).append((offset, tokens, rate, has_pool))
+        for (plan, model, mix), members in groups.items():
             if len(members) < 2:
                 continue
-            first_offset, first_tokens, first_rate = members[0]
-            for offset, tokens, rate in members[1:]:
-                t_ratio = tokens / first_tokens
-                r_ratio = rate / first_rate
-                if abs(t_ratio - r_ratio) / max(t_ratio, r_ratio) > ARITHMETIC_TOLERANCE:
-                    failures.append(
-                        f"[cost-identity] {rel(path)} data row {offset} and data row "
-                        f"{first_offset} both describe plan {plan!r}, model {model!r} "
-                        f"under mix {mix!r}, and both carry a dollar ceiling in "
-                        f"{pool_name}, but {column} differs by {t_ratio:.2f}x and "
-                        f"{rate_name} differs by {r_ratio:.2f}x. Two rows of one "
-                        f"quantity cannot scale differently: one of them is counting a "
-                        f"different dollar figure."
-                    )
+            first_offset, first_tokens, first_rate, first_pool = members[0]
+            for offset, tokens, rate, has_pool in members[1:]:
+                # tokens = dollars / rate, so tokens x rate is the dollar figure
+                # each row was divided from. Two readings of one quantity share
+                # it; a rate change that is not matched by an inverse change in
+                # tokens means the rows were divided from different dollar figures.
+                first_dollars = first_tokens * first_rate
+                dollars = tokens * rate
+                if abs(dollars - first_dollars) / max(dollars, first_dollars) <= ARITHMETIC_TOLERANCE:
+                    continue
+                if has_pool and first_pool:
+                    pool_said = f"both carry a dollar ceiling in {pool_name}"
+                elif has_pool or first_pool:
+                    pool_said = f"only one of them carries a dollar ceiling in {pool_name}"
+                else:
+                    pool_said = f"neither carries a dollar ceiling in {pool_name}"
+                failures.append(
+                    f"[cost-identity] {rel(path)} data row {offset} and data row "
+                    f"{first_offset} both describe plan {plan!r}, model {model!r} "
+                    f"under mix {mix!r} ({pool_said}), but {ceil_name} differs by "
+                    f"{tokens / first_tokens:.2f}x and {rate_name} by "
+                    f"{rate / first_rate:.2f}x, so {ceil_name} x {rate_name} is "
+                    f"${first_dollars:,.2f} on one row and ${dollars:,.2f} on the other. "
+                    f"Two readings of one quantity divide the same dollar figure: one "
+                    f"of them is counting a different one."
+                )
 
         for offset, row in enumerate(data_rows(rows), start=1):
             if len(row) != len(header):

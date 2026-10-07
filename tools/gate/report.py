@@ -6,7 +6,9 @@ import re
 from pathlib import Path
 
 from . import registry
-from .common import NUM_WORDS, ROOT, TOOLS, data_rows, failures, read_rows, rel
+from .common import (
+    NUM_WORDS, ROOT, TOOLS, data_rows, failures, number_from_words, read_rows, rel,
+)
 from .registry import CHECKS
 
 
@@ -23,12 +25,20 @@ def check_gate_count_claims(pass_dir: Path) -> None:
     every module of `tools/gate/`, because the docstrings that describe the gate
     moved into the package when the single file was split, and a count stated in
     any of them is a count a reader will rely on.
+
+    A count claim is a bold run (two asterisks) opening with one or two words,
+    or digits, immediately followed by the word "checks", such as "twenty",
+    "21" or "twenty-one" in bold before it. The examples are written without
+    the asterisks here because this docstring is itself one of the documents
+    this check reads. The count is read by `number_from_words`, which covers
+    zero to ninety-nine. A claim in that position whose count cannot be read is
+    a failure, not a pass: the first version knew only "eleven" to "twenty", so
+    a bold "ten checks" or "twenty-one checks" was never compared with anything
+    and the gate reported it as correct.
     """
-    words = {
-        "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
-        "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
-    }
-    pattern = re.compile(r"\*\*(" + "|".join(words) + r"|\d+)\s+checks\b", re.IGNORECASE)
+    pattern = re.compile(
+        r"\*\*(\d+|[A-Za-z]+(?:[-\s][A-Za-z]+)?)\s+checks\b", re.IGNORECASE
+    )
     gate_sources = [TOOLS / "validate.py"] + sorted((TOOLS / "gate").glob("*.py"))
     for path in [ROOT / "README.md", pass_dir / "README.md"] + gate_sources:
         if not path.is_file():
@@ -37,8 +47,16 @@ def check_gate_count_claims(pass_dir: Path) -> None:
             path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1
         ):
             for match in pattern.finditer(line):
-                token = match.group(1).lower()
-                claimed = int(token) if token.isdigit() else words[token]
+                token = match.group(1)
+                claimed = number_from_words(token)
+                if claimed is None:
+                    failures.append(
+                        f"[gate-count-claims] {rel(path)} line {offset} states a count of "
+                        f"checks as {token!r}, which the gate cannot read as a number, so "
+                        f"it cannot be compared with the {len(CHECKS)} CHECKS registers. "
+                        f"Write the count in digits or in words from zero to ninety-nine."
+                    )
+                    continue
                 if claimed != len(CHECKS):
                     failures.append(
                         f"[gate-count-claims] {rel(path)} line {offset} says the gate runs "
@@ -86,10 +104,9 @@ def check_report_matches_data(pass_dir: Path) -> None:
             name, claimed = match.group(1), int(match.group(2))
             path = data / name
             if not path.is_file():
-                failures.append(
-                    f"[report-matches-data] {rel(report)} cites data/{name} but it is "
-                    f"not in {rel(data)}/"
-                )
+                # A missing file is reported once, by the citation sweep below,
+                # which sees every data/ path whatever form cites it. Reporting
+                # it here as well printed the same failure once per pattern.
                 continue
             _, rows = read_rows(path)
             actual = len(data_rows(rows))
@@ -99,10 +116,16 @@ def check_report_matches_data(pass_dir: Path) -> None:
                     f"{claimed} rows, it has {actual}"
                 )
 
+    # Each missing target is reported once, whichever sweep sees it first and
+    # however many times or forms the report cites it in.
+    reported: set[Path] = set()
+
     # A `data/<pass>/data/<name>.csv` path is wrong unless that pass holds that file.
     for match in re.finditer(r"data/(\d{4}-\d{2}-\d{2})/data/([A-Za-z0-9._-]+\.csv)", text):
         other, name = match.group(1), match.group(2)
-        if not (ROOT / other / "data" / name).is_file():
+        target = ROOT / other / "data" / name
+        if not target.is_file() and target not in reported:
+            reported.add(target)
             failures.append(
                 f"[report-matches-data] {rel(report)} cites data/{other}/data/{name}, "
                 f"which does not exist. The pass is {pass_dir.name} and it holds no "
@@ -118,8 +141,9 @@ def check_report_matches_data(pass_dir: Path) -> None:
     for match in citation.finditer(text):
         other, name = match.group(1), match.group(2)
         target = ROOT / other / "data" / name if other else data / name
-        if target.is_file():
+        if target.is_file() or target in reported:
             continue
+        reported.add(target)
         where = rel(ROOT / other / "data") if other else rel(data)
         failures.append(
             f"[report-matches-data] {rel(report)} cites data/{name} but it is not "

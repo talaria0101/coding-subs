@@ -18,6 +18,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 UA = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -85,7 +86,12 @@ def main() -> int:
             os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
             with open(path, "wb") as handle:
                 handle.write(body)
-            record["saved_as"] = os.path.relpath(path, os.path.dirname(out_dir) or ".")
+            # POSIX separators whatever the platform: a log written on Windows
+            # recorded `2026-10-06\\sources\\x`, which reads as one filename
+            # everywhere else.
+            record["saved_as"] = Path(
+                os.path.relpath(path, os.path.dirname(out_dir) or ".")
+            ).as_posix()
         else:
             record["saved_as"] = None
         record["label"] = label
