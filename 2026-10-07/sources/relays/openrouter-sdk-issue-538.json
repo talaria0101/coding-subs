@@ -1,0 +1,82 @@
+{
+  "url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538",
+  "repository_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider",
+  "labels_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538/labels{/name}",
+  "comments_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538/comments",
+  "events_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538/events",
+  "html_url": "https://github.com/OpenRouterTeam/ai-sdk-provider/issues/538",
+  "id": 5241978546,
+  "node_id": "I_kwDOMX6F6c8AAAABOHI-sg",
+  "number": 538,
+  "title": "Runtime provider options drop configured sibling routing fields (allow_fallbacks, sort, etc.) on image requests",
+  "user": {
+    "login": "graysoncooper",
+    "id": 24884572,
+    "node_id": "MDQ6VXNlcjI0ODg0NTcy",
+    "avatar_url": "https://avatars.githubusercontent.com/u/24884572?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/graysoncooper",
+    "html_url": "https://github.com/graysoncooper",
+    "followers_url": "https://api.github.com/users/graysoncooper/followers",
+    "following_url": "https://api.github.com/users/graysoncooper/following{/other_user}",
+    "gists_url": "https://api.github.com/users/graysoncooper/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/graysoncooper/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/graysoncooper/subscriptions",
+    "organizations_url": "https://api.github.com/users/graysoncooper/orgs",
+    "repos_url": "https://api.github.com/users/graysoncooper/repos",
+    "events_url": "https://api.github.com/users/graysoncooper/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/graysoncooper/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2026-08-25T04:13:09Z",
+  "updated_at": "2026-08-25T04:13:09Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "issue_field_values": [
+
+  ],
+  "type": null,
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "In `doGenerate`, the request body spreads runtime provider options over the configured provider object:\nhttps://github.com/OpenRouterTeam/ai-sdk-provider/blob/b96b20799eadeb72a180ef021b85254fc1500746/src/image/index.ts#L106-L111\n\nBecause object spread replaces `provider` wholesale rather than merging it, any per-call `providerOptions.openrouter.provider` erases every sibling field set in the model's configured `provider` (`allow_fallbacks`, `require_parameters`, `sort`, `only`, `ignore`, `data_collection`, `max_price`).\n\n**Reproduction**\n1. Create the image model with `provider: { order: ['google'], allow_fallbacks: true }`.\n2. Call it with `providerOptions.openrouter.provider = { order: ['black-forest-labs'] }`.\n3. Inspect the `POST /images` body: `provider` is `{ order: ['black-forest-labs'] }`; `allow_fallbacks` is gone.\n\n**Effect**\nThe upstream routing request silently loses fallback/routing constraints, so a request can go to an unintended provider or fail when the chosen one is down.\n\n**Suggested fix**\nBuild `provider` separately and shallow-merge the configured and runtime provider objects instead of letting the outer spread overwrite it.\n\n_Found while testing [Ito](https://ito.ai), an automated code-review tool, against recently-merged PRs. It's free for open source. Sharing this because it looked like a real bug worth fixing, not to sell anything: https://app.ito.ai/share/43ff51ec-5766-43d5-bee3-9cbf6f1ef366?tab=details_\n",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/538/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

@@ -36,6 +36,15 @@ limits: [references/method-notes.md](references/method-notes.md). Reviews:
 | **Relays** | No longer excluded by category. Measured against a four-part standard (§8), **0 of 3** evaluated providers are rankable and the fourth row is software, not a provider. The one with a public rate card prices at **5.33x the official rate for the same model**. | FIRST-PARTY |
 | **Confidence** | **HIGH on the ceilings, MEDIUM on the blended $/M figures, and not HIGH on everything.** The ceilings are read from each vendor's own page. The $/M figures depend on a quoted traffic mix, not a measured workload. One price quotation in this pass was found to be wrong on 2026-10-07 after publication (R5, DeepSeek) and four published numbers inherited it — a price read from a page is evidence only while it still matches that page, which is why `validate.py` now checks every quoted figure against the archived bytes. **No metered result in this pass.** | — |
 
+> **SUPERSEDED 2026-10-07:** the first two rows of this table are not proved by their own arithmetic.
+> $0.002 is the price of the unscored Muse Spark Contributor SKUs, so it is not a qualifying price; the
+> cheapest qualifying non-zero price on the grid is DeepSeek V4.1 Flash off-peak at $0.003, a 3,333M
+> bound. A $0 lane is outside the division altogether, and the Command Code GOAT page archived here lists
+> Ling 3.1 Flash at Free while the leaderboard archived here scores `ling-3-1-flash` at 41.0906. The
+> verdict becomes "not shown, with one live candidate whose identity and delivery are unverified". The
+> Relays row's class `FIRST-PARTY` is not one of the six classes the root README declares. See
+> [../2026-10-07/README.md](../2026-10-07/README.md) section 1 and [../2026-10-07/data/citation-audit.csv](../2026-10-07/data/citation-audit.csv).
+
 ---
 
 ## 1. The result, and why it is structural
@@ -63,6 +72,12 @@ token is a cache read — and it is half the target. At the 97% mix this pass au
 coding workload, the same $10 buys **1,838M**, a factor of 2.7 lower. **The conclusion does not
 depend on which bound a reader prefers**: both are below 10,000M.
 
+> **SUPERSEDED 2026-10-07:** both bounds divide by $0.002, the cached-read price of Muse Spark 1.3
+> Contributor, which has no Intelligence Index. At the cheapest qualifying price, $0.003, the 100%-cache
+> bound is 3,333M and the 97% figure 1,035M. Neither bound covers a $0 lane, so "the credit route is
+> closed by arithmetic" holds for priced lanes only. See [../2026-10-07/README.md](../2026-10-07/README.md)
+> section 1.1.
+
 So the credit route is closed by arithmetic before any provider is considered. Three corollaries,
 each checked against a named source rather than assumed:
 
@@ -84,6 +99,11 @@ each checked against a named source rather than assumed:
    [R20], so the per-token rate is unchanged. Claude Max 5x at $100 and Claude Max 20x at $200 price
    identically per token in the one instrument that records both. The identity is the finding; the
    token counts behind it are not carried, and the reason is in [references/references.md](references/references.md) [R20].
+   > **SUPERSEDED 2026-10-07:** the two Claude Max rows the [R20] entry quotes (19,625M and 39,250M) are
+   > `claude-sonnet-5` rows in that repository's adopted-plans CSV, derived from its Opus rows by a 2.5
+   > list-price ratio and not measured; the `claude-opus-5` rows read 7,850M and 15,700M. The identity
+   > holds within one SKU. The file is now archived at a pinned commit by the 2026-10-07 pass; see
+   > [../2026-10-07/data/citation-audit.csv](../2026-10-07/data/citation-audit.csv).
 3. **All four of the cheapest lanes in the market are unscored or below the bar.** The archived grid
    carries four prices at or below $0.0028/M — Muse Spark 1.3 Contributor ($0.002/M blended
    $0.00544), Muse Spark 1.2 Contributor ($0.002), MiMo-V2.6-Flash ($0.0028) and MiMo-V2.5
@@ -99,6 +119,12 @@ each checked against a named source rather than assumed:
 **What would falsify this.** A subscription whose multiplier exceeds 2x on a model the leaderboard
 scores, or a qualifying price below $0.001/M from any vendor. Neither exists on the pages read
 today. §7 lists the rest.
+
+> **SUPERSEDED 2026-10-07:** the second falsifier is met on price by this pass's own archive.
+> `sources/commandcode-goat.html` carries a Ling 3.1 Flash row priced Free ("Free while it lasts. Every
+> request is billed $0."), and `sources/aa-leaderboard-models.html` scores `ling-3-1-flash` at 41.0906.
+> Whether the free endpoint serves that checkpoint is unknown. See
+> [../2026-10-07/README.md](../2026-10-07/README.md) section 1.2.
 
 ---
 
@@ -131,6 +157,14 @@ first.** Its percentages sum to exactly 100.0 while the dollars are at 37%. A sh
 not predict that; a meter that sums per-model percentages does. It is the reason the shared-pool
 reading is carried as *a* reading and not as *the* resolution: no maintainer has replied in any of
 these threads, and this pass has no paid account with which to settle it.
+
+> **SUPERSEDED 2026-10-07:** the vendor's public console code (anomalyco/opencode at commit
+> `ecc4916b`) keeps one `monthlyUsage` counter per user, adds
+> `quotaCost = Math.round(cost * modelInfo.costMultiplier)` to it for every model, and apportions the one
+> overall percentage across models so that the per-model figures sum to it by construction. A weighted
+> shared pool therefore predicts both observations in #47547, and they do not argue against a pool.
+> Production traffic is forwarded to a separate inference service whose limiter is not public, so the
+> production rule stays open. See [../2026-10-07/README.md](../2026-10-07/README.md) section 3.
 
 An independent instrument reached the same model of the world and recorded it per row:
 `min(共享月池$60, 模型Usage $60)` — "per-model allowances within one plan are not additive" [R20].
@@ -312,6 +346,9 @@ what made an unverified SKU the answer to the market. Both SKUs are now recorded
 [data/plan-economics.csv](data/plan-economics.csv), and `unscored-model` in `tools/validate.py`
 refuses the defect from now on.
 
+> **SUPERSEDED 2026-10-07:** two lanes, not one, sit above 10,000M: Muse Spark 1.3 Contributor and Muse
+> Spark 1.2 Contributor, as section 3 of this README already says.
+
 ---
 
 ## 5. What the traffic mix does to every number
@@ -347,8 +384,17 @@ Every row in [data/plan-economics.csv](data/plan-economics.csv) carries its `tra
   from the 2026-10-02 fetch, so **no successor campaign is announced in the page this pass holds.**
   Whether one exists elsewhere is not established, and the Z.ai rows in §3 should be read as
   expiring within the day.
+  > **SUPERSEDED 2026-10-07:** the ceilings do not halve. The 50% off-peak rate is a standing rule
+  > (`sources/zai-overview.md` line 135) and peak is 20 of 168 hours a week (line 138); only the
+  > all-day extension ends. The page maximum stays reachable off-peak, uniform use gets 0.894 of it and
+  > only all-peak use gets half. See [../2026-10-07/README.md](../2026-10-07/README.md) section 4.
 - **Command Code's over-quota behaviour is UNKNOWN.** The GOAT page publishes the limits and no
   billing rule, so this pass makes no claim about whether over-quota requests are declined.
+  > **SUPERSEDED 2026-10-07:** the rule is published in this pass's own archive,
+  > `sources/commandcode-goat.html` line 66: "Past a limit, requests fall back to those credits - and
+  > without them, paid models pause until the window or cycle resets while the free models keep
+  > working." The same correction applies to [R6] and to the "Command Code over-quota terms" row of
+  > [references/references.md](references/references.md).
 - **Reddit's `search.rss` silently ignores its query.** Measured: a nonsense term returns HTTP 200 and
   a well-formed feed with 0 entries. The two community meters in §2 come from a recency feed, read as
   a feed, and `tools/fetch-community.py` refuses to present such a feed as a search result.
@@ -414,6 +460,12 @@ single request on any model it lists.** The 5.33x ratio is therefore the smaller
 service whose own counters say nothing has ever run through it. A reader deciding whether to rely on
 this row should weigh that before the markup, and the pass's own §8 standard counts a provider that
 cannot show one completed request as not rankable for that reason as well as for its price.
+
+> **SUPERSEDED 2026-10-07:** every availability block reads `"window": "1h"` and
+> `"data_status": "pending"` beside `"request_count": 0`. A pending counter over a one-hour window does
+> not establish that the platform has never served a request; lifetime traffic is unknown. The 5.33x
+> price ratio is unaffected. The issue citations under [R19] (#3624, #3896 and #6134 grouped as ban
+> risk; #7503 under "silent substitution") are corrected in [../2026-10-07/data/citation-audit.csv](../2026-10-07/data/citation-audit.csv).
 
 **What the one measurable member's number says.** Fenno publishes a full 18-model rate card at a
 public endpoint. Its `deepseek-v4-1-flash` prices at $0.80 / $3.20 / $0.016 per 1M, which blends to

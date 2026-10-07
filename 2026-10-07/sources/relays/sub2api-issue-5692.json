@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/5692",
+  "id": 5163153961,
+  "node_id": "I_kwDOQqyBLs8AAAABM796KQ",
+  "number": 5692,
+  "title": "v0.1.177 后GPT PROX20 缩水额度问题还是存在",
+  "user": {
+    "login": "MrOlga",
+    "id": 61682561,
+    "node_id": "MDQ6VXNlcjYxNjgyNTYx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/61682561?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/MrOlga",
+    "html_url": "https://github.com/MrOlga",
+    "followers_url": "https://api.github.com/users/MrOlga/followers",
+    "following_url": "https://api.github.com/users/MrOlga/following{/other_user}",
+    "gists_url": "https://api.github.com/users/MrOlga/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/MrOlga/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/MrOlga/subscriptions",
+    "organizations_url": "https://api.github.com/users/MrOlga/orgs",
+    "repos_url": "https://api.github.com/users/MrOlga/repos",
+    "events_url": "https://api.github.com/users/MrOlga/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/MrOlga/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 24,
+  "created_at": "2026-08-16T06:57:20Z",
+  "updated_at": "2026-08-19T03:34:41Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "177 关闭了指纹收敛，其中一个账号从85%还是打到了98%，另一个账号没问题。这个到底是gpt 风控了缩额还是怎么回事。各位现在升级后好了吗？\n\n<img width=\"441\" height=\"354\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/20c4dffa-67c5-4cd3-9ae7-fd458b41f648\" />",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/5692/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

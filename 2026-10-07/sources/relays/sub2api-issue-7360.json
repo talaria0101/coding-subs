@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/7360",
+  "id": 5508908366,
+  "node_id": "I_kwDOQqyBLs8AAAABSFtFTg",
+  "number": 7360,
+  "title": "我的gpt6被奥特曼路由到gpt-5.6-luna  Sub2API 0.2.6在哪里？",
+  "user": {
+    "login": "xiaowanjiagit",
+    "id": 12732824,
+    "node_id": "MDQ6VXNlcjEyNzMyODI0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/12732824?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/xiaowanjiagit",
+    "html_url": "https://github.com/xiaowanjiagit",
+    "followers_url": "https://api.github.com/users/xiaowanjiagit/followers",
+    "following_url": "https://api.github.com/users/xiaowanjiagit/following{/other_user}",
+    "gists_url": "https://api.github.com/users/xiaowanjiagit/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/xiaowanjiagit/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/xiaowanjiagit/subscriptions",
+    "organizations_url": "https://api.github.com/users/xiaowanjiagit/orgs",
+    "repos_url": "https://api.github.com/users/xiaowanjiagit/repos",
+    "events_url": "https://api.github.com/users/xiaowanjiagit/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/xiaowanjiagit/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 13,
+  "created_at": "2026-09-19T08:46:30Z",
+  "updated_at": "2026-09-20T08:57:17Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "大佬，Sub2API 0.2.6在哪里？帮我解决一下降智问题，我代码都被写乱了",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/7360/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/1141",
+  "id": 4098892466,
+  "node_id": "I_kwDOQqyBLs70UCKy",
+  "number": 1141,
+  "title": "升级最新版v0.1.103，新账号一直被封，是要降级到0.96吗？",
+  "user": {
+    "login": "li-sen",
+    "id": 33471335,
+    "node_id": "MDQ6VXNlcjMzNDcxMzM1",
+    "avatar_url": "https://avatars.githubusercontent.com/u/33471335?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/li-sen",
+    "html_url": "https://github.com/li-sen",
+    "followers_url": "https://api.github.com/users/li-sen/followers",
+    "following_url": "https://api.github.com/users/li-sen/following{/other_user}",
+    "gists_url": "https://api.github.com/users/li-sen/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/li-sen/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/li-sen/subscriptions",
+    "organizations_url": "https://api.github.com/users/li-sen/orgs",
+    "repos_url": "https://api.github.com/users/li-sen/repos",
+    "events_url": "https://api.github.com/users/li-sen/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/li-sen/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 9,
+  "created_at": "2026-03-19T02:42:20Z",
+  "updated_at": "2026-03-24T07:57:39Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "如题，最近升级了新版本，账号活不过1天，新账号也老被封，有什么好方法，是版本升级的问题吗？我看有人0.96版本的没问题",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/1141/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

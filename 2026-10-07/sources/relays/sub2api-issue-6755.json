@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/6755",
+  "id": 5372539065,
+  "node_id": "I_kwDOQqyBLs8AAAABQDpwuQ",
+  "number": 6755,
+  "title": "Abuse 怎么解决呢 直接封号了",
+  "user": {
+    "login": "qingsonghu08",
+    "id": 139681464,
+    "node_id": "U_kgDOCFNeuA",
+    "avatar_url": "https://avatars.githubusercontent.com/u/139681464?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/qingsonghu08",
+    "html_url": "https://github.com/qingsonghu08",
+    "followers_url": "https://api.github.com/users/qingsonghu08/followers",
+    "following_url": "https://api.github.com/users/qingsonghu08/following{/other_user}",
+    "gists_url": "https://api.github.com/users/qingsonghu08/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/qingsonghu08/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/qingsonghu08/subscriptions",
+    "organizations_url": "https://api.github.com/users/qingsonghu08/orgs",
+    "repos_url": "https://api.github.com/users/qingsonghu08/repos",
+    "events_url": "https://api.github.com/users/qingsonghu08/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/qingsonghu08/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 10,
+  "created_at": "2026-09-07T09:10:59Z",
+  "updated_at": "2026-09-10T05:30:33Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "OpenAI\n你好，\nOpenAI的条款和政策限制我们的服务在多个领域的使用。我们已发现\nCodex中存在根据我们政策不允许的活动:\n网络虐待\n请确保你按照我们的使用条款和使用政策使用OpenAI服务。如继续违反这些政策，我们可能采取包括停用服务访问权限在内的进一步措施。\n如有疑问或认为处理有误，你可以点击下面的按钮提出申诉。\n提出申诉\n谨致问候OpenAI团队\n如有任何疑问，请通过帮助中心与我们联系。\n\n求助，这种怎么办，是并发太高了，还是说有人进行了敏感对话呢，怎么避免呢",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6755/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

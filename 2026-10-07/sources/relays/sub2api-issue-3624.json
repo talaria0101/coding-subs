@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/3624",
+  "id": 4788271869,
+  "node_id": "I_kwDOQqyBLs8AAAABHWc6_Q",
+  "number": 3624,
+  "title": "openai oauth账号可否增加User-Agent和tlc指纹伪装",
+  "user": {
+    "login": "xO-ox-ai",
+    "id": 104205598,
+    "node_id": "U_kgDOBjYNHg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/104205598?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/xO-ox-ai",
+    "html_url": "https://github.com/xO-ox-ai",
+    "followers_url": "https://api.github.com/users/xO-ox-ai/followers",
+    "following_url": "https://api.github.com/users/xO-ox-ai/following{/other_user}",
+    "gists_url": "https://api.github.com/users/xO-ox-ai/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/xO-ox-ai/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/xO-ox-ai/subscriptions",
+    "organizations_url": "https://api.github.com/users/xO-ox-ai/orgs",
+    "repos_url": "https://api.github.com/users/xO-ox-ai/repos",
+    "events_url": "https://api.github.com/users/xO-ox-ai/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/xO-ox-ai/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 8,
+  "created_at": "2026-07-01T18:36:30Z",
+  "updated_at": "2026-07-14T08:13:40Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "CONTRIBUTOR",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "<img width=\"270\" height=\"182\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a2619fa6-dd32-46c7-8ecd-d1ef5c7e29b0\" />\n\ntls指纹是否也可以开放给openai oauth呢？我看到claude oauth是有tls指纹模板的，但是没有开放给openai oauth。\n\n我用ai分析了下142版本的指纹信息拼装路径：\n\nOAuth 授权/刷新\n[oauth.go (line 19)](E:/test-dev/sub2api-main/backend/internal/pkg/openai/oauth.go:19) 使用固定 Codex CLI client_id，PKCE，scope 是 openid profile email offline_access，授权 URL 固定加 id_token_add_organizations=true 和 codex_cli_simplified_flow=true。\ntoken exchange/refresh 在 [openai_oauth_service.go (line 49)](E:/test-dev/sub2api-main/backend/internal/repository/openai_oauth_service.go:49)，请求头固定 User-Agent: codex-cli/0.91.0，不是浏览器指纹客户端。\n\nTLS/浏览器指纹\n仓库里确实有 uTLS 模块，默认模拟 Node.js 24.x/Claude Code ClientHello，见 [dialer.go (line 55)](E:/test-dev/sub2api-main/backend/internal/pkg/tlsfingerprint/dialer.go:55)。但关键点是：账号级 TLS 指纹开关在 [account.go (line 1695)](E:/test-dev/sub2api-main/backend/internal/service/account.go:1695) 只对 Anthropic OAuth/SetupToken 生效，OpenAI OAuth 主请求基本走普通 Go http.Transport。\n真正“Chrome TLS impersonation”只用于 ChatGPT backend-api 的隐私、账号、quota 类请求，通过 [req_client_pool.go (line 80)](E:/test-dev/sub2api-main/backend/internal/repository/req_client_pool.go:80) 的 ImpersonateChrome()。\n\nHTTP 头\nOpenAI OAuth 上游请求会补 Authorization: Bearer ...，并对 OAuth 账号加 Host: chatgpt.com、chatgpt-account-id、必要时 x-openai-fedramp，见 [openai_chatgpt_headers.go (line 8)](E:/test-dev/sub2api-main/backend/internal/service/openai_chatgpt_headers.go:8) 和 [openai_gateway_service.go (line 4476)](E:/test-dev/sub2api-main/backend/internal/service/openai_gateway_service.go:4476)。\nResponses 路径会固定/兜底 OpenAI-Beta: responses=experimental、originator: codex_cli_rs、accept、session_id、conversation_id，并把非 Codex UA 统一替换为固定 codex_cli_rs/0.125.0 (Ubuntu 22.4.0; x86_64) xterm-256color，见 [openai_gateway_service.go (line 50)](E:/test-dev/sub2api-main/backend/internal/service/openai_gateway_service.go:50)、[openai_gateway_service.go (line 3720)](E:/test-dev/sub2api-main/backend/internal/service/openai_gateway_service.go:3720)、[openai_gateway_service.go (line 3751)](E:/test-dev/sub2api-main/backend/internal/service/openai_gateway_service.go:3751)。\n\n设备/会话指纹\nsession_id / conversation_id 会用 API key id 混入后做 xxhash，变成 16 位十六进制隔离值，见 [openai_gateway_service.go (line 952)](E:/test-dev/sub2api-main/backend/internal/service/openai_gateway_service.go:952)。\n设备安装标识来自账号 extra.openai_device_id，只在存在时注入 client_metadata[\"x-codex-installation-id\"]，不伪造，见 [account.go (line 1249)](E:/test-dev/sub2api-main/backend/internal/service/account.go:1249) 和 [openai_codex_transform.go (line 1067)](E:/test-dev/sub2api-main/backend/internal/service/openai_codex_transform.go:1067)。这点相对克制。\n\nWebSocket\nWS headers 在 [openai_ws_forwarder.go (line 1111)](E:/test-dev/sub2api-main/backend/internal/service/openai_ws_forwarder.go:1111) 拼：authorization、session_id/conversation_id、chatgpt-account-id、originator、OpenAI-Beta: responses_websockets=2026-02-06、UA 兜底为固定 Codex UA。底层 WS dialer 是标准 coder/websocket + Go http.Client，不是 uTLS/Chrome 指纹。\n\n主要风险点\n1.最大问题是“人格分裂”：token 刷新像 codex-cli/0.91.0，主请求像 Linux codex_cli_rs/0.125.0，设置/配额接口又像 Chrome/Codex Desktop，WS 又是 Go TLS。不同链路的 TLS 和 UA 不一致，容易被关联成非真实客户端。\n\n2.固定 UA、固定 originator、固定 zh-CN quota 语言、固定 sec-fetch-*，规模化使用时很容易形成集群特征。\n\n3.OpenAI 主请求 UA 声称 Codex CLI，但 TLS 不是 Codex/Node/uTLS，而是 Go transport。这个 L7/L4 不匹配是比较醒目的风控信号。\n\n4.session_id 被压成固定 16 hex，不像很多真实客户端会携带的原始格式；虽然解决了跨用户碰撞，但也形成稳定模式。\n\n5.每次授权/刷新后 best-effort 调 accounts/check、subscription、关闭训练数据共享，链路行为也偏自动化。",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3624/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

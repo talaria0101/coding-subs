@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/6180",
+  "id": 5242814189,
+  "node_id": "I_kwDOQqyBLs8AAAABOH7-7Q",
+  "number": 6180,
+  "title": "被封号了",
+  "user": {
+    "login": "xiaolu6688aaa",
+    "id": 310942979,
+    "node_id": "U_kgDOEoidAw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/310942979?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/xiaolu6688aaa",
+    "html_url": "https://github.com/xiaolu6688aaa",
+    "followers_url": "https://api.github.com/users/xiaolu6688aaa/followers",
+    "following_url": "https://api.github.com/users/xiaolu6688aaa/following{/other_user}",
+    "gists_url": "https://api.github.com/users/xiaolu6688aaa/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/xiaolu6688aaa/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/xiaolu6688aaa/subscriptions",
+    "organizations_url": "https://api.github.com/users/xiaolu6688aaa/orgs",
+    "repos_url": "https://api.github.com/users/xiaolu6688aaa/repos",
+    "events_url": "https://api.github.com/users/xiaolu6688aaa/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/xiaolu6688aaa/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 13,
+  "created_at": "2026-08-25T06:35:10Z",
+  "updated_at": "2026-09-03T03:17:08Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "突然被封了3个号  有类似情况吗",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/6180/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

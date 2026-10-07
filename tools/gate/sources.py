@@ -166,8 +166,8 @@ def check_quoted_money_on_page(pass_dir: Path) -> None:
         return
 
     pages: dict[str, set[str]] = {}
-    for path in sorted(p for p in sources.iterdir() if p.is_file()):
-        pages[path.name] = _money_on_page(
+    for path in sorted(p for p in sources.rglob("*") if p.is_file()):
+        pages[path.relative_to(sources).as_posix()] = _money_on_page(
             path.read_text(encoding="utf-8", errors="replace")
         )
 

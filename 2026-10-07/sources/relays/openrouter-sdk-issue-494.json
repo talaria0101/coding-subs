@@ -1,0 +1,82 @@
+{
+  "url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494",
+  "repository_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider",
+  "labels_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494/labels{/name}",
+  "comments_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494/comments",
+  "events_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494/events",
+  "html_url": "https://github.com/OpenRouterTeam/ai-sdk-provider/issues/494",
+  "id": 4409808944,
+  "node_id": "I_kwDOMX6F6c8AAAABBthYMA",
+  "number": 494,
+  "title": "openrouter:web_search reports provider as OpenAI for Anthropic model requests",
+  "user": {
+    "login": "richardwu",
+    "id": 10563314,
+    "node_id": "MDQ6VXNlcjEwNTYzMzE0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/10563314?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/richardwu",
+    "html_url": "https://github.com/richardwu",
+    "followers_url": "https://api.github.com/users/richardwu/followers",
+    "following_url": "https://api.github.com/users/richardwu/following{/other_user}",
+    "gists_url": "https://api.github.com/users/richardwu/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/richardwu/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/richardwu/subscriptions",
+    "organizations_url": "https://api.github.com/users/richardwu/orgs",
+    "repos_url": "https://api.github.com/users/richardwu/repos",
+    "events_url": "https://api.github.com/users/richardwu/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/richardwu/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 4,
+  "created_at": "2026-05-08T22:33:39Z",
+  "updated_at": "2026-09-08T20:24:59Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "issue_field_values": [
+
+  ],
+  "type": null,
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "## Summary\n\nWhen using `@openrouter/ai-sdk-provider` with the native OpenRouter web search tool, web search appears to work, but the returned provider metadata reports `OpenAI` even when the requested model is Anthropic.\n\nFor example, this request uses:\n\n```ts\nmodel: openrouter.chat(\"anthropic/claude-opus-4.6\")\n```\n\nbut after the stream completes:\n\n```ts\n(await result.providerMetadata)?.openrouter?.provider\n```\n\nreturns:\n\n```ts\n\"OpenAI\"\n```\n\nThe issue is not that web search fails. The issue is that provider metadata says the provider was OpenAI for an Anthropic model request when `openrouter:web_search` is enabled.\n\n## Environment\n\n- `@openrouter/ai-sdk-provider`: `2.2.3`\n- `ai`: `6.0.97`\n- Runtime: Bun / Node-style server runtime\n- API: `streamText` with `openrouter.chat(...)`\n- Native server tool: `openrouter:web_search`\n\n## Repro\n\n```ts\nimport { createOpenRouter } from \"@openrouter/ai-sdk-provider\";\nimport { streamText, stepCountIs } from \"ai\";\n\nconst openrouter = createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY! });\n\nconst result = streamText({\n  model: openrouter.chat(\"anthropic/claude-opus-4.6\"),\n  messages: [\n    {\n      role: \"user\",\n      content: \"Use web search to find the latest OpenRouter routing docs and cite what you used.\",\n    },\n  ],\n  stopWhen: stepCountIs(1),\n  providerOptions: {\n    openrouter: {\n      tools: [\n        {\n          type: \"openrouter:web_search\",\n          parameters: {\n            engine: \"auto\",\n            max_results: 5,\n            max_total_results: 15,\n          },\n        },\n      ],\n      tool_choice: \"auto\",\n    },\n  },\n});\n\nawait result.consumeStream();\nconsole.log({\n  provider: (await result.providerMetadata)?.openrouter?.provider,\n  text: await result.text,\n});\n```\n\n## Actual output\n\nThe exact text varies, but the provider metadata reports OpenAI:\n\n```ts\n{\n  provider: \"OpenAI\",\n  text: \"Here's a comprehensive summary of the latest OpenRouter routing documentation...\"\n}\n```\n\nThe generated text includes web-search-based citations, so the tool appears to be working.\n\n## Expected behavior\n\nFor a request using `openrouter.chat(\"anthropic/claude-opus-4.6\")`, provider metadata should not report `OpenAI` unless OpenRouter intentionally routes Anthropic model requests with web search through an OpenAI-backed provider.\n\nIf that routing is intentional, it would be helpful for the provider metadata or docs to make that explicit. Otherwise, this looks like incorrect provider metadata when `openrouter:web_search` is enabled.",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/OpenRouterTeam/ai-sdk-provider/issues/494/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

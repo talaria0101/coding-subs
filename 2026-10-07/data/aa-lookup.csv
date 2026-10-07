@@ -1,0 +1,24 @@
+# Regenerated from the archived leaderboard payload sources/aa-leaderboard-models.html (fetched 2026-10-07) by:
+# python3 tools/parse-aa-scores.py 2026-10-07/sources/aa-leaderboard-models.html OUT.csv --probe ling-3-1-flash,deepseek-v4-1-flash,muse-spark-1-3-contributor,muse-spark-1-2-contributor,mimo-v2-5,mimo-v2-5-0424,mimo-v2-6-flash,muse-spark-1-3,muse-spark-1-3-xhigh,muse-spark-1-2,solar-pro-2,step-5,step-5-preview,glm-5-3-flash,kimi-k3,gemini-3-8-flash,gemini-3-8-flash-medium,gemini-3-8-flash-low,ling-3-0-flash
+# Exit code 2 is expected: it means at least one sought slug is notFound, which is the result being recorded.
+# The gate's lookup-against-board check re-parses the same payload and refuses any row that disagrees with it.
+sought_slug,present_on_board,intelligence_index,name_on_board,creator,lookup_verdict,board_model_count
+ling-3-1-flash,yes,41.0906,Ling 3.1 Flash,,scored,681
+deepseek-v4-1-flash,yes,39.4562,DeepSeek V4.1 Flash (Max),,scored,681
+muse-spark-1-3-contributor,no,,,,notFound,681
+muse-spark-1-2-contributor,no,,,,notFound,681
+mimo-v2-5,no,,,,notFound,681
+mimo-v2-5-0424,yes,25.1743,MiMo-V2.5,,scored,681
+mimo-v2-6-flash,yes,37.8844,MiMo-V2.6-Flash,,scored,681
+muse-spark-1-3,yes,48.0923,Muse Spark 1.3 (Max),,scored,681
+muse-spark-1-3-xhigh,yes,45.0733,Muse Spark 1.3 (Xhigh),,scored,681
+muse-spark-1-2,yes,39.5759,Muse Spark 1.2 (Xhigh),,scored,681
+solar-pro-2,yes,6.9984,Solar Pro 2 (Non-reasoning),,scored,681
+step-5,yes,43.7343,Step 5 Preview,,scored,681
+step-5-preview,no,,,,notFound,681
+glm-5-3-flash,yes,41.8075,GLM 5.3 Flash,,scored,681
+kimi-k3,yes,43.5938,Kimi K3 (Max),,scored,681
+gemini-3-8-flash,yes,40.9262,Gemini 3.8 Flash (High),,scored,681
+gemini-3-8-flash-medium,yes,39.7740,Gemini 3.8 Flash (Medium),,scored,681
+gemini-3-8-flash-low,yes,33.4548,Gemini 3.8 Flash (Low),,scored,681
+ling-3-0-flash,yes,20.1333,Ling 3.0 Flash,,scored,681

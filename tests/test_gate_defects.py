@@ -187,6 +187,28 @@ class OneMoneyNormalisation(GateCase):
                          "money normalisation is implemented in more than one place")
 
 
+class QuotedMoneyReadsSubfolders(GateCase):
+    """A reference entry citing `sources/<topic>/page` is checked against that
+    page. Before this check walked subfolders, every nested source was skipped
+    and a fabricated figure on a nested citation passed."""
+
+    ENTRY = "**[R1] Vendor** ([page](../sources/vendor/page.html))\n\nPro costs $%s a month.\n"
+
+    def run_check(self, figure: str) -> list[str]:
+        self.write("sources/vendor/page.html", "<p>Pro costs $18 a month.</p>")
+        self.write("references/references.md", self.ENTRY % figure)
+        sources.check_quoted_money_on_page(self.pass_dir)
+        return self.tagged("quoted-money-on-page")
+
+    def test_fabricated_figure_on_nested_source_is_refused(self):
+        found = self.run_check("99")
+        self.assertEqual(len(found), 1, failures)
+        self.assertIn("quotes $99", found[0])
+
+    def test_correct_figure_on_nested_source_is_accepted(self):
+        self.assertEqual(self.run_check("18"), [], failures)
+
+
 class FetchLogPathResolution(GateCase):
     """`fetch-log-corroborates` reads every spelling of `saved_as` in use."""
 

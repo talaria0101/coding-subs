@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/593",
+  "id": 3957599398,
+  "node_id": "I_kwDOQqyBLs7r5Cym",
+  "number": 593,
+  "title": "API Error: 503 {\"error\":{\"message\":\"No available accounts: no available          accounts\",\"type\":\"api_error\"},\"type\":\"error\"}",
+  "user": {
+    "login": "RobaireTH",
+    "id": 153534007,
+    "node_id": "U_kgDOCSa-Nw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/153534007?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/RobaireTH",
+    "html_url": "https://github.com/RobaireTH",
+    "followers_url": "https://api.github.com/users/RobaireTH/followers",
+    "following_url": "https://api.github.com/users/RobaireTH/following{/other_user}",
+    "gists_url": "https://api.github.com/users/RobaireTH/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/RobaireTH/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/RobaireTH/subscriptions",
+    "organizations_url": "https://api.github.com/users/RobaireTH/orgs",
+    "repos_url": "https://api.github.com/users/RobaireTH/repos",
+    "events_url": "https://api.github.com/users/RobaireTH/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/RobaireTH/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 27,
+  "created_at": "2026-02-18T12:23:25Z",
+  "updated_at": "2026-06-01T09:21:21Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "I have been experiencing this for a while now. How do I solve it? I tried rotating the API key but it's not helping \n\n\n```bash \nAPI Error: 503 {\"error\":{\"message\":\"No available accounts: no available          accounts\",\"type\":\"api_error\"},\"type\":\"error\"}\n```\n\n我现在遇到这个问题已经有一段时间了。我该如何解决呢？我试过轮换API密钥，但这没有帮助。\n\n```bash\nAPI 错误：503 {\"error\":{\"message\":\"没有可用账户：没有可用账户\",\"type\":\"api_error\"},\"type\":\"error\"}\n```",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593/reactions",
+    "total_count": 2,
+    "+1": 2,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/593/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

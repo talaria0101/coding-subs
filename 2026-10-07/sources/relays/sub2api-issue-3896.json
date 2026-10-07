@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896",
+  "repository_url": "https://api.github.com/repos/Wei-Shaw/sub2api",
+  "labels_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896/labels{/name}",
+  "comments_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896/comments",
+  "events_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896/events",
+  "html_url": "https://github.com/Wei-Shaw/sub2api/issues/3896",
+  "id": 4851100365,
+  "node_id": "I_kwDOQqyBLs8AAAABISXqzQ",
+  "number": 3896,
+  "title": "CodeX 新增了设备证明的请求体",
+  "user": {
+    "login": "LuckyKuang",
+    "id": 33362973,
+    "node_id": "MDQ6VXNlcjMzMzYyOTcz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/33362973?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/LuckyKuang",
+    "html_url": "https://github.com/LuckyKuang",
+    "followers_url": "https://api.github.com/users/LuckyKuang/followers",
+    "following_url": "https://api.github.com/users/LuckyKuang/following{/other_user}",
+    "gists_url": "https://api.github.com/users/LuckyKuang/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/LuckyKuang/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/LuckyKuang/subscriptions",
+    "organizations_url": "https://api.github.com/users/LuckyKuang/orgs",
+    "repos_url": "https://api.github.com/users/LuckyKuang/repos",
+    "events_url": "https://api.github.com/users/LuckyKuang/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/LuckyKuang/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 5,
+  "created_at": "2026-07-10T01:04:39Z",
+  "updated_at": "2026-09-11T04:48:07Z",
+  "closed_at": null,
+  "assignee": null,
+  "author_association": "NONE",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "信源补充: https://github.com/openai/codex/blob/main/codex-rs/app-server/README.md#attestation-generation\n\n修改追溯: https://github.com/openai/codex/pull/20619\n\n@Wei-Shaw 这个问题有点严重，如果账号伪装不够号，可能后期openai会因此封号，麻烦研究一下",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896/reactions",
+    "total_count": 5,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 5
+  },
+  "timeline_url": "https://api.github.com/repos/Wei-Shaw/sub2api/issues/3896/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

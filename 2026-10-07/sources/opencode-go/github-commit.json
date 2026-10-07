@@ -1,0 +1,113 @@
+{
+  "sha": "ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+  "node_id": "C_kwDOOiiGL9oAKGVjYzQ5MTZiNWE5NjA4YzMwZTZkZDU4YTY3ZjIxMzdiNTk0NDA3Y2E",
+  "commit": {
+    "author": {
+      "name": "Daniel Chen",
+      "email": "daniel85.chen@gmail.com",
+      "date": "2026-10-06T22:32:45Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-10-06T22:32:45Z"
+    },
+    "message": "fix(stats): attribute exo usage to an unknown provider (#53621)",
+    "tree": {
+      "sha": "27f82d7c5484f09eaef06fbd8977f6a1e277d382",
+      "url": "https://api.github.com/repos/anomalyco/opencode/git/trees/27f82d7c5484f09eaef06fbd8977f6a1e277d382"
+    },
+    "url": "https://api.github.com/repos/anomalyco/opencode/git/commits/ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+    "comment_count": 0,
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqxXcNCRC1aQ7uu5UhlAAAFasQAJudbQm2oO1IGDes5Z+c612E\nH6aJsgqK99GgsHeq/UOGrl1eAu08hw8kFjDPA8ZNWLGIR7BWZm67yGJ9tuWdPIG5\nC96jhyYEHJSAuazNVoDmAxjn0DoiVckxqXFS/kqTrP/0PYdBVG+joySoy6Q3wYhp\n9MfS2iPDenLBsIrvB6KGbG7g04u3tO7wek6wftfagLalKB94+9zzxgK/jrn1yjs3\nWQpb7YjoccxDP7j5QQtjAP7VPjsfP2fwoEpYys2bqTOlezSWFlbiBFGs4iPrhPiQ\nZZuk3OiJ0vVl4gG4oSyhGbmIWvfI56cWcBBw3HpnShcLEIlHvitR3pn+ZgeKfoV3\nnEynHZCcq2dnyzECQvYv2CN4sZue6hzp5M2PbyNZt+fuxrIoBtAJpJ/x8FKlgmWk\nPZKtBDPrcG3nOJJtDdKAdWzR2FadAMWs4Akq33hjurR9Ub64uq8Ww84RnJk9GZ7N\n5F31i7+Ruv9ZpdSv5u2AdmWEEgXlVJbSbTnkD3vaTFUi4kIAlXTXeM0Qgka80WRo\nMhwlHhFS2woIaXcA/MMzD0ilsapZruoCUbKLded4i51UTmlJWVH76NVE1XclW1A9\naGBU/JP/d76FFd0mL4k2ti6Rlyze5/ayTOtzD7ercCQmQQ/W7/pPpFkFbdswZnxJ\nMH93O1i8B8Vh4s3BlD7t\n=eEvU\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree 27f82d7c5484f09eaef06fbd8977f6a1e277d382\nparent e2564336e4fb98401d26a5b8e10038ab99763767\nauthor Daniel Chen <daniel85.chen@gmail.com> 1791325965 -0700\ncommitter GitHub <noreply@github.com> 1791325965 -0700\n\nfix(stats): attribute exo usage to an unknown provider (#53621)",
+      "verified_at": "2026-10-06T22:32:45Z"
+    }
+  },
+  "url": "https://api.github.com/repos/anomalyco/opencode/commits/ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+  "html_url": "https://github.com/anomalyco/opencode/commit/ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+  "comments_url": "https://api.github.com/repos/anomalyco/opencode/commits/ecc4916b5a9608c30e6dd58a67f2137b594407ca/comments",
+  "author": {
+    "login": "dc85",
+    "id": 83497,
+    "node_id": "MDQ6VXNlcjgzNDk3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/83497?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/dc85",
+    "html_url": "https://github.com/dc85",
+    "followers_url": "https://api.github.com/users/dc85/followers",
+    "following_url": "https://api.github.com/users/dc85/following{/other_user}",
+    "gists_url": "https://api.github.com/users/dc85/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/dc85/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/dc85/subscriptions",
+    "organizations_url": "https://api.github.com/users/dc85/orgs",
+    "repos_url": "https://api.github.com/users/dc85/repos",
+    "events_url": "https://api.github.com/users/dc85/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/dc85/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "e2564336e4fb98401d26a5b8e10038ab99763767",
+      "url": "https://api.github.com/repos/anomalyco/opencode/commits/e2564336e4fb98401d26a5b8e10038ab99763767",
+      "html_url": "https://github.com/anomalyco/opencode/commit/e2564336e4fb98401d26a5b8e10038ab99763767"
+    }
+  ],
+  "stats": {
+    "total": 7,
+    "additions": 4,
+    "deletions": 3
+  },
+  "files": [
+    {
+      "sha": "d67beec709ae34a4ed025c85af0f7dc12accc029",
+      "filename": "packages/stats/core/src/domain/inference.test.ts",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 2,
+      "changes": 5,
+      "blob_url": "https://github.com/anomalyco/opencode/blob/ecc4916b5a9608c30e6dd58a67f2137b594407ca/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Finference.test.ts",
+      "raw_url": "https://github.com/anomalyco/opencode/raw/ecc4916b5a9608c30e6dd58a67f2137b594407ca/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Finference.test.ts",
+      "contents_url": "https://api.github.com/repos/anomalyco/opencode/contents/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Finference.test.ts?ref=ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+      "patch": "@@ -89,6 +89,7 @@ describe(\"inference stat normalization\", () => {\n     expect(statProvider(\"OMEN-ALPHA-free:global\", \"gpt-test-model\", \"test-provider\")).toBe(\"unknown\")\n     expect(statProvider(\"omen-alpha\", \"\", \"test-provider\")).toBe(\"unknown\")\n     expect(statProvider(\"space-bunny-free\", \"hidden-route-model\", \"hidden-provider\")).toBe(\"unknown\")\n+    expect(statProvider(\"exo-free\", \"gpt-test-model\", \"hidden-provider\")).toBe(\"unknown\")\n \n     const spaceBunny = { ...aggregate(\"space-bunny-free\", \"hidden-provider\"), provider_model: \"hidden-route-model\" }\n     expect(toModelAggregate(spaceBunny)).toMatchObject([{ model: \"space-bunny\", provider: \"unknown\", requests: 1 }])\n@@ -269,7 +270,7 @@ describe(\"inference stat normalization\", () => {\n     queries.forEach((query) => {\n       expect(query).toContain(\"WHERE lower(model) NOT IN ('alpha-gpt-next')\")\n       expect(query).toContain(\n-        \"CASE\\n      WHEN lower(model) IN ('omen-alpha', 'space-bunny', 'union-alpha') THEN 'unknown'\\n\",\n+        \"CASE\\n      WHEN lower(model) IN ('exo', 'omen-alpha', 'space-bunny', 'union-alpha') THEN 'unknown'\\n\",\n       )\n       expect(query).toContain(\"= 'opencode-go/union-alpha' THEN 'union-alpha'\")\n       expect(query).toContain(\"= 'opencode/union-alpha' THEN 'union-alpha'\")\n@@ -342,7 +343,7 @@ describe(\"inference stat normalization\", () => {\n     expect(queries[0]?.query).toContain(\"AND product = 'go'\")\n     expect(queries[0]?.query).toContain(\"AND lower(model) NOT IN ('alpha-gpt-next')\")\n     expect(queries[0]?.query).toContain(\n-      \"CASE\\n      WHEN lower(model) IN ('omen-alpha', 'space-bunny', 'union-alpha') THEN 'unknown'\\n\",\n+      \"CASE\\n      WHEN lower(model) IN ('exo', 'omen-alpha', 'space-bunny', 'union-alpha') THEN 'unknown'\\n\",\n     )\n     expect(queries[0]?.query).toContain(\"= 'opencode-go/union-alpha' THEN 'union-alpha'\")\n     expect(queries[0]?.query).toContain(\"= 'opencode/union-alpha' THEN 'union-alpha'\")"
+    },
+    {
+      "sha": "2ec0c613f490849c3e5918c1d115da7d21e8e8ec",
+      "filename": "packages/stats/core/src/domain/model-normalization.ts",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2,
+      "blob_url": "https://github.com/anomalyco/opencode/blob/ecc4916b5a9608c30e6dd58a67f2137b594407ca/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Fmodel-normalization.ts",
+      "raw_url": "https://github.com/anomalyco/opencode/raw/ecc4916b5a9608c30e6dd58a67f2137b594407ca/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Fmodel-normalization.ts",
+      "contents_url": "https://api.github.com/repos/anomalyco/opencode/contents/packages%2Fstats%2Fcore%2Fsrc%2Fdomain%2Fmodel-normalization.ts?ref=ecc4916b5a9608c30e6dd58a67f2137b594407ca",
+      "patch": "@@ -16,7 +16,7 @@ export const MODEL_AUTHOR_RULES = [\n   { match: \"qwen\", author: \"qwen\" },\n ] as const\n export const EXCLUDED_MODELS = new Set([\"alpha-gpt-next\"])\n-export const STEALTH_MODELS = new Set([\"omen-alpha\", \"space-bunny\", \"union-alpha\"])\n+export const STEALTH_MODELS = new Set([\"exo\", \"omen-alpha\", \"space-bunny\", \"union-alpha\"])\n export const FREE_MODELS = new Set([\"gpt-5-nano\", \"grok-code\", \"big-pickle\"])\n export const MODEL_NAME_MAX_LENGTH = 256\n export const MODEL_NAME_ALIASES: Record<string, string> = {"
+    }
+  ]
+}
