@@ -919,10 +919,23 @@ def check_report_matches_data(pass_dir: Path) -> None:
 
     # "N rows", "N-row", "N rows per plan", immediately after a data/ path, and
     # the plainer form where the file is named and "N rows" follows.
+    #
+    # The third form was added because the first two missed most of a header
+    # paragraph. Its citations are `(20 plan x model rows)`, `(6 independent
+    # meter readings)` and `(16 SKU lookups ...)`: the count leads and the noun
+    # varies, so a pattern keyed on "N rows" matched exactly one of the five
+    # citations beside it. Changing "25 model rows" to "24", or "20 plan x model
+    # rows" to "21", left the gate at exit 0 with a wrong number in the prose.
+    # This one keys on the count itself in the parenthetical that opens right
+    # after the path, so the noun does not matter. It is deliberately tighter
+    # than the second: it requires the count to be the first thing inside the
+    # bracket, which is where this pass writes it, so a number appearing later
+    # in a sentence is not read as this file's count.
     patterns = (
         re.compile(r"data/([A-Za-z0-9._-]+\.csv)\)?\s*\((\d+)[- ]row", re.IGNORECASE),
         re.compile(r"data/([A-Za-z0-9._-]+\.csv)\b[^.\n]{0,40}?\b(\d+)\s+rows?\b",
                    re.IGNORECASE),
+        re.compile(r"data/([A-Za-z0-9._-]+\.csv)\)?\s*\(\s*(\d+)\b", re.IGNORECASE),
     )
     for pattern in patterns:
         for match in pattern.finditer(text):
@@ -1305,9 +1318,55 @@ def check_quoted_money_on_page(pass_dir: Path) -> None:
         )
 
     # A money figure derived by dividing two published numbers is not on the
-    # page and is not expected to be; a per-1M rate blended from a table is the
-    # same. Those are checked by arithmetic elsewhere, not here.
-    derived_markers = ("per 1m", "/m", "blended", "per mtok", "per month x", "x 4.33")
+    # page and is not expected to be; a per-1M rate blended from a table, or a
+    # per-token rate restated per 1M, is the same. Those are checked by
+    # arithmetic elsewhere, not here.
+    #
+    # Narrowed 2026-10-07. This used to skip any line containing `per 1m`, `/m`,
+    # `blended`, `per mtok`, `per month x` or `x 4.33`. Those are six loose
+    # keywords and they were an escape hatch: a fabricated figure written as
+    # "billed $0.007 per 1M cache hits" carried `per 1m` and passed silently,
+    # because a keyword anywhere on the line silenced every figure on it. The
+    # keywords that survive are the ones that *show the arithmetic* rather than
+    # name a unit - a blend, a per-token restatement, a spelled-out division.
+    # A unit label on its own ("per 1M", "$/M", "blended $/Mtok") no longer
+    # exempts anything, so a figure that merely sits next to one is checked
+    # against the page like any other.
+    #
+    # The test is applied to the figure's whole sentence, not to the physical
+    # line. Wrapped prose splits a derivation across lines - "blends to
+    # $0.00966 per 1M and the peak / tariff to $0.01932 per 1M" - and a
+    # line-local test would check the continuation and reject a correct figure.
+    derived_markers = (
+        "blends to", "blended to", "blend of", "which blends",
+        "per token", "times 1m", "x 1m", "÷ 1m",
+    )
+
+    def derived_sentence(text: str, start: int) -> str:
+        """The sentence holding the character at `start`, so a wrapped
+        derivation is judged as one sentence rather than as several lines.
+
+        A period only ends a sentence when it is a real terminator: not the
+        dot in a decimal (`0.00966`), not the dot in an abbreviation
+        (`i.e.`, `e.g.`, `etc.`, `vs.`), and not one inside a filename.
+        Without that, "1.6e-08 per token, i.e. $0.80 / $3.20 per 1M" was cut
+        after "i." and the derivation that introduces it was lost.
+        """
+        def is_break(pos: int) -> bool:
+            if text[pos] != ".":
+                return False
+            before = text[max(0, pos - 4):pos].lower()
+            if before.endswith(("e.g", "i.e", "etc", "vs", "cf")):
+                return False
+            if pos + 1 < len(text) and text[pos + 1].isdigit():
+                return False  # a decimal, not a terminator
+            return pos + 1 >= len(text) or text[pos + 1].isspace()
+
+        left = max((p for p in range(start - 1, -1, -1) if is_break(p)), default=-1)
+        right = next((p for p in range(start, len(text)) if is_break(p)), None)
+        if right is None:
+            right = min(len(text), start + 200)
+        return text[left + 1:right]
 
     for path in sorted(references.glob("*.md")):
         text = path.read_text(encoding="utf-8", errors="replace")
@@ -1325,7 +1384,10 @@ def check_quoted_money_on_page(pass_dir: Path) -> None:
                 continue
             first_line = part.splitlines()[0] if part.splitlines() else ""
             recording = False
+            cursor = 0
             for offset, line in enumerate(part.splitlines(), start=1):
+                line_at = cursor
+                cursor += len(line) + 1
                 if not line.strip():
                     recording = False
                     continue
@@ -1337,18 +1399,20 @@ def check_quoted_money_on_page(pass_dir: Path) -> None:
                         # Still inside the recording: the superseded figure.
                         continue
                     recording = False
-                lowered = line.lower()
-                if any(marker in lowered for marker in derived_markers):
-                    continue
-                for token in re.findall(r"\$\s?(\d[\d,]*\.?\d*)", line):
+                for match in re.finditer(r"\$\s?(\d[\d,]*\.?\d*)", line):
+                    token = match.group(1)
                     if _normalise_money(token) in on_page:
+                        continue
+                    sentence = derived_sentence(part, line_at + match.start())
+                    if any(marker in sentence.lower() for marker in derived_markers):
                         continue
                     failures.append(
                         f"[quoted-money-on-page] {rel(path)} entry "
                         f"{first_line[:60]!r} quotes ${token}, which is not on "
                         f"sources/{page}, the page this entry cites. A quotation that is "
-                        f"not in the source is not evidence; re-read the page, or put "
-                        f"the superseded figure inside a dated CORRECTED recording."
+                        f"not in the source is not evidence; re-read the page, show the "
+                        f"derivation that produces the figure, or put the superseded figure "
+                        f"inside a dated CORRECTED recording."
                     )
 
 

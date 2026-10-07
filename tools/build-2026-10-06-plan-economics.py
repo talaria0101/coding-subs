@@ -115,10 +115,17 @@ ROWS = [
      "The most expensive model on the plan and the most rationed: a $15 cap against a $60 pool."],
     ["OpenCode Go", "OpenCode", "10", "GPT 6 Luna (<=272K tokens)", "gpt-6-luna",
      "leaderboard:aa-models-on-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "60", "15",
-     "0.01466", MIX_STD, "1023", "0", "0.0098", "FIRST-PARTY-COMPUTED",
+     "0.0147", MIX_STD, "1020", "0", "0.0098", "FIRST-PARTY-COMPUTED",
      "https://opencode.ai/docs/go/", "2026-10-06",
      "The vendor splits this model at 272K tokens with different prices either side. Fails the "
-     "capability bar at 38.12 II."],
+     "capability bar at 38.12 II. CORRECTED 2026-10-07: this row carried blended 0.01466 and "
+     "1023M. The page publishes $0.10 input / $0.50 output / $0.01 cache read "
+     "(sources/opencode-go.md:193), and at this row's own declared mix that is "
+     "0.97*0.01 + 0.025*0.10 + 0.005*0.50 = 0.0147 exactly, so the yield is "
+     "15 / 0.0147 = 1020.408, or 1020M. The superseded 1023 was back-solved from 15 / 0.01466, "
+     "deriving the token count from the rate rather than computing the rate from the price card, "
+     "which inverts the evidence. The blended rate is now computed from the three published prices "
+     "and the token count follows from it."],
     ["OpenCode Go Plus", "OpenCode", "40", "Muse Spark 1.3 Contributor", "muse-spark-1-3-contributor",
      "unscored:notFound-on-the-page-archived-here-2026-10-06", "DOLLAR-CEILING", "SHARED-POOL", "120", "120",
      "0.00544", MIX_STD, "22059", "0", "0.0018", "FIRST-PARTY-COMPUTED",

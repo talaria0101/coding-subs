@@ -44,8 +44,8 @@ page. Reproduced by `tools/parse-aa-scores.py`; per-SKU verdicts are in
 
 > **SCOPE CORRECTED 2026-10-07.** This entry previously said "**the live board carries 24 models**",
 > which is a property of *this page* and was repeated in four CSV cells. It is not a property of the
-> board: the `/leaderboards/models` page [R21] ships a different payload carrying **681**
-> `intelligenceIndex` entries. The repository's parser recovered **0** models from that page because
+> board: the `/leaderboards/models` page [R21] ships a different payload carrying **680** scored
+> models. The repository's parser recovered **0** models from that page because
 > it only recognised the `{"id":"<uuid>","slug":…}` shape; `tools/parse-aa-models.py` has been
 > corrected to accept both and now recovers **680** from it. "24 models" here means 24 on
 > `/models`.
@@ -54,8 +54,19 @@ page. Reproduced by `tools/parse-aa-scores.py`; per-SKU verdicts are in
 — accessed 2026-10-07 — HTTP 200, 2,433,852 B, `sha256:06e5272f174c38e8…` — archived as
 [../sources/aa-leaderboard-models.html](../sources/aa-leaderboard-models.html). This page ships bare
 `{"slug":…}` model objects with **no `id` field**, which is the shape the repository's parser did not
-recognise. It carries **681** `intelligenceIndex` entries (680 distinct model objects after
-de-duplication). Read out of it:
+recognise.
+
+> **COUNT CORRECTED 2026-10-07.** This entry previously read "**681** `intelligenceIndex` entries
+> (680 distinct model objects after de-duplication)". Re-derived from the archived payload in this
+> session, by the parser's own scan: **2,431** parseable slug objects, **689** carrying an
+> `intelligenceIndex` key, **680** with a non-null score, and **680** distinct slugs among them.
+> **681 is not reachable from the payload by any of those counts.** The "de-duplication" clause was
+> also inaccurate: the 689 and the 680 differ because 9 of the key-carrying objects have a
+> **null** score, not because anything was de-duplicated. The parser's `seen` set is a guard that
+> would collapse a repeated slug, and on this payload it drops **zero** objects. The count is 680,
+> which is what `tools/parse-aa-models.py` prints.
+
+Read out of it:
 
 > `"modelCreatorName":"Xiaomi","contextWindowTokens":1000000,"intelligenceIndex":37.8843590141754`
 
@@ -198,8 +209,16 @@ account. 1,432 calls, $125.57 to the first 100% reading, 86% of prompt tokens ca
 
 ## The gateway stack, and its failure modes
 
-**[R19] `Wei-Shaw/sub2api`** — LGPL-3.0, 43,349 stars, repository created 2025-12-18 — read at commit
-`b8dece9` (VERSION 0.2.13). Enforcement in `backend/internal/service/user_subscription.go`:
+**[R19] `Wei-Shaw/sub2api`** — <https://github.com/Wei-Shaw/sub2api> — accessed 2026-10-06 —
+LGPL-3.0, repository created 2025-12-18 — read at commit `b8dece9` (VERSION 0.2.13).
+
+> **DRIFT NOTE 2026-10-07.** This entry previously read **43,349 stars**, the value the review at
+> `docs/reviews-2026-10-06.md` records as wrong. It now reads **43,351**, matching
+> [../data/relay-providers.csv](../data/relay-providers.csv), which is where the corrected figure was
+> fetched from. A star count is a live counter and drifts daily in both directions; the value here is
+> the one read on the access date above, not a standing property of the repository.
+
+Enforcement in `backend/internal/service/user_subscription.go`:
 
 ```go
 func (s *UserSubscription) CheckMonthlyLimit(group *Group, additionalCost float64) bool {
@@ -240,8 +259,12 @@ requests.
 
 ## The shared-pool decision, from an independent instrument
 
-**[R20] `FeiZhuLulu/real-api-pricing`** — MIT. Its `data/adopted.csv` carries a decision note on every
-OpenCode Go row:
+**[R20] `FeiZhuLulu/real-api-pricing`** — MIT. **Not archived by this pass, and no retrieval of it is
+recorded in [../data/fetch-log.json](../data/fetch-log.json)**, so unlike every entry above it this one
+carries no archived copy, no SHA-256 and no HTTP status to check a reader against. What is quoted
+below was read out of that repository's files; what is *not* established here is when, or from which
+commit, and this entry should not be read as an archived first-party source. Its
+`data/adopted.csv` carries a decision note on every OpenCode Go row:
 
 > `min(共享月池$60, 模型Usage $60)` … `同套餐各模型额度不可相加`
 

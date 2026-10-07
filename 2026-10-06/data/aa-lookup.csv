@@ -10,9 +10,14 @@
 # CORRECTED 2026-10-07. '24 models' is the count recovered from the archived
 # /models page, and the repository's parser requires an id:UUID alongside the
 # slug to recognise a model object. The /leaderboards/models page ships bare
-# {"slug":...} objects instead and carries 681 intelligenceIndex entries, so
+# {"slug":...} objects instead and carries 680 scored models, so
 # "the live board carries 24 models" was a property of one page, not of the board.
 # Both pages and both counts are named wherever a row depends on the difference.
+# COUNT CORRECTED 2026-10-07: "681 intelligenceIndex entries" was not reachable
+# from the archived payload. Re-derived from it by the parser's own scan: 2,431
+# parseable slug objects, 689 carrying an intelligenceIndex key, 680 with a
+# non-null score, 680 distinct slugs. The 689-to-680 gap is 9 null scores, not
+# de-duplication; the parser's seen-set drops zero objects on this payload.
 sought_slug,sku_sold_by_plans,present_on_board,intelligence_index,base_model_slug,base_model_index,lookup_verdict,evidence_class,source_url,read_date,notes
 muse-spark-1-3-contributor,Muse Spark 1.3 Contributor (OpenCode Go $60 cap),no,,muse-spark-1-3,48.0923,notFound,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,"The load-bearing absence of this pass. The Contributor tier is the cheapest qualifying-lane SKU in the market and the only one above 10,000M tokens, and the leaderboard has no row for it. The base model's 48.0923 must not be carried across: a contributor tier is a discounted SKU, not the same model. Both vendors that publish a score column print 'not yet scored' for it."
 muse-spark-1-3,Muse Spark 1.3 (base),yes,48.0923,,,scored,DOCUMENTED,https://artificialanalysis.ai/models,2026-10-06,The base model scores 48.0923. This is the score the 2026-10-02 pass attached to the Contributor row.

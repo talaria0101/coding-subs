@@ -5,10 +5,18 @@ coding-subscription source from the [2026-09-13 pass](../2026-09-13/README.md) s
 logs what changed, adds the new entrants the old pass missed, normalizes every non-USD price to
 dollars at a cited FX rate, and quarantines the relay/reseller "sponsor" market into an advisory
 instead of a ranking. Databases: [data/providers-database.csv](data/providers-database.csv)
-(68 plan rows, 30 provider groups), [data/models-database.csv](data/models-database.csv)
+(77 plan rows, 36 provider groups), [data/models-database.csv](data/models-database.csv)
 (48 models with a fresh Intelligence-Index column), [data/delta-vs-2026-09-13.csv](data/delta-vs-2026-09-13.csv)
-(26 logged changes), [data/relay-market-flags.csv](data/relay-market-flags.csv) (12 red flags),
+(40 logged changes), [data/relay-market-flags.csv](data/relay-market-flags.csv) (12 red flags),
 [data/currency-normalization.csv](data/currency-normalization.csv). Numbered citations:
+
+> **ROW COUNTS CORRECTED 2026-10-07.** This list said 68 plan rows, 30 provider groups and 26
+> logged changes. The files hold **77**, **36** and **40**; the counts had gone stale as rows were
+> added and nothing re-read them. They were invisible because `report-matches-data`'s row-count
+> pattern only matched a count within 40 characters of the path when the words "N rows" followed,
+> and this list writes "N plan rows", "N provider groups" and "N logged changes". That pattern has
+> been widened to the count itself, which is why the three are now checked. "12 red flags" was
+> already correct and is unchanged.
 [references/references.md](references/references.md). Raw snapshots: [sources/](sources/).
 
 Why a same-week pass: the 2026-09-13 report's own freshness warnings had expiry dates inside
