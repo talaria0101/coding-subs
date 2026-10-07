@@ -60,7 +60,7 @@ are recorded from issue evidence, and every exclusion must name a measured prope
 category.
 
 `python3 tools/validate.py --all` gates every pass on **twenty checks** a reader cannot check by eye,
-registered in the `CHECKS` table at the top of the tool. The ones with a history: CSV field-count
+registered in the `CHECKS` table in `tools/gate/registry.py`. The ones with a history: CSV field-count
 agreement (a surplus unquoted comma shifts every later column, and 7 rows across three files shipped
 that way in the 2026-09-13 and 2026-09-20 passes while the old validator reported clean - **two rows
 in `2026-09-13/data/providers-database.csv`, one in `2026-09-20/data/agents-universe.csv`, four in

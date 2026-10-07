@@ -38,6 +38,11 @@ jobs:
       # a check that silently stopped firing would pass CI forever.
       - name: every check refuses its planted defect and accepts correct data
         run: bash tests/run-plants.sh
+      # The registry, the run order and the plant manifest each name the checks.
+      # This holds them against one another, so a check registered but never run,
+      # run but never registered, or never planted fails here.
+      - name: gate registry, pipeline and plants agree
+        run: python3 -m unittest discover -s tests
       # The plan ladder is hand-curated because the generic text extractor cannot
       # tell a plan name from a feature label. This is the check that keeps a
       # hand-curated row honest against the page it cites.
